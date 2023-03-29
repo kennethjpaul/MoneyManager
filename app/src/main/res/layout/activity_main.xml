@@ -1,185 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/main_add_expense_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="@string/add_transactions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/main_add_income_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/minus_symbol"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_add_expense_text" />
-
-    <TextView
-        android:id="@+id/t10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/expense"
-        app:layout_constraintEnd_toEndOf="@+id/main_add_income_btn"
-        app:layout_constraintStart_toStartOf="@+id/main_add_income_btn"
-        app:layout_constraintTop_toBottomOf="@+id/main_add_income_btn" />
-
-    <Button
-        android:id="@+id/main_add_expense_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:text="@string/plus_symbol"
-        app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
-        app:layout_constraintEnd_toStartOf="@+id/main_add_income_btn" />
-
-    <TextView
-        android:id="@+id/t11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/income"
-        app:layout_constraintEnd_toEndOf="@+id/main_add_expense_btn"
-        app:layout_constraintStart_toStartOf="@+id/main_add_expense_btn"
-        app:layout_constraintTop_toBottomOf="@+id/main_add_expense_btn" />
-
-    <Button
-        android:id="@+id/main_add_transfer_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/transfer_symbol"
-        android:layout_marginStart="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
-        app:layout_constraintStart_toEndOf="@+id/main_add_income_btn" />
-
-    <TextView
-        android:id="@+id/t12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/transfer"
-        app:layout_constraintEnd_toEndOf="@+id/main_add_transfer_btn"
-        app:layout_constraintStart_toStartOf="@+id/main_add_transfer_btn"
-        app:layout_constraintTop_toBottomOf="@+id/main_add_transfer_btn" />
-    <View
-        android:id="@+id/divider"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="40dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_add_expense_btn" />
-
-    <TextView
-        android:id="@+id/main_this_month_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/this_month"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
-
-    <TextView
-        android:id="@+id/main_income_text"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/income"
-        app:layout_constraintStart_toStartOf="@+id/main_this_month_text"
-        app:layout_constraintTop_toBottomOf="@id/main_this_month_text" />
-
-    <TextView
-        android:id="@+id/main_income_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/empty_string_placeholder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/main_income_text"
-        app:layout_constraintStart_toEndOf="@id/main_income_text"
-        android:layout_marginHorizontal="100dp"/>
-
-    <TextView
-        android:id="@+id/main_expense_text"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/expense"
-        app:layout_constraintStart_toStartOf="@+id/main_this_month_text"
-        app:layout_constraintTop_toBottomOf="@id/main_income_text" />
-
-    <TextView
-        android:id="@+id/main_expense_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/empty_string_placeholder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/main_expense_text"
-        app:layout_constraintStart_toEndOf="@id/main_expense_text"
-        android:layout_marginHorizontal="100dp"/>
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="30dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.20"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_expense_text" />
-
-    <TextView
-        android:id="@+id/main_summary_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/summary"
-        app:layout_constraintStart_toStartOf="@+id/main_this_month_text"
-        app:layout_constraintTop_toBottomOf="@id/divider2" />
 
 
-    <ScrollView
-        android:id="@+id/main_summary_scroll"
-        android:layout_width="409dp"
-        android:layout_height="186dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_summary_text">
-
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/main_total_text"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/total"
-        app:layout_constraintStart_toStartOf="@+id/main_this_month_text"
-        app:layout_constraintTop_toBottomOf="@id/main_summary_scroll" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/empty_string_placeholder"
-        app:layout_constraintBottom_toBottomOf="@+id/main_total_text"
-        app:layout_constraintStart_toEndOf="@+id/main_total_text"
-        android:layout_marginHorizontal="100dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/myNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph ="@navigation/main_navigation"
+            app:defaultNavHost = "true"/>
+    </LinearLayout>
 
+</layout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
