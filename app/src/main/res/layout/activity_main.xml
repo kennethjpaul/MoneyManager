@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/plus_symbol"
+        android:text="@string/minus_symbol"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_add_expense_text" />
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
-        android:text="@string/minus_symbol"
+        android:text="@string/plus_symbol"
         app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
         app:layout_constraintEnd_toStartOf="@+id/main_add_income_btn" />
 
