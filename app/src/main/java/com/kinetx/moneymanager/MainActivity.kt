@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
-
+        supportActionBar?.title = "Money Manager"
 
     }
 
