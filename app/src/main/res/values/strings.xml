@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Money Manager</string>
+    <string name="plus_symbol">+</string>
+    <string name="this_month">This month</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="summary">Summary</string>
+    <string name="total">Total</string>
+    <string name="empty_string_placeholder">0</string>
+    <string name="add_transactions">Add Transactions</string>
+    <string name="minus_symbol">-</string>
+    <string name="transfer_symbol"><![CDATA[-->]]></string>
+    <string name="transfer">Transfer</string>
+</resources>
