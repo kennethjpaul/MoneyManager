@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/main_add_income_btn"
+            android:id="@+id/main_add_expense_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -34,25 +34,25 @@
             android:id="@+id/t10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/expense"
+            android:text="@string/income"
             app:layout_constraintEnd_toEndOf="@+id/main_add_income_btn"
             app:layout_constraintStart_toStartOf="@+id/main_add_income_btn"
             app:layout_constraintTop_toBottomOf="@+id/main_add_income_btn" />
 
         <Button
-            android:id="@+id/main_add_expense_btn"
+            android:id="@+id/main_add_income_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
             android:text="@string/plus_symbol"
-            app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
-            app:layout_constraintEnd_toStartOf="@+id/main_add_income_btn" />
+            app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_btn"
+            app:layout_constraintEnd_toStartOf="@+id/main_add_expense_btn" />
 
         <TextView
             android:id="@+id/t11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/income"
+            android:text="@string/expense"
             app:layout_constraintEnd_toEndOf="@+id/main_add_expense_btn"
             app:layout_constraintStart_toStartOf="@+id/main_add_expense_btn"
             app:layout_constraintTop_toBottomOf="@+id/main_add_expense_btn" />
@@ -63,8 +63,8 @@
             android:layout_height="wrap_content"
             android:text="@string/transfer_symbol"
             android:layout_marginStart="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
-            app:layout_constraintStart_toEndOf="@+id/main_add_income_btn" />
+            app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_btn"
+            app:layout_constraintStart_toEndOf="@+id/main_add_expense_btn" />
 
         <TextView
             android:id="@+id/t12"
