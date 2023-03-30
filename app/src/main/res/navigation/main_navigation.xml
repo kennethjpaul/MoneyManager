@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_addIncomeFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
+        <argument
+            android:name="var_type"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addTransferFragment"
