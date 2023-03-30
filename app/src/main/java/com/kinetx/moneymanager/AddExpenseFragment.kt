@@ -18,7 +18,7 @@ class AddExpenseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity).supportActionBar?.title = "Add Expenses"
+        (activity as AppCompatActivity).supportActionBar?.title = "Add Expense"
         val binding : FragmentAddExpenseBinding  = DataBindingUtil.inflate(inflater, R.layout.fragment_add_expense, container, false)
         return binding.root
     }
