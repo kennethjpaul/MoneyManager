@@ -23,13 +23,32 @@
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.kinetx.moneymanager.AddExpenseFragment"
-        android:label="AddExpenseFragment" />
+        android:label="AddExpenseFragment" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addIncomeFragment"
         android:name="com.kinetx.moneymanager.AddIncomeFragment"
-        android:label="AddIncomeFragment" />
+        android:label="AddIncomeFragment" >
+        <action
+            android:id="@+id/action_addIncomeFragment_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addTransferFragment"
         android:name="com.kinetx.moneymanager.AddTransferFragment"
         android:label="AddTransferFragment" />
+    <fragment
+        android:id="@+id/selectCategoryFragment"
+        android:name="com.kinetx.moneymanager.SelectCategoryFragment"
+        android:label="SelectCategoryFragment" >
+        <argument
+            android:name="transactionType"
+            app:argType="string" />
+        <argument
+            android:name="actionType"
+            app:argType="string" />
+    </fragment>
 </navigation>
