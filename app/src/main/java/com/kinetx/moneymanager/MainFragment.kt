@@ -31,6 +31,10 @@ class MainFragment : Fragment() {
             Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addIncomeFragment)
         )
 
+        binding.mainAddTransferBtn.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addTransferFragment)
+        )
+
         (activity as AppCompatActivity).supportActionBar?.title = "Money Manager"
         return binding.root
     }

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addIncomeFragment"
             app:destination="@id/addIncomeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addTransferFragment"
+            app:destination="@id/addTransferFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
@@ -25,4 +28,8 @@
         android:id="@+id/addIncomeFragment"
         android:name="com.kinetx.moneymanager.AddIncomeFragment"
         android:label="AddIncomeFragment" />
+    <fragment
+        android:id="@+id/addTransferFragment"
+        android:name="com.kinetx.moneymanager.AddTransferFragment"
+        android:label="AddTransferFragment" />
 </navigation>
