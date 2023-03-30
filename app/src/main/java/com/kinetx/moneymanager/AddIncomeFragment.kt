@@ -46,7 +46,7 @@ class AddIncomeFragment : Fragment() {
 
         binding.addIncomeAddAccountBtn.setOnClickListener()
         {
-            val transactionType: String = "Expense"
+            val transactionType: String = "income"
             val actionType: String = "account"
             view?.findNavController()?.navigate(
                 AddIncomeFragmentDirections.actionAddIncomeFragmentToSelectCategoryFragment(

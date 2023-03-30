@@ -27,6 +27,18 @@
         <action
             android:id="@+id/action_addExpenseFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
+        <argument
+            android:name="var_type"
+            app:argType="string" />
+        <argument
+            android:name="var_bg"
+            app:argType="integer" />
+        <argument
+            android:name="var_color"
+            app:argType="string" />
+        <argument
+            android:name="var_id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/addIncomeFragment"
@@ -38,6 +50,15 @@
         <argument
             android:name="var_type"
             app:argType="string" />
+        <argument
+            android:name="var_bg"
+            app:argType="integer" />
+        <argument
+            android:name="var_color"
+            app:argType="string" />
+        <argument
+            android:name="var_id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/addTransferFragment"
@@ -53,5 +74,15 @@
         <argument
             android:name="actionType"
             app:argType="string" />
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment"
+            app:popUpTo="@id/addIncomeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment"
+            app:popUpTo="@id/addExpenseFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

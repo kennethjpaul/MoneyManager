@@ -34,7 +34,7 @@ class AddExpenseFragment : Fragment() {
 
         binding.addExpenseAddCategoryBtn.setOnClickListener()
         {
-            val transactionType: String = "Expense"
+            val transactionType: String = "expense"
             val actionType: String = "category"
             view?.findNavController()?.navigate(
                 AddExpenseFragmentDirections.actionAddExpenseFragmentToSelectCategoryFragment(
@@ -46,7 +46,7 @@ class AddExpenseFragment : Fragment() {
 
         binding.addExpenseAddAccountBtn.setOnClickListener()
         {
-            val transactionType: String = "Expense"
+            val transactionType: String = "expense"
             val actionType: String = "account"
             view?.findNavController()?.navigate(
                 AddExpenseFragmentDirections.actionAddExpenseFragmentToSelectCategoryFragment(
