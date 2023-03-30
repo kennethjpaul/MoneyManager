@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/add_expense_expense_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:inputType="numberSigned"
+            android:layout_marginTop="100dp"
+            app:layout_constraintRight_toLeftOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="Expense"
+            android:hint="@string/empty_string_placeholder"/>
+
+        <Spinner
+            android:id="@+id/add_expense_currency_spinner"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/add_expense_expense_amount"
+            app:layout_constraintLeft_toRightOf="@id/guideline" />
+
+        <Button
+            android:id="@+id/main_add_income_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/plus_symbol"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_expense_expense_amount" />
+
+        <TextView
+            android:id="@+id/t10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            app:layout_constraintEnd_toEndOf="@+id/main_add_income_btn"
+            app:layout_constraintStart_toStartOf="@+id/main_add_income_btn"
+            app:layout_constraintTop_toBottomOf="@+id/main_add_income_btn" />
+
+        <Button
+            android:id="@+id/main_add_expense_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:text="@string/plus_symbol"
+            app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
+            app:layout_constraintEnd_toStartOf="@+id/main_add_income_btn" />
+
+        <TextView
+            android:id="@+id/t11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account"
+            app:layout_constraintEnd_toEndOf="@+id/main_add_expense_btn"
+            app:layout_constraintStart_toStartOf="@+id/main_add_expense_btn"
+            app:layout_constraintTop_toBottomOf="@+id/main_add_expense_btn" />
+
+        <Button
+            android:id="@+id/main_add_transfer_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/transfer_symbol"
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/main_add_income_btn"
+            app:layout_constraintStart_toEndOf="@+id/main_add_income_btn" />
+
+        <TextView
+            android:id="@+id/t12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            app:layout_constraintEnd_toEndOf="@+id/main_add_transfer_btn"
+            app:layout_constraintStart_toStartOf="@+id/main_add_transfer_btn"
+            app:layout_constraintTop_toBottomOf="@+id/main_add_transfer_btn" />
+
+        <TextView
+            android:id="@+id/add_expense_comments_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comments"
+            android:layout_marginTop="70dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_add_transfer_btn" />
+
+        <EditText
+            android:id="@+id/add_expense_comments_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/add_expense_comments_text"
+            app:layout_constraintTop_toBottomOf="@+id/add_expense_comments_text" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:text="@string/add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_expense_comments_edittext" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

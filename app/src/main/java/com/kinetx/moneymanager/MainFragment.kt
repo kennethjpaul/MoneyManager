@@ -46,6 +46,11 @@ class MainFragment : Fragment() {
         binding.mainAddExpenseBtn.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addExpenseFragment)
         )
+
+        binding.mainAddIncomeBtn.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addIncomeFragment)
+        )
+
         (activity as AppCompatActivity).supportActionBar?.title = "Money Manager"
         return binding.root
     }
