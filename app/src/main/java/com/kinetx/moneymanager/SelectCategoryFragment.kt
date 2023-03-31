@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
 
@@ -39,11 +41,9 @@ class SelectCategoryFragment : Fragment() {
             val color = "#456789"
             val id : Long =1
 
-            when (argList.transactionType)
-            {
-                "income" -> view?.findNavController()?.navigate(SelectCategoryFragmentDirections.actionSelectCategoryFragmentToAddIncomeFragment(argList.actionType,num,color,id))
-                "expense"->view?.findNavController()?.navigate(SelectCategoryFragmentDirections.actionSelectCategoryFragmentToAddExpenseFragment(argList.actionType,num,color,id))
-            }
+            setFragmentResult("SelectCategory", bundleOf("category" to argList.actionType,"bg" to num, "color" to color, "id" to id))
+
+            view?.findNavController()?.navigateUp()
         }
         return binding.root
     }

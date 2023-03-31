@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentAddExpenseBinding
 
@@ -31,6 +32,15 @@ class AddExpenseFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.title = "Add Expense"
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_expense, container, false)
+
+        setFragmentResultListener("SelectCategory")
+        {key, bundle ->
+            val varColor = bundle.getString("color")
+            val varType = bundle.getString("category")
+            val varBg = bundle.getInt("bg")
+            val varId = bundle.getLong("id")
+            Toast.makeText(activity,"The $varType is updated an ID $varId and with bg : $varBg with $varColor ", Toast.LENGTH_LONG).show()
+        }
 
         binding.addExpenseAddCategoryBtn.setOnClickListener()
         {

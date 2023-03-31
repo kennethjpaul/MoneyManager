@@ -74,15 +74,5 @@
         <argument
             android:name="actionType"
             app:argType="string" />
-        <action
-            android:id="@+id/action_selectCategoryFragment_to_addIncomeFragment"
-            app:destination="@id/addIncomeFragment"
-            app:popUpTo="@id/addIncomeFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_selectCategoryFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment"
-            app:popUpTo="@id/addExpenseFragment"
-            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
