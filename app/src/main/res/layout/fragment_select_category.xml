@@ -10,6 +10,16 @@
         >
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/select_category_recyclerview"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Button
             android:id="@+id/select_category_select_button"
             android:layout_width="wrap_content"
@@ -19,12 +29,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="409dp"
-            android:layout_height="661dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
