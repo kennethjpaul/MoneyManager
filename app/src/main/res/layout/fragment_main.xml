@@ -3,7 +3,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainFragment">
-
+    <data>
+        <variable
+            name="mainViewModel"
+            type="com.kinetx.moneymanager.MainViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -108,7 +112,7 @@
             android:id="@+id/main_income_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty_string_placeholder"
+            android:text="@{mainViewModel.incomeMonth.toString()}"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_income_text"
             app:layout_constraintStart_toEndOf="@id/main_income_text"
             android:layout_marginHorizontal="100dp"/>
@@ -127,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/empty_string_placeholder"
+            android:text="@{mainViewModel.expenseMonth.toString()}"
             app:layout_constraintBaseline_toBaselineOf="@+id/main_expense_text"
             app:layout_constraintStart_toEndOf="@id/main_expense_text"
             android:layout_marginHorizontal="100dp"/>
@@ -178,7 +182,7 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty_string_placeholder"
+            android:text="@{mainViewModel.accountTotal.toString()}"
             app:layout_constraintBottom_toBottomOf="@+id/main_total_text"
             app:layout_constraintStart_toEndOf="@+id/main_total_text"
             android:layout_marginHorizontal="100dp"/>
