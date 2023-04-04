@@ -61,7 +61,7 @@ class SelectCategoryFragment : Fragment() {
             val color = R.color.black
             val id : Long =1
 
-            setFragmentResult("SelectCategory", bundleOf("category" to argList.actionType,"imgId" to num, "color" to color, "id" to id))
+            setFragmentResult("SelectCategory", bundleOf("transaction" to argList.transactionType, "category" to argList.actionType,"imgId" to num, "color" to color, "id" to id))
 
             view?.findNavController()?.navigateUp()
         }
