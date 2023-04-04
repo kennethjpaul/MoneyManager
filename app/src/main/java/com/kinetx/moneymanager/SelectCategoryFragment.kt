@@ -57,11 +57,11 @@ class SelectCategoryFragment : Fragment() {
 
         binding.selectCategorySelectButton.setOnClickListener()
         {
-            val num = 1
-            val color = "#456789"
+            val num = R.drawable.android
+            val color = R.color.black
             val id : Long =1
 
-            setFragmentResult("SelectCategory", bundleOf("category" to argList.actionType,"bg" to num, "color" to color, "id" to id))
+            setFragmentResult("SelectCategory", bundleOf("category" to argList.actionType,"imgId" to num, "color" to color, "id" to id))
 
             view?.findNavController()?.navigateUp()
         }
