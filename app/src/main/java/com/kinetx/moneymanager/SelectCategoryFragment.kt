@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,11 +23,8 @@ import java.util.ArrayList
 
 class SelectCategoryFragment : Fragment() {
 
-    private lateinit var mRecyclerView : RecyclerView
-    private lateinit var mCategoryList : ArrayList<SelectCategoryItem>
-    private lateinit var imageID : Array<Int>
-    private lateinit var titleArray : Array<String>
     private lateinit var binding : FragmentSelectCategoryBinding
+    private lateinit var viewModel : SelectCategoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,20 +40,28 @@ class SelectCategoryFragment : Fragment() {
             "category" -> screenTitle = "Select Categories"
             "account" -> screenTitle = "Select Accounts"
         }
-
-        initializeData(argList)
-
         (activity as AppCompatActivity).supportActionBar?.title = screenTitle
-        //Toast.makeText(activity, "The user came from ${argList.transactionType} for the action ${argList.actionType}", Toast.LENGTH_SHORT).show()
-         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
 
 
+        binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
         binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
         binding.selectCategoryRecyclerview.setHasFixedSize(true)
 
+        viewModel = ViewModelProvider(this).get(SelectCategoryViewModel::class.java)
+        viewModel.updateData(argList)
 
-        mCategoryList = arrayListOf<SelectCategoryItem>()
-        getData()
+
+        val adapter = SelectCategoryAdapter()
+        binding.selectCategoryRecyclerview.adapter = adapter
+
+        viewModel.itemList.observe(viewLifecycleOwner, Observer
+        {
+         it?.let{
+                adapter.selectCategoryItemArray = it
+            }
+        })
+
+
 
         binding.selectCategorySelectButton.setOnClickListener()
         {
@@ -66,68 +74,6 @@ class SelectCategoryFragment : Fragment() {
             view?.findNavController()?.navigateUp()
         }
         return binding.root
-    }
-
-    private fun initializeData(argList: SelectCategoryFragmentArgs) {
-
-        imageID = arrayOf(
-            R.drawable.android,
-            R.drawable.android,
-            R.drawable.android,
-            R.drawable.android,
-            R.drawable.android,
-            R.drawable.android
-        )
-
-
-        if (argList.actionType=="category" && argList.transactionType=="expense")
-        {
-            titleArray = arrayOf(
-                "Household",
-                "Eating out",
-                "Groceries",
-                "Health",
-                "Sports",
-                "Entertainment"
-            )
-        }
-
-        if (argList.actionType=="category" && argList.transactionType=="income")
-        {
-            titleArray = arrayOf(
-                "Salary",
-                "Interest",
-                "Borrowed",
-                "Profit",
-                "Cash",
-                "Random"
-            )
-        }
-
-        if (argList.actionType=="account")
-        {
-            titleArray = arrayOf(
-                "Main Account",
-                "Wallet",
-                "Credit card 1",
-                "Credit card 2",
-                "Credit card 3",
-                "Secret"
-            )
-        }
-
-
-
-    }
-
-    private fun getData() {
-        for (i in imageID.indices)
-        {
-            val item = SelectCategoryItem(imageID[i],titleArray[i])
-            mCategoryList.add(item)
-        }
-
-        binding.selectCategoryRecyclerview.adapter = SelectCategoryAdapter(mCategoryList)
     }
 
 
