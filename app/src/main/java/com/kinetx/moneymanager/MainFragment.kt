@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         binding.mainViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         (activity as AppCompatActivity).supportActionBar?.title = "Money Manager"
         return binding.root

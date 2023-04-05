@@ -37,7 +37,7 @@ class AddIncomeFragment : Fragment(){
         viewModel = ViewModelProvider(this).get(AddIncomeViewModel::class.java)
 
         binding.addIncomeViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setFragmentResultListener("SelectCategory")
         {key, bundle ->

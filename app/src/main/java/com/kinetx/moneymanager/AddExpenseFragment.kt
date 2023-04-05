@@ -37,7 +37,7 @@ class AddExpenseFragment : Fragment()
         viewModel = ViewModelProvider(this).get(AddExpenseViewModel::class.java)
 
         binding.addExpenseViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setFragmentResultListener("SelectCategory")
         {key, bundle ->

@@ -30,7 +30,7 @@ class AddTransferFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(AddTransferViewModel::class.java)
 
         binding.addTransferViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setFragmentResultListener("SelectCategory")
         {key, bundle ->
