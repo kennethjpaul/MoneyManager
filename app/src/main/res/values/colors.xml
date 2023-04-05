@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="air_force_blue">#FF5d8aa8</color>
+    <color name="almond">#FFefdecd</color>
+    <color name="android_green">#FFa4c639</color>
+    <color name="ao">#FF008000</color>
+    <color name="army_green">#FF4b5320</color>
+    <color name="auburn">#FFa52a2a</color>
+    <color name="azure">#FF007fff</color>
 </resources>
