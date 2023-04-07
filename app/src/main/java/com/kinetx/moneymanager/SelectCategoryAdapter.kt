@@ -1,6 +1,5 @@
 package com.kinetx.moneymanager
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
-class SelectCategoryAdapter() :RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
+class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
 {
     var selectCategoryItemArray = ArrayList<SelectCategoryItem>()
         set(value) {
@@ -38,9 +37,26 @@ class SelectCategoryAdapter() :RecyclerView.Adapter<SelectCategoryAdapter.MyView
         return selectCategoryItemArray.size
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
         val itemImage : ImageView = itemView.findViewById(R.id.select_category_item_image)
         val itemText  : TextView = itemView.findViewById(R.id.select_category_item_text)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position!=RecyclerView.NO_POSITION) {
+                listener.onSelectCategoryClick(position)
+            }
+        }
+
+    }
+
+    interface OnSelectCategoryListener
+    {
+        fun onSelectCategoryClick(position: Int)
     }
 }

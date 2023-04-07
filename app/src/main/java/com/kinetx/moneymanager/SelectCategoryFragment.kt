@@ -12,18 +12,32 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
-import java.util.ArrayList
 
 
-class SelectCategoryFragment : Fragment() {
+class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategoryListener {
 
     private lateinit var binding : FragmentSelectCategoryBinding
+    private lateinit var argList :SelectCategoryFragmentArgs
+
+    override fun onSelectCategoryClick(position: Int) {
+
+        val item = viewModel.itemList.value?.get(position)
+        val id : Long = item?.itemId!!
+        val itemImage : Int = item.itemImage
+        val itemColor : Int = item.itemColor
+        val itemTitle : String = item.itemTitle
+
+        setFragmentResult("SelectCategory", bundleOf("transaction" to argList.transactionType, "category" to argList.actionType,"itemId" to id, "itemColor" to itemColor, "itemImage" to itemImage, "itemTitle" to itemTitle))
+
+        view?.findNavController()?.navigateUp()
+
+        //Toast.makeText(context, "An item of $id, image $itemImage, color $itemColor and title $itemTitle was clicked", Toast.LENGTH_SHORT).show()
+
+    }
+
     private lateinit var viewModel : SelectCategoryViewModel
 
     override fun onCreateView(
@@ -31,7 +45,7 @@ class SelectCategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val argList  = SelectCategoryFragmentArgs.fromBundle(requireArguments())
+        argList  = SelectCategoryFragmentArgs.fromBundle(requireArguments())
 
         var screenTitle: String =""
 
@@ -51,7 +65,7 @@ class SelectCategoryFragment : Fragment() {
         viewModel.updateData(argList)
 
 
-        val adapter = SelectCategoryAdapter()
+        val adapter = SelectCategoryAdapter(this)
         binding.selectCategoryRecyclerview.adapter = adapter
 
         viewModel.itemList.observe(viewLifecycleOwner, Observer

@@ -41,9 +41,9 @@ class AddExpenseFragment : Fragment()
 
         setFragmentResultListener("SelectCategory")
         {key, bundle ->
-            val varBgColor = bundle.getInt("color")
+            val varBgColor = bundle.getInt("itemColor")
             val varType = bundle.getString("category")
-            val varImgId = bundle.getInt("imgId")
+            val varImgId = bundle.getInt("itemImage")
             val varId = bundle.getLong("id")
 
             when(varType)
