@@ -81,7 +81,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         viewModel.itemList.observe(viewLifecycleOwner, Observer
         {
          it?.let{
-                adapter.selectCategoryItemArray = it
+                adapter.submitList(it)
             }
         })
 

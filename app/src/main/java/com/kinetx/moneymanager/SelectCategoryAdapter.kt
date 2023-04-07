@@ -5,16 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import java.util.ArrayList
 
-class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
+class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapter<SelectCategoryItem, SelectCategoryAdapter.MyViewHolder>(SelectCategoryItemCallBack())
 {
-    var selectCategoryItemArray = ArrayList<SelectCategoryItem>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
     {
@@ -26,15 +23,10 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerVie
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
-        val currentItem = selectCategoryItemArray[position]
+        val currentItem = getItem(position)
         holder.itemImage.setImageResource(currentItem.itemImage)
         holder.itemImage.setBackgroundResource(currentItem.itemColor)
         holder.itemText.text = currentItem.itemTitle
-    }
-
-    override fun getItemCount(): Int
-    {
-        return selectCategoryItemArray.size
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener
@@ -70,5 +62,22 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerVie
     {
         fun onSelectCategoryClick(position: Int)
         fun onSelectCategoryLongClick(position: Int)
+    }
+}
+
+class SelectCategoryItemCallBack : DiffUtil.ItemCallback<SelectCategoryItem>()
+{
+    override fun areItemsTheSame(
+        oldItem: SelectCategoryItem,
+        newItem: SelectCategoryItem
+    ): Boolean {
+        return oldItem.itemId == newItem.itemId
+    }
+
+    override fun areContentsTheSame(
+        oldItem: SelectCategoryItem,
+        newItem: SelectCategoryItem
+    ): Boolean {
+        return oldItem == newItem
     }
 }
