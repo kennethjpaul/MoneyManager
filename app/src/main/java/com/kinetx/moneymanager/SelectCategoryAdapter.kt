@@ -37,13 +37,15 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerVie
         return selectCategoryItemArray.size
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener
     {
         val itemImage : ImageView = itemView.findViewById(R.id.select_category_item_image)
         val itemText  : TextView = itemView.findViewById(R.id.select_category_item_text)
 
+
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -53,10 +55,20 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) :RecyclerVie
             }
         }
 
+        override fun onLongClick(v: View?): Boolean {
+            val position = adapterPosition
+            if (position!=RecyclerView.NO_POSITION) {
+                listener.onSelectCategoryLongClick(position)
+                return true
+            }
+            return false
+        }
+
     }
 
     interface OnSelectCategoryListener
     {
         fun onSelectCategoryClick(position: Int)
+        fun onSelectCategoryLongClick(position: Int)
     }
 }

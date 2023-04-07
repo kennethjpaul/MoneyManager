@@ -38,6 +38,16 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
     }
 
+    override fun onSelectCategoryLongClick(position: Int) {
+
+        val item = viewModel.itemList.value?.get(position)
+        val id : Long = item?.itemId!!
+        val itemImage : Int = item.itemImage
+        val itemColor : Int = item.itemColor
+        val itemTitle : String = item.itemTitle
+        Toast.makeText(context, "An item of $id, image $itemImage, color $itemColor and title $itemTitle was clicked", Toast.LENGTH_SHORT).show()
+    }
+
     private lateinit var viewModel : SelectCategoryViewModel
 
     override fun onCreateView(
