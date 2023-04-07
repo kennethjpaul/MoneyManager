@@ -52,7 +52,6 @@ class AddExpenseFragment : Fragment()
                 "category" -> viewModel.updateCategory(varId,varImgId,varBgColor)
             }
 
-            Toast.makeText(activity,"The $varType is updated an ID $varId and with bg : $varImgId with $varBgColor ", Toast.LENGTH_LONG).show()
         }
 
         binding.addExpenseAddCategoryBtn.setOnClickListener()

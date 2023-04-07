@@ -45,7 +45,6 @@ class AddTransferFragment : Fragment() {
                 "destination" -> viewModel.updateDestination(varId,varImgId,varBgColor)
             }
 
-            Toast.makeText(activity,"The $varType is updated an ID $varId and with bg : $varImgId with $varBgColor ", Toast.LENGTH_LONG).show()
         }
 
         binding.addTransferSourceButton.setOnClickListener()
