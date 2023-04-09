@@ -22,4 +22,8 @@
     <string name="source">Source</string>
     <string name="destination">Destination</string>
     <string name="select">Select</string>
+    <string name="name">Name</string>
+    <string name="icon">Icon</string>
+    <string name="color">Color</string>
+    <string name="category_name">category name</string>
 </resources>

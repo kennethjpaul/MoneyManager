@@ -78,5 +78,32 @@
         <argument
             android:name="actionType"
             app:argType="string" />
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.kinetx.moneymanager.CategoryFragment"
+        android:label="CategoryFragment" >
+        <argument
+            android:name="isEdit"
+            app:argType="boolean" />
+        <argument
+            android:name="categoryID"
+            app:argType="long" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+        <argument android:name="categoryType"
+            app:argType="string" />
+        <argument android:name="iconResource"
+            app:argType="integer" />
+        <argument
+            android:name="colorResource"
+            app:argType="integer" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
 </navigation>

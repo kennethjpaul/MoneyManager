@@ -41,11 +41,19 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
     override fun onSelectCategoryLongClick(position: Int) {
 
         val item = viewModel.itemList.value?.get(position)
-        val id : Long = item?.itemId!!
-        val itemImage : Int = item.itemImage
-        val itemColor : Int = item.itemColor
-        val itemTitle : String = item.itemTitle
-        Toast.makeText(context, "An item of $id, image $itemImage, color $itemColor and title $itemTitle was clicked", Toast.LENGTH_SHORT).show()
+
+        val isEdit : Boolean = true
+        val categoryID : Long = item?.itemId!!
+        val categoryName : String = item.itemTitle
+        val categoryType : String = argList.transactionType
+        val iconResource : Int = item.itemImage
+        val colorResource : Int = item.itemColor
+        val category : String = argList.actionType
+
+
+        view?.findNavController()?.navigate(
+            SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
+        )
     }
 
     private lateinit var viewModel : SelectCategoryViewModel
@@ -89,14 +97,19 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
         binding.selectCategorySelectButton.setOnClickListener()
         {
-            val num = R.drawable.android
-            val color = R.color.black
-            val id : Long =1
+            val isEdit : Boolean = false
+            val categoryID : Long = 1
+            val categoryName : String = ""
+            val categoryType : String = ""
+            val iconResource : Int = R.drawable.android
+            val colorResource : Int = R.color.teal_700
+            val category : String = argList.actionType
 
-            setFragmentResult("SelectCategory", bundleOf("transaction" to argList.transactionType, "category" to argList.actionType,"imgId" to num, "color" to color, "id" to id))
-
-            view?.findNavController()?.navigateUp()
+            view?.findNavController()?.navigate(
+                SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
+            )
         }
+
         return binding.root
     }
 
