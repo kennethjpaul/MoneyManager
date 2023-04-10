@@ -46,14 +46,14 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setBackgroundResource(it.bgColor)
-            binding.addTransactionCategoryOneBtn.setImageResource(it.imageId)
+            binding.addTransactionCategoryOneBtn.setBackgroundResource(it.buttonColor)
+            binding.addTransactionCategoryOneBtn.setImageResource(it.buttonImage)
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setBackgroundResource(it.bgColor)
-            binding.addTransactionCategoryTwoBtn.setImageResource(it.imageId)
+            binding.addTransactionCategoryTwoBtn.setBackgroundResource(it.buttonColor)
+            binding.addTransactionCategoryTwoBtn.setImageResource(it.buttonImage)
         }
 
 
@@ -85,17 +85,17 @@ class AddTransactionFragment : Fragment() {
 
         setFragmentResultListener("SelectCategory")
         { _, bundle ->
-            val varBgColor = bundle.getInt("itemColor")
+            val itemColor = bundle.getInt("itemColor")
             val varType = bundle.getString("category")
-            val varImgId = bundle.getInt("itemImage")
-            val varId = bundle.getLong("id")
+            val itemImage = bundle.getInt("itemImage")
+            val itemId = bundle.getLong("itemId")
 
             when(varType)
             {
-                "account" -> viewModel.updateCategoryPositionOne(varId,varImgId,varBgColor)
-                "category" -> viewModel.updateCategoryPositionTwo(varId,varImgId,varBgColor)
-                "source" -> viewModel.updateCategoryPositionOne(varId,varImgId,varBgColor)
-                "destination" -> viewModel.updateCategoryPositionTwo(varId,varImgId,varBgColor)
+                "account" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor)
+                "category" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor)
+                "source" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor)
+                "destination" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor)
             }
 
         }

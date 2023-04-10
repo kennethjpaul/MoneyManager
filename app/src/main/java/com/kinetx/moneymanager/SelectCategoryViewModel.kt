@@ -24,7 +24,7 @@ class SelectCategoryViewModel : ViewModel() {
     fun initializeLayout(argList: SelectCategoryFragmentArgs) {
 
         val tmp = ArrayList<SelectCategoryItem>()
-        if (argList.actionType=="category" && argList.transactionType=="expense")
+        if (argList.categoryType=="category" && argList.transactionType=="expense")
         {
             tmp.add(SelectCategoryItem(1, R.drawable.cash, R.color.black, "House hold"))
             tmp.add(SelectCategoryItem(2, R.drawable.atm_256, R.color.teal_700, "Eating out"))
@@ -35,7 +35,7 @@ class SelectCategoryViewModel : ViewModel() {
             _itemList.value = tmp
         }
 
-        if (argList.actionType=="category" && argList.transactionType=="income")
+        if (argList.categoryType=="category" && argList.transactionType=="income")
         {
 
             tmp.add(SelectCategoryItem(1, R.drawable.customer, R.color.android_green, "Salary"))
@@ -49,7 +49,7 @@ class SelectCategoryViewModel : ViewModel() {
 
         }
 
-        if (argList.actionType=="account" || argList.transactionType=="transfer")
+        if (argList.categoryType=="account" || argList.transactionType=="transfer")
         {
             tmp.add(SelectCategoryItem(1, R.drawable.moneybag, R.color.android_green, "Main Account"))
             tmp.add(SelectCategoryItem(2, R.drawable.moneytransfer, R.color.army_green, "Wallet"))

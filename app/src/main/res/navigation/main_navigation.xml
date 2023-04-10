@@ -22,7 +22,7 @@
             android:name="transactionType"
             app:argType="string" />
         <argument
-            android:name="actionType"
+            android:name="categoryType"
             app:argType="string" />
         <action
             android:id="@+id/action_selectCategoryFragment_to_categoryFragment"

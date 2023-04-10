@@ -1,3 +1,3 @@
 package com.kinetx.moneymanager
 
-data class ImageButtonData(var id : Long, var imageId : Int, var bgColor : Int)
+data class ImageButtonData(var buttonId : Long, var buttonImage : Int, var buttonColor : Int)

@@ -78,15 +78,15 @@ class AddTransactionViewModel: ViewModel() {
     }
 
     fun updateCategoryPositionTwo(varId: Long, varImgId: Int, varBgColor: Int) {
-        _categoryPositionTwo.value?.id = varId
-        _categoryPositionTwo.value?.imageId =varImgId
-        _categoryPositionTwo.value?.bgColor = varBgColor
+        _categoryPositionTwo.value?.buttonId = varId
+        _categoryPositionTwo.value?.buttonImage =varImgId
+        _categoryPositionTwo.value?.buttonColor = varBgColor
     }
 
     fun updateCategoryPositionOne(varId: Long, varImgId: Int, varBgColor: Int) {
-        _categoryPositionOne.value?.id = varId
-        _categoryPositionOne.value?.imageId =varImgId
-        _categoryPositionOne.value?.bgColor = varBgColor
+        _categoryPositionOne.value?.buttonId = varId
+        _categoryPositionOne.value?.buttonImage =varImgId
+        _categoryPositionOne.value?.buttonColor = varBgColor
     }
 
     fun initializeLayout(argList: AddTransactionFragmentArgs) {
