@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
 
 
@@ -26,18 +27,23 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding : FragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
-        binding.mainAddExpenseBtn.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addExpenseFragment)
-        )
+        binding.mainAddExpenseBtn.setOnClickListener()
+        {
+            var transactionType : String = "expense"
+            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+        }
 
-        binding.mainAddIncomeBtn.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addIncomeFragment)
-        )
+        binding.mainAddIncomeBtn.setOnClickListener()
+        {
+            var transactionType : String = "income"
+            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+        }
 
-        binding.mainAddTransferBtn.setOnClickListener(
-            Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_addTransferFragment)
-        )
-
+        binding.mainAddTransferBtn.setOnClickListener()
+        {
+            var transactionType : String = "transfer"
+            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+        }
 
        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

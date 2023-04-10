@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/add_expense.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_expense.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_income.xml" value="0.24183006535947713" />
+        <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_transfer.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.13855116514690982" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.4" />

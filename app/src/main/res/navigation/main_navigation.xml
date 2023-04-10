@@ -11,62 +11,8 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_addIncomeFragment"
-            app:destination="@id/addIncomeFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_addTransferFragment"
-            app:destination="@id/addTransferFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addExpenseFragment"
-        android:name="com.kinetx.moneymanager.AddExpenseFragment"
-        android:label="AddExpenseFragment" >
-        <action
-            android:id="@+id/action_addExpenseFragment_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
-        <argument
-            android:name="var_type"
-            app:argType="string" />
-        <argument
-            android:name="var_bg"
-            app:argType="integer" />
-        <argument
-            android:name="var_color"
-            app:argType="string" />
-        <argument
-            android:name="var_id"
-            app:argType="long" />
-    </fragment>
-    <fragment
-        android:id="@+id/addIncomeFragment"
-        android:name="com.kinetx.moneymanager.AddIncomeFragment"
-        android:label="AddIncomeFragment" >
-        <action
-            android:id="@+id/action_addIncomeFragment_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
-        <argument
-            android:name="var_type"
-            app:argType="string" />
-        <argument
-            android:name="var_bg"
-            app:argType="integer" />
-        <argument
-            android:name="var_color"
-            app:argType="string" />
-        <argument
-            android:name="var_id"
-            app:argType="long" />
-    </fragment>
-    <fragment
-        android:id="@+id/addTransferFragment"
-        android:name="com.kinetx.moneymanager.AddTransferFragment"
-        android:label="AddTransferFragment" >
-        <action
-            android:id="@+id/action_addTransferFragment_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
+            android:id="@+id/action_mainFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectCategoryFragment"
@@ -116,5 +62,16 @@
         <argument
             android:name="colorIconType"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTransactionFragment"
+        android:name="com.kinetx.moneymanager.AddTransactionFragment"
+        android:label="AddTransactionFragment" >
+        <argument
+            android:name="transactionType"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addTransactionFragment_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
     </fragment>
 </navigation>

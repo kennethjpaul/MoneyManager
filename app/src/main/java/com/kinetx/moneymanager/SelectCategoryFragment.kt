@@ -22,6 +22,59 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
     private lateinit var binding : FragmentSelectCategoryBinding
     private lateinit var argList :SelectCategoryFragmentArgs
 
+    private lateinit var viewModel : SelectCategoryViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        argList  = SelectCategoryFragmentArgs.fromBundle(requireArguments())
+
+
+        binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
+        viewModel = ViewModelProvider(this).get(SelectCategoryViewModel::class.java)
+
+
+        viewModel.initializeLayout(argList)
+
+
+
+        val adapter = SelectCategoryAdapter(this)
+        binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
+        binding.selectCategoryRecyclerview.setHasFixedSize(true)
+        binding.selectCategoryRecyclerview.adapter = adapter
+
+
+        viewModel.itemList.observe(viewLifecycleOwner)
+        {
+            adapter.submitList(it)
+        }
+
+        viewModel.fragmentTitle.observe(viewLifecycleOwner)
+        {
+            (activity as AppCompatActivity).supportActionBar?.title = it
+        }
+
+
+        binding.selectCategorySelectButton.setOnClickListener()
+        {
+            val isEdit : Boolean = false
+            val categoryID : Long = 1
+            val categoryName : String = ""
+            val categoryType : String = ""
+            val iconResource : Int = R.drawable.android
+            val colorResource : Int = R.color.teal_700
+            val category : String = argList.actionType
+
+            view?.findNavController()?.navigate(
+                SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
+            )
+        }
+
+        return binding.root
+    }
+
     override fun onSelectCategoryClick(position: Int) {
 
         val item = viewModel.itemList.value?.get(position)
@@ -55,63 +108,5 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
             SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
         )
     }
-
-    private lateinit var viewModel : SelectCategoryViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        argList  = SelectCategoryFragmentArgs.fromBundle(requireArguments())
-
-        var screenTitle: String =""
-
-        when(argList.actionType)
-        {
-            "category" -> screenTitle = "Select Categories"
-            "account" -> screenTitle = "Select Accounts"
-        }
-        (activity as AppCompatActivity).supportActionBar?.title = screenTitle
-
-
-        binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
-        binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
-        binding.selectCategoryRecyclerview.setHasFixedSize(true)
-
-        viewModel = ViewModelProvider(this).get(SelectCategoryViewModel::class.java)
-        viewModel.updateData(argList)
-
-
-        val adapter = SelectCategoryAdapter(this)
-        binding.selectCategoryRecyclerview.adapter = adapter
-
-        viewModel.itemList.observe(viewLifecycleOwner, Observer
-        {
-         it?.let{
-                adapter.submitList(it)
-            }
-        })
-
-
-
-        binding.selectCategorySelectButton.setOnClickListener()
-        {
-            val isEdit : Boolean = false
-            val categoryID : Long = 1
-            val categoryName : String = ""
-            val categoryType : String = ""
-            val iconResource : Int = R.drawable.android
-            val colorResource : Int = R.color.teal_700
-            val category : String = argList.actionType
-
-            view?.findNavController()?.navigate(
-                SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
-            )
-        }
-
-        return binding.root
-    }
-
 
 }
