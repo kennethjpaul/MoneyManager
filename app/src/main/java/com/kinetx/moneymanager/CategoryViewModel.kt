@@ -27,6 +27,14 @@ class CategoryViewModel : ViewModel() {
     val radioVisible : LiveData<Int>
         get() = _radioVisible
 
+    private val _addVisible = MutableLiveData<Int>()
+    val addVisible : LiveData<Int>
+        get() = _addVisible
+
+    private val _editVisible = MutableLiveData<Int>()
+    val editVisible : LiveData<Int>
+        get() = _editVisible
+
     private val _expenseSelected =  MutableLiveData<Boolean>()
     val expenseSelected : LiveData<Boolean>
         get() = _expenseSelected
@@ -44,21 +52,17 @@ class CategoryViewModel : ViewModel() {
         get() = _colorColorCode
 
 
-    private val _submitButtonText = MutableLiveData<String>()
-    val submitButtonText : LiveData<String>
-        get() = _submitButtonText
-
-
 
     init {
         _categoryName.value = ""
         _radioEnabled.value = true
         _radioVisible.value = View.VISIBLE
+        _addVisible.value = View.VISIBLE
+        _editVisible.value = View.GONE
         _expenseSelected.value = false
         _incomeSelected.value = false
-        _iconImageSource.value = R.drawable.android
-        _colorColorCode.value = R.color.teal_700
-        _submitButtonText.value = "Add"
+        _iconImageSource.value = R.drawable.help
+        _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
         _fragmentTitle.value = "Create category"
         _categoryId.value = 1
     }
@@ -67,6 +71,8 @@ class CategoryViewModel : ViewModel() {
 
         if (argList.isEdit)
         {
+            _addVisible.value = View.GONE
+            _editVisible.value = View.VISIBLE
             _categoryId.value = argList.itemId
             _categoryName.value = argList.itemName
             _radioEnabled.value = false

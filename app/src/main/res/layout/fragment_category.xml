@@ -103,12 +103,14 @@
             tools:src="@tools:sample/avatars" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/category_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{categoryViewModel.submitButtonText}"
-            android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{categoryViewModel.addVisible}"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/add"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/categoryIconButton" />
 
@@ -118,6 +120,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5"/>
+
+        <Button
+            android:id="@+id/category_update_button"
+            android:visibility="@{categoryViewModel.editVisible}"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/update"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/category_delete_button" />
+
+        <Button
+            android:id="@+id/category_delete_button"
+            android:visibility="@{categoryViewModel.editVisible}"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="60dp"
+            android:text="@string/delete"
+            android:backgroundTint="@color/red"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/categoryColorButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
