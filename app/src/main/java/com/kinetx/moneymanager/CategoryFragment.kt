@@ -62,7 +62,7 @@ class CategoryFragment : Fragment() {
 
 
             setFragmentResultListener("SelectColorIcon")
-            {key, bundle ->
+            { _, bundle ->
 
                 val colorIconType = bundle.getString("colorIconType")
                 val itemBackgroundColor= bundle.getInt("itemBackgroundColor")

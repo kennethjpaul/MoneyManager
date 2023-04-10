@@ -84,7 +84,7 @@ class AddTransactionFragment : Fragment() {
 
 
         setFragmentResultListener("SelectCategory")
-        {key, bundle ->
+        { _, bundle ->
             val varBgColor = bundle.getInt("itemColor")
             val varType = bundle.getString("category")
             val varImgId = bundle.getInt("itemImage")

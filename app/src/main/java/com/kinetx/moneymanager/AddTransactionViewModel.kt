@@ -54,7 +54,7 @@ class AddTransactionViewModel: ViewModel() {
         _categoryPositionTwoText.value = "Category"
     }
 
-    private val datePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayofMonth ->
+    private val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayofMonth ->
         myCalendar.set(Calendar.YEAR, year)
         myCalendar.set(Calendar.MONTH, month)
         myCalendar.set(Calendar.DAY_OF_MONTH, dayofMonth)
