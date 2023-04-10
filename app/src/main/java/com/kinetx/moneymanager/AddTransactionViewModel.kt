@@ -48,8 +48,8 @@ class AddTransactionViewModel: ViewModel() {
         _dateButton.value = "${myCalendar.get(Calendar.DAY_OF_MONTH)} \n ${monthArray[myCalendar.get(
             Calendar.MONTH)]}\n ${myCalendar.get(Calendar.YEAR)}"
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
-        _categoryPositionOne.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt())
-        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt())
+        _categoryPositionOne.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt(),"")
+        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt(),"")
         _categoryPositionOneText.value = "Account"
         _categoryPositionTwoText.value = "Category"
     }
@@ -77,16 +77,18 @@ class AddTransactionViewModel: ViewModel() {
         _dateButton.value = "$dayofMonth \n ${monthArray[month]} \n$year"
     }
 
-    fun updateCategoryPositionTwo(varId: Long, varImgId: Int, varBgColor: Int) {
+    fun updateCategoryPositionTwo(varId: Long, varImgId: Int, varBgColor: Int, itemTitle: String) {
         _categoryPositionTwo.value?.buttonId = varId
         _categoryPositionTwo.value?.buttonImage =varImgId
         _categoryPositionTwo.value?.buttonColor = varBgColor
+        _categoryPositionTwo.value?.buttonTitle = itemTitle
     }
 
-    fun updateCategoryPositionOne(varId: Long, varImgId: Int, varBgColor: Int) {
+    fun updateCategoryPositionOne(varId: Long, varImgId: Int, varBgColor: Int, itemTitle: String) {
         _categoryPositionOne.value?.buttonId = varId
         _categoryPositionOne.value?.buttonImage =varImgId
         _categoryPositionOne.value?.buttonColor = varBgColor
+        _categoryPositionOne.value?.buttonTitle = itemTitle
     }
 
     fun initializeLayout(argList: AddTransactionFragmentArgs) {

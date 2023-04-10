@@ -63,10 +63,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{addTransactionViewModel.categoryPositionTwoText}"
-            tools:text="Category"
+            app:layout_constraintBottom_toTopOf="@+id/add_transaction_category_two_btn"
             app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_two_btn"
             app:layout_constraintStart_toStartOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn" />
+            tools:text="Category" />
 
         <ImageButton
             android:id="@+id/add_transaction_category_one_btn"
@@ -83,11 +83,11 @@
             android:id="@+id/t11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Account"
             android:text="@{addTransactionViewModel.categoryPositionOneText}"
+            app:layout_constraintBottom_toTopOf="@+id/add_transaction_category_one_btn"
             app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_one_btn"
             app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_one_btn" />
+            tools:text="Account" />
 
         <Button
             android:id="@+id/add_transaction_add_date_btn"
@@ -104,9 +104,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date"
+            app:layout_constraintBottom_toTopOf="@+id/add_transaction_add_date_btn"
             app:layout_constraintEnd_toEndOf="@+id/add_transaction_add_date_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_add_date_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_add_date_btn" />
+            app:layout_constraintStart_toStartOf="@+id/add_transaction_add_date_btn" />
 
         <TextView
             android:id="@+id/add_transaction_comments_text"
@@ -140,6 +140,24 @@
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_transaction_comments_edittext" />
+
+        <TextView
+            android:id="@+id/transaction_category_one_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_one_btn"
+            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
+            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_one_btn" />
+
+        <TextView
+            android:id="@+id/transaction_category_two_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_two_btn"
+            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_two_btn"
+            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

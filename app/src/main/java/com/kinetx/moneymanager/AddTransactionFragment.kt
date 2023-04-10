@@ -48,12 +48,14 @@ class AddTransactionFragment : Fragment() {
         {
             binding.addTransactionCategoryOneBtn.setBackgroundColor(it.buttonColor)
             binding.addTransactionCategoryOneBtn.setImageResource(it.buttonImage)
+            binding.transactionCategoryOneSelect.text = it.buttonTitle
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
             binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.buttonColor)
             binding.addTransactionCategoryTwoBtn.setImageResource(it.buttonImage)
+            binding.transactionCategoryTwoSelect.text = it.buttonTitle
         }
 
 
@@ -89,13 +91,14 @@ class AddTransactionFragment : Fragment() {
             val varType = bundle.getString("category")
             val itemImage = bundle.getInt("itemImage")
             val itemId = bundle.getLong("itemId")
+            val itemTitle= bundle.getString("itemTitle")!!
 
             when(varType)
             {
-                "account" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor)
-                "category" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor)
-                "source" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor)
-                "destination" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor)
+                "account" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
+                "category" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
+                "source" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
+                "destination" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
             }
 
         }
