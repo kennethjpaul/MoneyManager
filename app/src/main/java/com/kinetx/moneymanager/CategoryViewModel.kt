@@ -92,6 +92,10 @@ class CategoryViewModel : ViewModel() {
         else
         {
             _fragmentTitle.value = "Create ${argList.category}"
+            if (argList.category=="account")
+            {
+                _radioVisible.value = View.GONE
+            }
         }
     }
 
