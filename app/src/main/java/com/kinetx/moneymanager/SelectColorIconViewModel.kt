@@ -1,9 +1,13 @@
 package com.kinetx.moneymanager
-
+import android.R.drawable
+import android.content.res.Resources
+import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.lang.reflect.Field
+
 
 class SelectColorIconViewModel: ViewModel() {
 
@@ -32,7 +36,6 @@ class SelectColorIconViewModel: ViewModel() {
     private fun initializeIconData() {
         Log.i("ColorIcon","Icon")
         val tmp = ArrayList<SelectCategoryItem>()
-
         tmp.add(SelectCategoryItem(1, R.drawable.cash, R.color.black, ""))
         tmp.add(SelectCategoryItem(2, R.drawable.atm_256, R.color.black, ""))
         tmp.add(SelectCategoryItem(3, R.drawable.bank, R.color.black, ""))
@@ -53,16 +56,31 @@ class SelectColorIconViewModel: ViewModel() {
     private fun initializeColorData() {
         Log.i("ColorIcon","Color")
         val tmp = ArrayList<SelectCategoryItem>()
-        tmp.add(SelectCategoryItem(1, 0, R.color.black, ""))
-        tmp.add(SelectCategoryItem(2, 0, R.color.teal_700, ""))
-        tmp.add(SelectCategoryItem(3, 0, R.color.ao, ""))
-        tmp.add(SelectCategoryItem(4, 0, R.color.almond, ""))
-        tmp.add(SelectCategoryItem(5, 0, R.color.air_force_blue, ""))
-        tmp.add(SelectCategoryItem(1, 0, R.color.android_green, ""))
-        tmp.add(SelectCategoryItem(2, 0, R.color.army_green, ""))
-        tmp.add(SelectCategoryItem(3, 0, R.color.auburn, ""))
-        tmp.add(SelectCategoryItem(4, 0, R.color.azure, ""))
-        tmp.add(SelectCategoryItem(5, 0, R.color.purple_200, ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF6B8E23").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFFa4c639").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF003b49").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF005252").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF1b8a6b").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF018786").toInt(), ""))
+
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF1b365d").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF1d4289").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF2244a5").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF5d3754").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF3f125f").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF7b151e").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFFd3273e").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFFFF0000").toInt(), ""))
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFFdc582a").toInt(), ""))
+
+
+        tmp.add(SelectCategoryItem(9, 0, java.lang.Long.decode("0xFF000000").toInt(), ""))
+
+
+
+
+
+
         _itemList.value = tmp
     }
 

@@ -25,7 +25,7 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapte
     {
         val currentItem = getItem(position)
         holder.itemImage.setImageResource(currentItem.itemImage)
-        holder.itemImage.setBackgroundResource(currentItem.itemColor)
+        holder.itemImage.setBackgroundColor(currentItem.itemColor)
         holder.itemText.text = currentItem.itemTitle
     }
 

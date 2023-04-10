@@ -46,7 +46,7 @@ class CategoryFragment : Fragment() {
             }
 
             viewModel.coloColorCode.observe(viewLifecycleOwner){
-                binding.categoryColorButton.setBackgroundResource(it)
+                binding.categoryColorButton.setBackgroundColor(it)
             }
 
 

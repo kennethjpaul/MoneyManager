@@ -48,8 +48,8 @@ class AddTransactionViewModel: ViewModel() {
         _dateButton.value = "${myCalendar.get(Calendar.DAY_OF_MONTH)} \n ${monthArray[myCalendar.get(
             Calendar.MONTH)]}\n ${myCalendar.get(Calendar.YEAR)}"
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
-        _categoryPositionOne.value = ImageButtonData(1,R.drawable.android,R.color.purple_500)
-        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.android,R.color.teal_700)
+        _categoryPositionOne.value = ImageButtonData(1,R.drawable.android,java.lang.Long.decode("0xFFFF0000").toInt())
+        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.android,java.lang.Long.decode("0xFFFF0000").toInt())
         _categoryPositionOneText.value = "Account"
         _categoryPositionTwoText.value = "Category"
     }

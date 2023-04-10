@@ -46,13 +46,13 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setBackgroundResource(it.buttonColor)
+            binding.addTransactionCategoryOneBtn.setBackgroundColor(it.buttonColor)
             binding.addTransactionCategoryOneBtn.setImageResource(it.buttonImage)
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setBackgroundResource(it.buttonColor)
+            binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.buttonColor)
             binding.addTransactionCategoryTwoBtn.setImageResource(it.buttonImage)
         }
 
