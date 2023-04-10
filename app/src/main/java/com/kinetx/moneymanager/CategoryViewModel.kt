@@ -95,5 +95,13 @@ class CategoryViewModel : ViewModel() {
         }
     }
 
+    fun updateIcon(itemBackgroundImage: Int) {
+        _iconImageSource.value = itemBackgroundImage
+    }
+
+    fun updateColor(itemBackgroundColor: Int) {
+        _colorColorCode.value = itemBackgroundColor
+    }
+
 
 }

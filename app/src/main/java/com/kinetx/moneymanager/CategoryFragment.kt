@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
 
 
@@ -35,12 +37,9 @@ class CategoryFragment : Fragment() {
             binding.lifecycleOwner = this
 
 
-            (activity as AppCompatActivity).supportActionBar?.title =viewModel.fragmentTitle.value
-
             viewModel.fragmentTitle.observe(viewLifecycleOwner){
                 (activity as AppCompatActivity).supportActionBar?.title =it
             }
-
 
             viewModel.iconImageSource.observe(viewLifecycleOwner){
                 binding.categoryIconButton.setImageResource(it)
@@ -48,6 +47,34 @@ class CategoryFragment : Fragment() {
 
             viewModel.coloColorCode.observe(viewLifecycleOwner){
                 binding.categoryColorButton.setBackgroundResource(it)
+            }
+
+
+            binding.categoryIconButton.setOnClickListener()
+            {
+                view?.findNavController()?.navigate(CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment("icon"))
+            }
+
+            binding.categoryColorButton.setOnClickListener()
+            {
+                view?.findNavController()?.navigate(CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment("color"))
+            }
+
+
+            setFragmentResultListener("SelectColorIcon")
+            {key, bundle ->
+
+                val colorIconType = bundle.getString("colorIconType")
+                val itemBackgroundColor= bundle.getInt("itemBackgroundColor")
+                val itemBackgroundImage = bundle.getInt("itemBackgroundImage")
+
+
+                when(colorIconType)
+                {
+                    "icon" -> viewModel.updateIcon(itemBackgroundImage)
+                    "color" -> viewModel.updateColor(itemBackgroundColor)
+                }
+
             }
 
             return binding.root

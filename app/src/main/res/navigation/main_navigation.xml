@@ -105,5 +105,16 @@
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryFragment_to_selectColorIconFragment"
+            app:destination="@id/selectColorIconFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectColorIconFragment"
+        android:name="com.kinetx.moneymanager.SelectColorIconFragment"
+        android:label="SelectColorIconFragment" >
+        <argument
+            android:name="colorIconType"
+            app:argType="string" />
     </fragment>
 </navigation>
