@@ -36,17 +36,17 @@
             android:name="isEdit"
             app:argType="boolean" />
         <argument
-            android:name="categoryID"
+            android:name="itemId"
             app:argType="long" />
         <argument
-            android:name="categoryName"
+            android:name="itemName"
             app:argType="string" />
-        <argument android:name="categoryType"
+        <argument android:name="itemType"
             app:argType="string" />
-        <argument android:name="iconResource"
+        <argument android:name="itemIcon"
             app:argType="integer" />
         <argument
-            android:name="colorResource"
+            android:name="itemColor"
             app:argType="integer" />
         <argument
             android:name="category"

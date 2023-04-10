@@ -67,32 +67,32 @@ class CategoryViewModel : ViewModel() {
 
         if (argList.isEdit)
         {
-            _categoryId.value = argList.categoryID
-            _categoryName.value = argList.categoryName
+            _categoryId.value = argList.itemId
+            _categoryName.value = argList.itemName
             _radioEnabled.value = false
 
-            if (argList.category=="account")
+            if (argList.category=="account" || argList.itemType=="transfer")
             {
                 _radioVisible.value = View.GONE
             }
             else
             {
-                when(argList.categoryType)
+                when(argList.itemType)
                 {
                     "income" -> _incomeSelected.value = true
                     "expense" -> _expenseSelected.value = true
                 }
             }
 
-            _iconImageSource.value = argList.iconResource
-            _colorColorCode.value = argList.colorResource
+            _iconImageSource.value = argList.itemIcon
+            _colorColorCode.value = argList.itemColor
             _fragmentTitle.value = "Edit ${argList.category}"
 
         }
         else
         {
             _fragmentTitle.value = "Create ${argList.category}"
-            if (argList.category=="account")
+            if (argList.category=="account" || argList.itemType=="transfer")
             {
                 _radioVisible.value = View.GONE
             }
