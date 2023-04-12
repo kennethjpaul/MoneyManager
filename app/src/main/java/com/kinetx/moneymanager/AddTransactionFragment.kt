@@ -79,12 +79,6 @@ class AddTransactionFragment : Fragment() {
             view?.findNavController()?.navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(argList.transactionType,categoryType))
         }
 
-
-
-
-
-
-
         setFragmentResultListener("SelectCategory")
         { _, bundle ->
             val itemColor = bundle.getInt("itemColor")

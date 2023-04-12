@@ -14,6 +14,18 @@ class AddTransactionViewModel: ViewModel() {
         "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     )
 
+    private val _selectedDay = MutableLiveData<String>()
+    val selectedDay : LiveData<String>
+        get() = _selectedDay
+
+    private val _selectedMonth = MutableLiveData<String>()
+    val selectedMonth : LiveData<String>
+        get() = _selectedMonth
+
+    private val _selectedYear = MutableLiveData<String>()
+    val selectedYear : LiveData<String>
+        get() = _selectedYear
+
     private val _categoryPositionOne = MutableLiveData<ImageButtonData>()
     val categoryPositionOne : LiveData<ImageButtonData>
         get() = _categoryPositionOne
@@ -30,10 +42,6 @@ class AddTransactionViewModel: ViewModel() {
     val categoryPositionTwo : LiveData<ImageButtonData>
         get() = _categoryPositionTwo
 
-    private val _dateButton = MutableLiveData<String>()
-    val dateButton : LiveData<String>
-        get() = _dateButton
-
     private val _currencySpinner = MutableLiveData<List<String>>()
     val currencySpinner : LiveData<List<String>>
         get() = _currencySpinner
@@ -45,20 +53,24 @@ class AddTransactionViewModel: ViewModel() {
     private val myCalendar: Calendar = Calendar.getInstance()
 
     init {
-        _dateButton.value = "${myCalendar.get(Calendar.DAY_OF_MONTH)} \n ${monthArray[myCalendar.get(
-            Calendar.MONTH)]}\n ${myCalendar.get(Calendar.YEAR)}"
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
-        _categoryPositionOne.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt(),"")
-        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFFFF0000").toInt(),"")
+        _categoryPositionOne.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
+        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
         _categoryPositionOneText.value = "Account"
         _categoryPositionTwoText.value = "Category"
+        _selectedDay.value = myCalendar.get(Calendar.DAY_OF_MONTH).toString()
+        _selectedMonth.value = monthArray[myCalendar.get(
+            Calendar.MONTH)]
+        _selectedYear.value = myCalendar.get(Calendar.YEAR).toString()
     }
 
     private val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayofMonth ->
         myCalendar.set(Calendar.YEAR, year)
         myCalendar.set(Calendar.MONTH, month)
         myCalendar.set(Calendar.DAY_OF_MONTH, dayofMonth)
-        updateDate(year, month, dayofMonth)
+        _selectedDay.value = dayofMonth.toString()
+        _selectedMonth.value = monthArray[month]
+        _selectedYear.value = year.toString()
     }
 
     fun datePick(it: View?) {
@@ -73,9 +85,6 @@ class AddTransactionViewModel: ViewModel() {
         }
     }
 
-    private fun updateDate(year: Int, month: Int, dayofMonth: Int) {
-        _dateButton.value = "$dayofMonth \n ${monthArray[month]} \n$year"
-    }
 
     fun updateCategoryPositionTwo(varId: Long, varImgId: Int, varBgColor: Int, itemTitle: String) {
         _categoryPositionTwo.value?.buttonId = varId

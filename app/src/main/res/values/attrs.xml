@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DialView">
+        <attr name="expenses" format="float" />
+        <attr name="balance" format="float" />
+        <attr name="currency" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="DateView">
+        <attr name="day" format="string"/>
+        <attr name="month" format="string"/>
+        <attr name="year" format="string"/>
+    </declare-styleable>
+
+</resources>

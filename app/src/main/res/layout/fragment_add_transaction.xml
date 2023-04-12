@@ -96,19 +96,6 @@
             app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
             tools:text="Account" />
 
-        <Button
-            android:id="@+id/add_transaction_add_date_btn"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="30dp"
-            android:background="@color/black"
-            android:contentDescription="@string/button_to_select_date"
-            android:text="@{addTransactionViewModel.dateButton}"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintStart_toEndOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintTop_toTopOf="@+id/add_transaction_category_two_btn" />
-
         <TextView
             android:id="@+id/t12"
             android:layout_width="wrap_content"
@@ -119,6 +106,19 @@
             app:layout_constraintEnd_toEndOf="@+id/add_transaction_add_date_btn"
             app:layout_constraintStart_toStartOf="@+id/add_transaction_add_date_btn" />
 
+
+        <com.kinetx.moneymanager.customview.DateView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:background="@color/air_force_blue"
+            android:layout_marginStart="30dp"
+            android:id="@+id/add_transaction_add_date_btn"
+            app:day="@{addTransactionViewModel.selectedDay}"
+            app:month="@{addTransactionViewModel.selectedMonth}"
+            app:year="@{addTransactionViewModel.selectedYear}"
+            app:layout_constraintBottom_toBottomOf="@+id/add_transaction_category_two_btn"
+            app:layout_constraintStart_toEndOf="@+id/add_transaction_category_two_btn"
+            app:layout_constraintTop_toTopOf="@+id/add_transaction_category_two_btn" />
 
         <EditText
             android:id="@+id/add_transaction_comments_edittext"
