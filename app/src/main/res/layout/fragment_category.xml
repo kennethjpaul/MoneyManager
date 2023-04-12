@@ -19,7 +19,7 @@
             android:id="@+id/categoryNameEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:autofillHints="Fill the name of category"
             android:ems="10"
             android:hint="@{categoryViewModel.categoryHint}"
