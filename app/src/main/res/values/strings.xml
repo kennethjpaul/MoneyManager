@@ -27,4 +27,11 @@
     <string name="category_name">category name</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="select_category_one">To select category one</string>
+    <string name="select_category_two">To select category two</string>
+    <string name="button_to_select_date">To select date</string>
+    <string name="currencies">currencies</string>
+    <string name="selecting_the_icon">Selecting the icon</string>
+    <string name="selecting_the_color">Selecting the color</string>
+    <string name="create">Create</string>
 </resources>

@@ -19,6 +19,10 @@ class CategoryViewModel : ViewModel() {
     val categoryName : LiveData<String>
         get() = _categoryName
 
+    private val _categoryHint = MutableLiveData<String>()
+    val categoryHint : LiveData<String>
+        get() = _categoryHint
+
     private val _radioEnabled = MutableLiveData<Boolean>()
     val radioEnabled :LiveData<Boolean>
         get() = _radioEnabled
@@ -65,6 +69,7 @@ class CategoryViewModel : ViewModel() {
         _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
         _fragmentTitle.value = "Create category"
         _categoryId.value = 1
+        _categoryHint.value = "Category name"
     }
 
     fun initializeLayout(argList: CategoryFragmentArgs) {
@@ -80,6 +85,7 @@ class CategoryViewModel : ViewModel() {
             if (argList.category=="account" || argList.itemType=="transfer")
             {
                 _radioVisible.value = View.GONE
+                _categoryHint.value = "Account name"
             }
             else
             {
@@ -101,6 +107,7 @@ class CategoryViewModel : ViewModel() {
             if (argList.category=="account" || argList.itemType=="transfer")
             {
                 _radioVisible.value = View.GONE
+                _categoryHint.value = "Account name"
             }
         }
     }

@@ -61,7 +61,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
             val categoryID : Long = 1
             val categoryName : String = ""
             val categoryType : String = ""
-            val iconResource : Int = R.drawable.android
+            val iconResource : Int = R.drawable.help
             val colorResource : Int = R.color.teal_700
             val category : String = argList.categoryType
 
