@@ -25,7 +25,7 @@
             android:hint="@{categoryViewModel.categoryHint}"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="@{categoryViewModel.categoryName}"
+            android:text="@={categoryViewModel.categoryName}"
             android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.2"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/expense"
                 android:clickable="@{categoryViewModel.radioEnabled}"
-                android:checked="@{categoryViewModel.expenseSelected}"
+                android:checked="@={categoryViewModel.expenseSelected}"
                 tools:layout_editor_absoluteX="212dp"
                 tools:layout_editor_absoluteY="189dp" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/income"
                 android:clickable="@{categoryViewModel.radioEnabled}"
-                android:checked="@{categoryViewModel.incomeSelected}"
+                android:checked="@={categoryViewModel.incomeSelected}"
                 tools:layout_editor_absoluteX="59dp"
                 tools:layout_editor_absoluteY="194dp" />
 

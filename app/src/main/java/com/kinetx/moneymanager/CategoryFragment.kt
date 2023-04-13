@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
+import com.kinetx.moneymanager.viewmodel.CategoryViewModelFactory
 
 
 class CategoryFragment : Fragment() {
@@ -20,18 +21,27 @@ class CategoryFragment : Fragment() {
     lateinit var viewModel : CategoryViewModel
     private lateinit var argList : CategoryFragmentArgs
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
 
+
             argList  = CategoryFragmentArgs.fromBundle(requireArguments())
 
-            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category,container,false)
-            viewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
+            val application = requireNotNull(this.activity).application
+            val viewModelFactory = CategoryViewModelFactory(argList,application)
 
-            viewModel.initializeLayout(argList)
+            binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category,container,false)
+            viewModel = ViewModelProvider(this,viewModelFactory).get(CategoryViewModel::class.java)
+
 
             binding.categoryViewModel = viewModel
             binding.lifecycleOwner = this
@@ -58,6 +68,19 @@ class CategoryFragment : Fragment() {
             binding.categoryColorButton.setOnClickListener()
             {
                 view?.findNavController()?.navigate(CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment("color"))
+            }
+
+            binding.categoryAddButton.setOnClickListener()
+            {
+
+                var catType : String = if (argList.category=="account" || argList.itemType=="transfer") {
+                    "account"
+                } else {
+                    argList.itemType
+                }
+
+                viewModel.insertCategory(catType)
+                view?.findNavController()?.navigateUp()
             }
 
 

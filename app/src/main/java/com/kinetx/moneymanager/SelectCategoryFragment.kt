@@ -12,7 +12,9 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
+import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModelFactory
 
 
 class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategoryListener {
@@ -31,17 +33,22 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
 
         binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
-        viewModel = ViewModelProvider(this).get(SelectCategoryViewModel::class.java)
+
+        val application = requireNotNull(this.activity).application
+        val database = DatabaseMain.getInstance(application).databaseDao
+        val viewModelFactory = SelectCategoryViewModelFactory(database,application,argList)
 
 
-        viewModel.initializeLayout(argList)
 
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SelectCategoryViewModel::class.java)
 
 
         val adapter = SelectCategoryAdapter(this)
         binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
         binding.selectCategoryRecyclerview.setHasFixedSize(true)
         binding.selectCategoryRecyclerview.adapter = adapter
+
+
 
 
         viewModel.itemList.observe(viewLifecycleOwner)
@@ -76,10 +83,10 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
     override fun onSelectCategoryClick(position: Int) {
 
         val item = viewModel.itemList.value?.get(position)
-        val itemId : Long = item?.itemId!!
-        val itemImage : Int = item.itemImage
-        val itemColor : Int = item.itemColor
-        val itemTitle : String = item.itemTitle
+        val itemId : Long = item?.categoryId!!
+        val itemImage : Int = item.categoryImage
+        val itemColor : Int = item.categoryColor
+        val itemTitle : String = item.categoryName
 
         setFragmentResult("SelectCategory", bundleOf("transaction" to argList.transactionType, "category" to argList.categoryType,"itemId" to itemId, "itemColor" to itemColor, "itemImage" to itemImage, "itemTitle" to itemTitle))
 
@@ -94,11 +101,11 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         val item = viewModel.itemList.value?.get(position)
 
         val isEdit : Boolean = true
-        val itemId : Long = item?.itemId!!
-        val itemName : String = item.itemTitle
+        val itemId : Long = item?.categoryId!!
+        val itemName : String = item.categoryName
         val itemType : String = argList.transactionType
-        val itemIcon : Int = item.itemImage
-        val itemColor : Int = item.itemColor
+        val itemIcon : Int = item.categoryImage
+        val itemColor : Int = item.categoryColor
         val category : String = argList.categoryType
 
 

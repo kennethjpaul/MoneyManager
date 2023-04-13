@@ -1,36 +1,43 @@
 package com.kinetx.moneymanager
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kinetx.moneymanager.database.CategoryDatabase
+import com.kinetx.moneymanager.database.DatabaseDao
+import com.kinetx.moneymanager.database.DatabaseRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlin.collections.ArrayList
 
-class SelectCategoryViewModel : ViewModel() {
+class SelectCategoryViewModel (val database: DatabaseDao, application: Application, argList: SelectCategoryFragmentArgs) : AndroidViewModel(application) {
 
-    private val _itemList  = MutableLiveData<ArrayList<SelectCategoryItem>>()
-    val itemList : LiveData<ArrayList<SelectCategoryItem>>
+    private val _itemList  = MutableLiveData<List<CategoryDatabase>>()
+    val itemList : LiveData<List<CategoryDatabase>>
         get() = _itemList
+
+    private val repository : DatabaseRepository
+
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
 
 
+
     init {
-        _fragmentTitle.value =""
-    }
-
-    fun initializeLayout(argList: SelectCategoryFragmentArgs) {
-
-        val tmp = ArrayList<SelectCategoryItem>()
+        val tmp = ArrayList<CategoryDatabase>()
         if (argList.categoryType=="category" && argList.transactionType=="expense")
         {
-            tmp.add(SelectCategoryItem(1, R.drawable.home, java.lang.Long.decode("0xFFFF0000").toInt(), "House hold"))
-            tmp.add(SelectCategoryItem(2, R.drawable.restaurant, java.lang.Long.decode("0xFFBB86FC").toInt(), "Eating out"))
-            tmp.add(SelectCategoryItem(3, R.drawable.shopping, java.lang.Long.decode("0xFF018786").toInt(), "Groceries"))
-            tmp.add(SelectCategoryItem(4, R.drawable.heart, java.lang.Long.decode("0xFFFF0000").toInt(), "Health"))
-            tmp.add(SelectCategoryItem(5, R.drawable.weight, java.lang.Long.decode("0xFFa4c639").toInt(), "Sports"))
+            tmp.add(CategoryDatabase(1,"House","expense",R.drawable.home,java.lang.Long.decode("0xFFFF0000").toInt()))
+            tmp.add(CategoryDatabase(2,"Restaurants","expense",R.drawable.restaurant,java.lang.Long.decode("0xFFBB86FC").toInt()))
+            tmp.add(CategoryDatabase(3,"Groceries","expense",R.drawable.shopping,java.lang.Long.decode("0xFF018786").toInt()))
+            tmp.add(CategoryDatabase(4,"Health","expense",R.drawable.heart,java.lang.Long.decode("0xFFFF0000").toInt()))
+            tmp.add(CategoryDatabase(5,"Sports","expense",R.drawable.weight,java.lang.Long.decode("0xFFa4c639").toInt()))
             _fragmentTitle.value = "Select category"
             _itemList.value = tmp
         }
@@ -38,9 +45,9 @@ class SelectCategoryViewModel : ViewModel() {
         if (argList.categoryType=="category" && argList.transactionType=="income")
         {
 
-            tmp.add(SelectCategoryItem(1, R.drawable.salary,java.lang.Long.decode("0xFF007fff0").toInt(), "Salary"))
-            tmp.add(SelectCategoryItem(2, R.drawable.debitcard, java.lang.Long.decode("0xFFBB86FC").toInt(), "Interest"))
-            tmp.add(SelectCategoryItem(3, R.drawable.moneytransfer, java.lang.Long.decode("0xFFFF0000").toInt(), "Borrowed"))
+            tmp.add(CategoryDatabase(1,"Salary","income",R.drawable.salary,java.lang.Long.decode("0xFF007fff0").toInt()))
+            tmp.add(CategoryDatabase(2,"Interest","income",R.drawable.debitcard,java.lang.Long.decode("0xFFBB86FC").toInt()))
+            tmp.add(CategoryDatabase(3,"Borrowed","income",R.drawable.moneytransfer,java.lang.Long.decode("0xFFFF0000").toInt()))
             _fragmentTitle.value = "Select category"
             _itemList.value = tmp
 
@@ -48,16 +55,16 @@ class SelectCategoryViewModel : ViewModel() {
 
         if (argList.categoryType=="account" || argList.transactionType=="transfer")
         {
-            tmp.add(SelectCategoryItem(1, R.drawable.bank, java.lang.Long.decode("0xFF018786").toInt(), "Main Account"))
-            tmp.add(SelectCategoryItem(2, R.drawable.wallet, java.lang.Long.decode("0xFFFF0000").toInt(), "Wallet"))
-            tmp.add(SelectCategoryItem(3, R.drawable.creditcard, java.lang.Long.decode("0xFFa4c639").toInt(), "Credit card"))
+            tmp.add(CategoryDatabase(1,"Main","account",R.drawable.bank,java.lang.Long.decode("0xFF018786").toInt()))
+            tmp.add(CategoryDatabase(2,"Wallet","account",R.drawable.wallet,java.lang.Long.decode("0xFFFF0000").toInt()))
+            tmp.add(CategoryDatabase(3,"Credit card","account",R.drawable.creditcard,java.lang.Long.decode("0xFFa4c639").toInt()))
             _fragmentTitle.value = "Select account"
             _itemList.value = tmp
 
         }
 
+        repository = DatabaseRepository(database)
     }
-
 
 
 }

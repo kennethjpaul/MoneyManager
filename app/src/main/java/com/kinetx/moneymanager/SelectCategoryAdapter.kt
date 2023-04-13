@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.kinetx.moneymanager.database.CategoryDatabase
 import java.util.ArrayList
 
-class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapter<SelectCategoryItem, SelectCategoryAdapter.MyViewHolder>(SelectCategoryItemCallBack())
+class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapter<CategoryDatabase, SelectCategoryAdapter.MyViewHolder>(SelectCategoryItemCallBack())
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
@@ -24,9 +25,9 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapte
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
         val currentItem = getItem(position)
-        holder.itemImage.setImageResource(currentItem.itemImage)
-        holder.itemImage.setBackgroundColor(currentItem.itemColor)
-        holder.itemText.text = currentItem.itemTitle
+        holder.itemImage.setImageResource(currentItem.categoryImage)
+        holder.itemImage.setBackgroundColor(currentItem.categoryColor)
+        holder.itemText.text = currentItem.categoryName
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener
@@ -65,18 +66,18 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : ListAdapte
     }
 }
 
-class SelectCategoryItemCallBack : DiffUtil.ItemCallback<SelectCategoryItem>()
+class SelectCategoryItemCallBack : DiffUtil.ItemCallback<CategoryDatabase>()
 {
     override fun areItemsTheSame(
-        oldItem: SelectCategoryItem,
-        newItem: SelectCategoryItem
+        oldItem: CategoryDatabase,
+        newItem: CategoryDatabase
     ): Boolean {
-        return oldItem.itemId == newItem.itemId
+        return oldItem.categoryId == newItem.categoryId
     }
 
     override fun areContentsTheSame(
-        oldItem: SelectCategoryItem,
-        newItem: SelectCategoryItem
+        oldItem: CategoryDatabase,
+        newItem: CategoryDatabase
     ): Boolean {
         return oldItem == newItem
     }

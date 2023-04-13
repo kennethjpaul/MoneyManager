@@ -1,11 +1,16 @@
 package com.kinetx.moneymanager
 
+import android.app.Application
+import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.kinetx.moneymanager.database.CategoryDatabase
+import com.kinetx.moneymanager.database.DatabaseMain
+import com.kinetx.moneymanager.database.DatabaseRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class CategoryViewModel : ViewModel() {
+class CategoryViewModel (argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -15,9 +20,7 @@ class CategoryViewModel : ViewModel() {
     val categoryId : LiveData<Long>
         get() = _categoryId
 
-    private val _categoryName = MutableLiveData<String>()
-    val categoryName : LiveData<String>
-        get() = _categoryName
+    val categoryName = MutableLiveData<String>()
 
     private val _categoryHint = MutableLiveData<String>()
     val categoryHint : LiveData<String>
@@ -39,13 +42,11 @@ class CategoryViewModel : ViewModel() {
     val editVisible : LiveData<Int>
         get() = _editVisible
 
-    private val _expenseSelected =  MutableLiveData<Boolean>()
-    val expenseSelected : LiveData<Boolean>
-        get() = _expenseSelected
+    val expenseSelected =  MutableLiveData<Boolean>()
 
-    private val _incomeSelected =  MutableLiveData<Boolean>()
-    val incomeSelected : LiveData<Boolean>
-        get() = _incomeSelected
+
+    val incomeSelected =  MutableLiveData<Boolean>()
+
 
     private  val _iconImageSource = MutableLiveData<Int>()
     val iconImageSource : LiveData<Int>
@@ -56,32 +57,19 @@ class CategoryViewModel : ViewModel() {
         get() = _colorColorCode
 
 
+    private val repository : DatabaseRepository
+
 
     init {
-        _categoryName.value = ""
-        _radioEnabled.value = true
-        _radioVisible.value = View.VISIBLE
-        _addVisible.value = View.VISIBLE
-        _editVisible.value = View.GONE
-        _expenseSelected.value = false
-        _incomeSelected.value = false
-        _iconImageSource.value = R.drawable.help
-        _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
-        _fragmentTitle.value = "Create category"
-        _categoryId.value = 1
-        _categoryHint.value = "Category name"
-    }
-
-    fun initializeLayout(argList: CategoryFragmentArgs) {
 
         if (argList.isEdit)
         {
             _addVisible.value = View.GONE
             _editVisible.value = View.VISIBLE
             _categoryId.value = argList.itemId
-            _categoryName.value = argList.itemName
+            categoryName.value = argList.itemName
             _radioEnabled.value = false
-
+            Log.i("Strange","Initialize layout edit true")
             if (argList.category=="account" || argList.itemType=="transfer")
             {
                 _radioVisible.value = View.GONE
@@ -91,8 +79,8 @@ class CategoryViewModel : ViewModel() {
             {
                 when(argList.itemType)
                 {
-                    "income" -> _incomeSelected.value = true
-                    "expense" -> _expenseSelected.value = true
+                    "income" -> incomeSelected.value = true
+                    "expense" -> expenseSelected.value = true
                 }
             }
 
@@ -103,6 +91,15 @@ class CategoryViewModel : ViewModel() {
         }
         else
         {
+            _radioEnabled.value = true
+            _radioVisible.value = View.VISIBLE
+            _addVisible.value = View.VISIBLE
+            _editVisible.value = View.GONE
+            _iconImageSource.value = R.drawable.help
+            _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
+            _fragmentTitle.value = "Create category"
+            _categoryId.value = 1
+            _categoryHint.value = "Category name"
             _fragmentTitle.value = "Create ${argList.category}"
             if (argList.category=="account" || argList.itemType=="transfer")
             {
@@ -110,6 +107,23 @@ class CategoryViewModel : ViewModel() {
                 _categoryHint.value = "Account name"
             }
         }
+        val databaseDao = DatabaseMain.getInstance(application).databaseDao
+        repository = DatabaseRepository(databaseDao)
+        Log.i("Strange","Init was called")
+    }
+
+    fun insertCategoryDao(category: CategoryDatabase)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.insertCategory(category)
+        }
+    }
+
+    fun insertCategory(categoryType: String)
+    {
+        val category = CategoryDatabase(0,categoryName.value.toString(),categoryType,_iconImageSource.value!!.toInt(),_colorColorCode.value!!.toInt())
+        insertCategoryDao(category)
     }
 
     fun updateIcon(itemBackgroundImage: Int) {

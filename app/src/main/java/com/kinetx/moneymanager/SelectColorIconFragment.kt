@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kinetx.moneymanager.databinding.FragmentSelectColorIconBinding
+import com.kinetx.moneymanager.viewmodel.SelectIconColorViewModelFactory
 
 
 class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategoryListener {
@@ -27,14 +28,15 @@ class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategor
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_color_icon,container,false)
-        viewModel = ViewModelProvider(this).get(SelectColorIconViewModel::class.java)
         argList = SelectColorIconFragmentArgs.fromBundle(requireArguments())
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = SelectIconColorViewModelFactory(argList,application)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_color_icon,container,false)
+        viewModel = ViewModelProvider(this,viewModelFactory).get(SelectColorIconViewModel::class.java)
+
 
         binding.selectColorIconViewModel = viewModel
         binding.lifecycleOwner = this
-
-        viewModel.initializeLayout(argList)
 
         val adapter = SelectCategoryAdapter(this)
         binding.recyclerView.layoutManager = GridLayoutManager(context,4)
@@ -60,8 +62,8 @@ class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategor
     override fun onSelectCategoryClick(position: Int) {
 
         val item = viewModel.itemList.value?.get(position)
-        val itemImage : Int = item?.itemImage!!
-        val itemColor : Int = item.itemColor
+        val itemImage : Int = item?.categoryImage!!
+        val itemColor : Int = item.categoryColor
 
         setFragmentResult("SelectColorIcon", bundleOf("colorIconType" to argList.colorIconType,"itemBackgroundColor" to itemColor, "itemBackgroundImage" to itemImage))
         view?.findNavController()?.navigateUp()
