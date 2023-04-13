@@ -13,10 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kinetx.moneymanager.databinding.FragmentSelectColorIconBinding
+import com.kinetx.moneymanager.recyclerview.SelectIconAdapter
 import com.kinetx.moneymanager.viewmodelfactory.SelectIconColorViewModelFactory
 
 
-class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategoryListener {
+class SelectColorIconFragment : Fragment(),SelectIconAdapter.OnSelectIconListener {
 
     private lateinit var binding : FragmentSelectColorIconBinding
     private lateinit var viewModel : SelectColorIconViewModel
@@ -37,13 +38,10 @@ class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategor
         binding.selectColorIconViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = SelectCategoryAdapter(this)
+        val adapter = SelectIconAdapter(this)
         binding.recyclerView.layoutManager = GridLayoutManager(context,4)
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
-
-
-
 
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner){
@@ -58,18 +56,15 @@ class SelectColorIconFragment : Fragment(),SelectCategoryAdapter.OnSelectCategor
         return binding.root
     }
 
-    override fun onSelectCategoryClick(position: Int) {
+    override fun onSelectIconClick(position: Int) {
 
         val item = viewModel.itemList.value?.get(position)
-        val itemImage : Int = item?.categoryImage!!
-        val itemColor : Int = item.categoryColor
+        val itemImage : Int = item?.iconImage!!
+        val itemColor : Int = item.iconColor
 
         setFragmentResult("SelectColorIcon", bundleOf("colorIconType" to argList.colorIconType,"itemBackgroundColor" to itemColor, "itemBackgroundImage" to itemImage))
         view?.findNavController()?.navigateUp()
     }
 
-    override fun onSelectCategoryLongClick(position: Int) {
-        //Toast.makeText(context, "long clicked", Toast.LENGTH_SHORT).show()
-    }
 
 }
