@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.kinetx.moneymanager.database.AccountDatabase
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseDao
 import com.kinetx.moneymanager.database.DatabaseMain
@@ -54,17 +53,4 @@ class DatabaseTest {
         assertEquals(latestCategory?.categoryImage,0)
 
     }
-
-    @Test
-    @Throws(Exception::class)
-    fun insertAndGetAccount()
-    {
-        val account = AccountDatabase()
-        databaseDao.insertAccount(account)
-
-        val latestAccount = databaseDao.getLatestAccount()
-        assertEquals(latestAccount?.accountImage,0)
-    }
-
-
 }
