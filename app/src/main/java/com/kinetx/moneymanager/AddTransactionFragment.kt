@@ -29,7 +29,7 @@ class AddTransactionFragment : Fragment() {
         argList = AddTransactionFragmentArgs.fromBundle(requireArguments())
 
         binding.addTransactionViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.initializeLayout(argList)
 

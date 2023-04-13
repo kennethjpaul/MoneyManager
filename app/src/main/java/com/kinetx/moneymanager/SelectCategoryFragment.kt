@@ -14,7 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
-import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModelFactory
+import com.kinetx.moneymanager.viewmodelfactory.SelectCategoryViewModelFactory
 
 
 class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategoryListener {
@@ -47,6 +47,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
         binding.selectCategoryRecyclerview.setHasFixedSize(true)
         binding.selectCategoryRecyclerview.adapter = adapter
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
 

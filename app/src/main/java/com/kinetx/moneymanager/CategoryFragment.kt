@@ -9,10 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
-import com.kinetx.moneymanager.viewmodel.CategoryViewModelFactory
+import com.kinetx.moneymanager.viewmodelfactory.CategoryViewModelFactory
 
 
 class CategoryFragment : Fragment() {
@@ -44,7 +43,7 @@ class CategoryFragment : Fragment() {
 
 
             binding.categoryViewModel = viewModel
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = viewLifecycleOwner
 
 
             viewModel.fragmentTitle.observe(viewLifecycleOwner){

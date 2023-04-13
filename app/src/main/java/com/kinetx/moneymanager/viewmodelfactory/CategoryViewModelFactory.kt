@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager.viewmodel
+package com.kinetx.moneymanager.viewmodelfactory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

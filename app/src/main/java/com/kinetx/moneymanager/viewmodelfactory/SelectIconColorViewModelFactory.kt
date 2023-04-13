@@ -1,9 +1,8 @@
-package com.kinetx.moneymanager.viewmodel
+package com.kinetx.moneymanager.viewmodelfactory
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kinetx.moneymanager.CategoryViewModel
 import com.kinetx.moneymanager.SelectColorIconFragmentArgs
 import com.kinetx.moneymanager.SelectColorIconViewModel
 
