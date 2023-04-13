@@ -6,7 +6,7 @@
     <data>
         <variable
             name="addTransactionViewModel"
-            type="com.kinetx.moneymanager.AddTransactionViewModel" />
+            type="com.kinetx.moneymanager.viewmodel.AddTransactionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

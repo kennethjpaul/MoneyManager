@@ -1,9 +1,11 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.viewmodel
 
 import android.app.Application
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
+import com.kinetx.moneymanager.CategoryFragmentArgs
+import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.DatabaseMain
 
 class CategoryViewModel (argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {

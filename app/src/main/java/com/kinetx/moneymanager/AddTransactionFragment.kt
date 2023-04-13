@@ -11,6 +11,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentAddTransactionBinding
+import com.kinetx.moneymanager.viewmodel.AddTransactionViewModel
 
 
 class AddTransactionFragment : Fragment() {

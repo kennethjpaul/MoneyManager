@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

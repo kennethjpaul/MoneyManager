@@ -6,7 +6,7 @@
     <data>
     <variable
         name="categoryViewModel"
-        type="com.kinetx.moneymanager.CategoryViewModel" />
+        type="com.kinetx.moneymanager.viewmodel.CategoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

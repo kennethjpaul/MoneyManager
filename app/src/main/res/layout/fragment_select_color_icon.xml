@@ -6,7 +6,7 @@
     <data>
         <variable
             name="selectColorIconViewModel"
-            type="com.kinetx.moneymanager.SelectColorIconViewModel" />
+            type="com.kinetx.moneymanager.viewmodel.SelectColorIconViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

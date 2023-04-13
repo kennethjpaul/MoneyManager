@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
+import com.kinetx.moneymanager.viewmodel.MainViewModel
 
 
 class MainFragment : Fragment() {

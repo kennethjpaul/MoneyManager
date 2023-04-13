@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.viewmodel
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
@@ -6,6 +6,9 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kinetx.moneymanager.AddTransactionFragmentArgs
+import com.kinetx.moneymanager.ImageButtonData
+import com.kinetx.moneymanager.R
 
 class AddTransactionViewModel: ViewModel() {
 
@@ -54,8 +57,10 @@ class AddTransactionViewModel: ViewModel() {
 
     init {
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
-        _categoryPositionOne.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
-        _categoryPositionTwo.value = ImageButtonData(1,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
+        _categoryPositionOne.value = ImageButtonData(1,
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
+        _categoryPositionTwo.value = ImageButtonData(1,
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
         _categoryPositionOneText.value = "Account"
         _categoryPositionTwoText.value = "Category"
         _selectedDay.value = myCalendar.get(Calendar.DAY_OF_MONTH).toString()

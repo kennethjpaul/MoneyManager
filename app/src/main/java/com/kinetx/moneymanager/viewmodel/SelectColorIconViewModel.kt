@@ -1,16 +1,12 @@
-package com.kinetx.moneymanager
-import android.R.drawable
+package com.kinetx.moneymanager.viewmodel
 import android.app.Application
-import android.content.res.Resources
-import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kinetx.moneymanager.database.CategoryDatabase
+import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.SelectColorIconFragmentArgs
 import com.kinetx.moneymanager.dataclass.IconDataClass
-import com.kinetx.moneymanager.enums.CategoryType
-import java.lang.reflect.Field
 
 
 class SelectColorIconViewModel(argList : SelectColorIconFragmentArgs, application: Application): ViewModel() {
