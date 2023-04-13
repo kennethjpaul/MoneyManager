@@ -4,11 +4,7 @@ import android.app.Application
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
-import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
-import com.kinetx.moneymanager.database.DatabaseRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class CategoryViewModel (argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
 
@@ -55,9 +51,6 @@ class CategoryViewModel (argList : CategoryFragmentArgs, application: Applicatio
     private val _colorColorCode = MutableLiveData<Int>()
     val coloColorCode : LiveData<Int>
         get() = _colorColorCode
-
-
-    private val repository : DatabaseRepository
 
 
     init {
@@ -108,22 +101,7 @@ class CategoryViewModel (argList : CategoryFragmentArgs, application: Applicatio
             }
         }
         val databaseDao = DatabaseMain.getInstance(application).databaseDao
-        repository = DatabaseRepository(databaseDao)
         Log.i("Strange","Init was called")
-    }
-
-    fun insertCategoryDao(category: CategoryDatabase)
-    {
-        viewModelScope.launch(Dispatchers.IO)
-        {
-            repository.insertCategory(category)
-        }
-    }
-
-    fun insertCategory(categoryType: String)
-    {
-        val category = CategoryDatabase(0,categoryName.value.toString(),categoryType,_iconImageSource.value!!.toInt(),_colorColorCode.value!!.toInt())
-        insertCategoryDao(category)
     }
 
     fun updateIcon(itemBackgroundImage: Int) {

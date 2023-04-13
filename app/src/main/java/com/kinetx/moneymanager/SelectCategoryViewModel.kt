@@ -1,17 +1,11 @@
 package com.kinetx.moneymanager
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseDao
-import com.kinetx.moneymanager.database.DatabaseRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlin.collections.ArrayList
 
 class SelectCategoryViewModel (val database: DatabaseDao, application: Application, argList: SelectCategoryFragmentArgs) : AndroidViewModel(application) {
@@ -19,9 +13,6 @@ class SelectCategoryViewModel (val database: DatabaseDao, application: Applicati
     private val _itemList  = MutableLiveData<List<CategoryDatabase>>()
     val itemList : LiveData<List<CategoryDatabase>>
         get() = _itemList
-
-    private val repository : DatabaseRepository
-
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -63,7 +54,6 @@ class SelectCategoryViewModel (val database: DatabaseDao, application: Applicati
 
         }
 
-        repository = DatabaseRepository(database)
     }
 
 

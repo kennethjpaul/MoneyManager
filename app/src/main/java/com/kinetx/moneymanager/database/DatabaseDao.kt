@@ -2,24 +2,26 @@ package com.kinetx.moneymanager.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DatabaseDao {
 
     @Insert
-    fun insertCategory(category: CategoryDatabase)
+    suspend fun insertCategory(category: CategoryDatabase)
     @Update
-    fun updateCategory(category: CategoryDatabase)
+    suspend fun updateCategory(category: CategoryDatabase)
     @Delete
     fun deleteCategory(category: CategoryDatabase)
+
     @Query("SELECT * FROM category_table")
-    fun getAllCategory(): LiveData<List<CategoryDatabase>>
+    fun getAllCategory(): Flow<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table WHERE category_type = 'income'")
-    fun getAllIncomeCategory(): LiveData<List<CategoryDatabase>>
+    fun getAllIncomeCategory(): Flow<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table WHERE category_type = 'expense'")
-    fun getAllExpenseCategory(): LiveData<List<CategoryDatabase>>
+    fun getAllExpenseCategory(): Flow<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table WHERE category_type = 'account'")
-    fun getAllAccountCategory(): LiveData<List<CategoryDatabase>>
+    fun getAllAccountCategory(): Flow<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table ORDER BY categoryId DESC LIMIT 1")
     fun getLatestCategory(): CategoryDatabase?
 
