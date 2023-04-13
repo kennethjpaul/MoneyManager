@@ -3,7 +3,7 @@ package com.kinetx.moneymanager.viewmodelfactory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kinetx.moneymanager.CategoryFragmentArgs
+import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
 import com.kinetx.moneymanager.viewmodel.CategoryViewModel
 
 class CategoryViewModelFactory (

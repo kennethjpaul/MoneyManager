@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +12,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentSelectColorIconBinding
 import com.kinetx.moneymanager.recyclerview.SelectIconAdapter
 import com.kinetx.moneymanager.viewmodel.SelectColorIconViewModel
@@ -32,7 +33,8 @@ class SelectColorIconFragment : Fragment(),SelectIconAdapter.OnSelectIconListene
         argList = SelectColorIconFragmentArgs.fromBundle(requireArguments())
         val application = requireNotNull(this.activity).application
         val viewModelFactory = SelectIconColorViewModelFactory(argList,application)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_color_icon,container,false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_select_color_icon,container,false)
         viewModel = ViewModelProvider(this,viewModelFactory).get(SelectColorIconViewModel::class.java)
 
 

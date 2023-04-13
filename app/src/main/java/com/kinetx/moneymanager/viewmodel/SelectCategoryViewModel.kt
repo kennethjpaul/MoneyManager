@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kinetx.moneymanager.R
-import com.kinetx.moneymanager.SelectCategoryFragmentArgs
+import com.kinetx.moneymanager.fragment.SelectCategoryFragmentArgs
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseDao
 import com.kinetx.moneymanager.enums.CategoryType

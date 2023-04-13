@@ -3,7 +3,7 @@ package com.kinetx.moneymanager.viewmodelfactory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kinetx.moneymanager.SelectColorIconFragmentArgs
+import com.kinetx.moneymanager.fragment.SelectColorIconFragmentArgs
 import com.kinetx.moneymanager.viewmodel.SelectColorIconViewModel
 
 class SelectIconColorViewModelFactory(

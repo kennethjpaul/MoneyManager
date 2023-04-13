@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kinetx.moneymanager.R
-import com.kinetx.moneymanager.SelectColorIconFragmentArgs
 import com.kinetx.moneymanager.dataclass.IconDataClass
+import com.kinetx.moneymanager.fragment.SelectColorIconFragmentArgs
 
 
 class SelectColorIconViewModel(argList : SelectColorIconFragmentArgs, application: Application): ViewModel() {

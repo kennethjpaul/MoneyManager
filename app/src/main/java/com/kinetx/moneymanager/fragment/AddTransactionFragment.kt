@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentAddTransactionBinding
 import com.kinetx.moneymanager.viewmodel.AddTransactionViewModel
 
@@ -25,7 +26,8 @@ class AddTransactionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_transaction, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_add_transaction, container, false)
         viewModel = ViewModelProvider(this).get(AddTransactionViewModel::class.java)
         argList = AddTransactionFragmentArgs.fromBundle(requireArguments())
 
@@ -71,13 +73,23 @@ class AddTransactionFragment : Fragment() {
         binding.addTransactionCategoryOneBtn.setOnClickListener()
         {
             val categoryType : String = viewModel.categoryPositionOneText.value?.lowercase()!!
-            view?.findNavController()?.navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(argList.transactionType,categoryType))
+            view?.findNavController()?.navigate(
+                AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
+                    argList.transactionType,
+                    categoryType
+                )
+            )
         }
 
         binding.addTransactionCategoryTwoBtn.setOnClickListener()
         {
             val categoryType : String = viewModel.categoryPositionTwoText.value?.lowercase()!!
-            view?.findNavController()?.navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(argList.transactionType,categoryType))
+            view?.findNavController()?.navigate(
+                AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
+                    argList.transactionType,
+                    categoryType
+                )
+            )
         }
 
         setFragmentResultListener("SelectCategory")

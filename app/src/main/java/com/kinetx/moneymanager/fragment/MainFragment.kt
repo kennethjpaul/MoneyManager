@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
 import com.kinetx.moneymanager.viewmodel.MainViewModel
 
@@ -25,24 +26,37 @@ class MainFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-        val binding : FragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+        val binding : FragmentMainBinding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_main, container, false)
 
         binding.mainAddExpenseBtn.setOnClickListener()
         {
             var transactionType : String = "expense"
-            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+            view?.findNavController()?.navigate(
+                MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
+                    transactionType
+                )
+            )
         }
 
         binding.mainAddIncomeBtn.setOnClickListener()
         {
             var transactionType : String = "income"
-            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+            view?.findNavController()?.navigate(
+                MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
+                    transactionType
+                )
+            )
         }
 
         binding.mainAddTransferBtn.setOnClickListener()
         {
             var transactionType : String = "transfer"
-            view?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToAddTransactionFragment(transactionType))
+            view?.findNavController()?.navigate(
+                MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
+                    transactionType
+                )
+            )
         }
 
        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)

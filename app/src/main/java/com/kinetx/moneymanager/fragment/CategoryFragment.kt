@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
 import com.kinetx.moneymanager.viewmodel.CategoryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.CategoryViewModelFactory
@@ -62,12 +63,20 @@ class CategoryFragment : Fragment() {
 
             binding.categoryIconButton.setOnClickListener()
             {
-                view?.findNavController()?.navigate(CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment("icon"))
+                view?.findNavController()?.navigate(
+                    CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment(
+                        "icon"
+                    )
+                )
             }
 
             binding.categoryColorButton.setOnClickListener()
             {
-                view?.findNavController()?.navigate(CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment("color"))
+                view?.findNavController()?.navigate(
+                    CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment(
+                        "color"
+                    )
+                )
             }
 
             binding.categoryAddButton.setOnClickListener()

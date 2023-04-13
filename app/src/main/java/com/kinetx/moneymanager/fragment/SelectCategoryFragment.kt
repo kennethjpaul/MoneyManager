@@ -1,4 +1,4 @@
-package com.kinetx.moneymanager
+package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +12,8 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.SelectCategoryAdapter
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
 import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModel
@@ -21,7 +23,7 @@ import com.kinetx.moneymanager.viewmodelfactory.SelectCategoryViewModelFactory
 class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategoryListener {
 
     private lateinit var binding : FragmentSelectCategoryBinding
-    private lateinit var argList :SelectCategoryFragmentArgs
+    private lateinit var argList : SelectCategoryFragmentArgs
 
     private lateinit var viewModel : SelectCategoryViewModel
 
@@ -33,7 +35,8 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         argList  = SelectCategoryFragmentArgs.fromBundle(requireArguments())
 
 
-        binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_select_category, container, false)
+        binding  = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_select_category, container, false)
 
         val application = requireNotNull(this.activity).application
         val database = DatabaseMain.getInstance(application).databaseDao
@@ -75,7 +78,15 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
             val category : String = argList.categoryType
 
             view?.findNavController()?.navigate(
-                SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,categoryID,categoryName,categoryType,iconResource,colorResource,category)
+                SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(
+                    isEdit,
+                    categoryID,
+                    categoryName,
+                    categoryType,
+                    iconResource,
+                    colorResource,
+                    category
+                )
             )
         }
 
@@ -112,7 +123,15 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
 
         view?.findNavController()?.navigate(
-            SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(isEdit,itemId,itemName,itemType,itemIcon,itemColor,category)
+            SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(
+                isEdit,
+                itemId,
+                itemName,
+                itemType,
+                itemIcon,
+                itemColor,
+                category
+            )
         )
     }
 

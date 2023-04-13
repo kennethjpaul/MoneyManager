@@ -3,9 +3,9 @@ package com.kinetx.moneymanager.viewmodelfactory
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kinetx.moneymanager.SelectCategoryFragmentArgs
 import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModel
 import com.kinetx.moneymanager.database.DatabaseDao
+import com.kinetx.moneymanager.fragment.SelectCategoryFragmentArgs
 
 class SelectCategoryViewModelFactory (
     private val database: DatabaseDao,
