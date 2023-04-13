@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kinetx.moneymanager.AddTransactionFragmentArgs
-import com.kinetx.moneymanager.ImageButtonData
+import com.kinetx.moneymanager.dataclass.ImageButtonData
 import com.kinetx.moneymanager.R
 
 class AddTransactionViewModel: ViewModel() {
