@@ -5,10 +5,17 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
+import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class CategoryViewModel (argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
+class CategoryViewModel (val argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
+
+
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -55,55 +62,83 @@ class CategoryViewModel (argList : CategoryFragmentArgs, application: Applicatio
         get() = _colorColorCode
 
 
+    private val repository : DatabaseRepository
+
+
     init {
+
+        val userDao = DatabaseMain.getInstance(application).databaseDao
+        repository = DatabaseRepository(userDao)
+        _radioEnabled.value = false
 
         if (argList.isEdit)
         {
             _addVisible.value = View.GONE
             _editVisible.value = View.VISIBLE
-            _categoryId.value = argList.itemId
-            categoryName.value = argList.itemName
-            _radioEnabled.value = false
-            Log.i("Strange","Initialize layout edit true")
-            if (argList.category=="account" || argList.itemType=="transfer")
-            {
-                _radioVisible.value = View.GONE
-                _categoryHint.value = "Account name"
-            }
-            else
-            {
-                when(argList.itemType)
-                {
-                    "income" -> incomeSelected.value = true
-                    "expense" -> expenseSelected.value = true
-                }
-            }
-
-            _iconImageSource.value = argList.itemIcon
-            _colorColorCode.value = argList.itemColor
             _fragmentTitle.value = "Edit ${argList.category}"
 
         }
         else
         {
-            _radioEnabled.value = true
-            _radioVisible.value = View.VISIBLE
             _addVisible.value = View.VISIBLE
             _editVisible.value = View.GONE
-            _iconImageSource.value = R.drawable.help
-            _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
-            _fragmentTitle.value = "Create category"
-            _categoryId.value = 1
-            _categoryHint.value = "Category name"
             _fragmentTitle.value = "Create ${argList.category}"
-            if (argList.category=="account" || argList.itemType=="transfer")
+        }
+
+
+        if (argList.category=="account" || argList.itemType=="transfer")
+        {
+            _radioVisible.value = View.GONE
+            _categoryHint.value = "Account name"
+        }
+        else
+        {
+            _radioVisible.value = View.VISIBLE
+            when(argList.itemType)
             {
-                _radioVisible.value = View.GONE
-                _categoryHint.value = "Account name"
+                "income" -> incomeSelected.value = true
+                "expense" -> expenseSelected.value = true
             }
         }
-        val databaseDao = DatabaseMain.getInstance(application).databaseDao
-        Log.i("Strange","Init was called")
+
+
+        if (argList.isEdit)
+        {
+            _categoryId.value = argList.itemId
+            categoryName.value = argList.itemName
+            _iconImageSource.value = argList.itemIcon
+            _colorColorCode.value = argList.itemColor
+
+        }
+        else
+        {
+            _categoryId.value = 1
+            _iconImageSource.value = R.drawable.help
+            _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
+            _categoryHint.value = "Category name"
+
+        }
+    }
+
+    fun insertCategory()
+    {
+       val C =  when(argList.itemType)
+        {
+            "income" -> CategoryType.INCOME
+            "expense"-> CategoryType.EXPENSE
+           else-> CategoryType.ACCOUNT
+        }
+        val category = CategoryDatabase(0,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
+
+        insertCategoryDao(category)
+    }
+
+    fun insertCategoryDao(category: CategoryDatabase)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.insertCategory(category)
+        }
     }
 
     fun updateIcon(itemBackgroundImage: Int) {

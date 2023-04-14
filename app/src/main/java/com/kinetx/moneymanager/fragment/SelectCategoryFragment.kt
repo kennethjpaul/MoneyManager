@@ -55,10 +55,9 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
 
 
-
-        viewModel.itemList.observe(viewLifecycleOwner)
+        viewModel.readAllCategories.observe(viewLifecycleOwner)
         {
-            adapter.submitList(it)
+            adapter.setData(it)
         }
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner)
@@ -72,7 +71,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
             val isEdit : Boolean = false
             val categoryID : Long = 1
             val categoryName : String = ""
-            val categoryType : String = ""
+            val categoryType : String = argList.transactionType
             val iconResource : Int = R.drawable.help
             val colorResource : Int = R.color.teal_700
             val category : String = argList.categoryType
@@ -95,7 +94,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
     override fun onSelectCategoryClick(position: Int) {
 
-        val item = viewModel.itemList.value?.get(position)
+        val item = viewModel.readAllCategories.value?.get(position)
         val itemId : Long = item?.categoryId!!
         val itemImage : Int = item.categoryImage
         val itemColor : Int = item.categoryColor
@@ -111,7 +110,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
     override fun onSelectCategoryLongClick(position: Int) {
 
-        val item = viewModel.itemList.value?.get(position)
+        val item = viewModel.readAllCategories.value?.get(position)
 
         val isEdit : Boolean = true
         val itemId : Long = item?.categoryId!!

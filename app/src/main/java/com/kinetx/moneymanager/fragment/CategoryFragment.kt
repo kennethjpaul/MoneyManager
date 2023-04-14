@@ -87,7 +87,7 @@ class CategoryFragment : Fragment() {
                 } else {
                     argList.itemType
                 }
-
+                viewModel.insertCategory()
                 view?.findNavController()?.navigateUp()
             }
 
