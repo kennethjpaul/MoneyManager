@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.viewmodel
 
+import android.app.AlertDialog
 import android.app.Application
 import android.util.Log
 import android.view.View
@@ -122,12 +123,21 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     fun insertCategory()
     {
-       val C =  when(argList.itemType)
+        lateinit var C : CategoryType
+
+        if (argList.category=="account" || argList.itemType=="transfer")
         {
-            "income" -> CategoryType.INCOME
-            "expense"-> CategoryType.EXPENSE
-           else-> CategoryType.ACCOUNT
+           C = CategoryType.ACCOUNT
         }
+        else
+        {
+            when(argList.itemType)
+            {
+                "income" -> C = CategoryType.INCOME
+                "expense" -> C = CategoryType.EXPENSE
+            }
+        }
+
         val category = CategoryDatabase(0,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
 
         insertCategoryDao(category)
@@ -147,6 +157,60 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     fun updateColor(itemBackgroundColor: Int) {
         _colorColorCode.value = itemBackgroundColor
+    }
+
+    fun updateCategory() {
+
+        lateinit var C : CategoryType
+
+        if (argList.category=="account" || argList.itemType=="transfer")
+        {
+            C = CategoryType.ACCOUNT
+        }
+        else
+        {
+            when(argList.itemType)
+            {
+                "income" -> C = CategoryType.INCOME
+                "expense" -> C = CategoryType.EXPENSE
+            }
+        }
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
+        updateCategoryDao(category)
+    }
+
+    private fun updateCategoryDao(category: CategoryDatabase) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.updateCategory(category)
+        }
+    }
+
+    fun deleteCategory() {
+        lateinit var C : CategoryType
+
+        if (argList.category=="account" || argList.itemType=="transfer")
+        {
+            C = CategoryType.ACCOUNT
+        }
+        else
+        {
+            when(argList.itemType)
+            {
+                "income" -> C = CategoryType.INCOME
+                "expense" -> C = CategoryType.EXPENSE
+            }
+        }
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
+
+        deleteCategoryDao(category)
+    }
+
+    private fun deleteCategoryDao(category: CategoryDatabase) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.deleteCategory(category)
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -91,6 +92,31 @@ class CategoryFragment : Fragment() {
                 view?.findNavController()?.navigateUp()
             }
 
+            binding.categoryUpdateButton.setOnClickListener()
+            {
+                viewModel.updateCategory()
+                view?.findNavController()?.navigateUp()
+            }
+
+            binding.categoryDeleteButton.setOnClickListener()
+            {
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setPositiveButton("Yes")
+                {
+                    _,_ ->
+                    viewModel.deleteCategory()
+                    view?.findNavController()?.navigateUp()
+                }
+                builder.setNegativeButton("No")
+                {
+                    _,_ ->
+                }
+                builder.setTitle("Do you want to delete this category")
+                builder.setMessage("Deleting will purge all entries associated with it")
+                builder.create().show()
+
+
+            }
 
             setFragmentResultListener("SelectColorIcon")
             { _, bundle ->

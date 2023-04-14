@@ -12,4 +12,14 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     {
         databaseDao.insertCategory(category)
     }
+
+    suspend fun updateCategory(category: CategoryDatabase)
+    {
+        databaseDao.updateCategory(category)
+    }
+
+    suspend fun deleteCategory(category: CategoryDatabase)
+    {
+        databaseDao.deleteCategory(category)
+    }
 }
