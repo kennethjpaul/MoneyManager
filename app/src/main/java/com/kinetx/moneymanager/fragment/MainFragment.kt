@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.viewmodel.MainViewModel
 
 
@@ -34,7 +35,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "expense"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    transactionType
+                    TransactionType.EXPENSE
                 )
             )
         }
@@ -44,7 +45,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "income"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    transactionType
+                    TransactionType.INCOME
                 )
             )
         }
@@ -54,7 +55,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "transfer"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    transactionType
+                    TransactionType.TRANSFER
                 )
             )
         }

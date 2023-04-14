@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentAddTransactionBinding
+import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.viewmodel.AddTransactionViewModel
+import com.kinetx.moneymanager.viewmodelfactory.AddTransactionViewModelFactory
 
 
 class AddTransactionFragment : Fragment() {
@@ -26,20 +28,16 @@ class AddTransactionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        argList = AddTransactionFragmentArgs.fromBundle(requireArguments())
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_add_transaction, container, false)
-        viewModel = ViewModelProvider(this).get(AddTransactionViewModel::class.java)
-        argList = AddTransactionFragmentArgs.fromBundle(requireArguments())
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = AddTransactionViewModelFactory(argList,application)
+        viewModel = ViewModelProvider(this,viewModelFactory).get(AddTransactionViewModel::class.java)
+
 
         binding.addTransactionViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.initializeLayout(argList)
-
-
-
-
-
 
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner)
@@ -72,22 +70,20 @@ class AddTransactionFragment : Fragment() {
 
         binding.addTransactionCategoryOneBtn.setOnClickListener()
         {
-            val categoryType : String = viewModel.categoryPositionOneText.value?.lowercase()!!
             view?.findNavController()?.navigate(
                 AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
-                    argList.transactionType,
-                    categoryType
+                    viewModel.categoryPositionOne.value?.buttonType ?: CategoryType.ACCOUNT,
+                    1
                 )
             )
         }
 
         binding.addTransactionCategoryTwoBtn.setOnClickListener()
         {
-            val categoryType : String = viewModel.categoryPositionTwoText.value?.lowercase()!!
             view?.findNavController()?.navigate(
                 AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
-                    argList.transactionType,
-                    categoryType
+                    viewModel.categoryPositionTwo.value?.buttonType ?: CategoryType.ACCOUNT,
+                2
                 )
             )
         }
@@ -95,17 +91,15 @@ class AddTransactionFragment : Fragment() {
         setFragmentResultListener("SelectCategory")
         { _, bundle ->
             val itemColor = bundle.getInt("itemColor")
-            val varType = bundle.getString("category")
+            val categoryPosition = bundle.getInt("categoryPosition")
             val itemImage = bundle.getInt("itemImage")
             val itemId = bundle.getLong("itemId")
             val itemTitle= bundle.getString("itemTitle")!!
 
-            when(varType)
+            when(categoryPosition)
             {
-                "account" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
-                "category" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
-                "source" -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
-                "destination" -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
+                1 -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
+                2 -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
             }
 
         }

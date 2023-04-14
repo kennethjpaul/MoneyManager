@@ -16,6 +16,7 @@ import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.SelectCategoryAdapter
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
+import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.SelectCategoryViewModelFactory
 
@@ -71,20 +72,18 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
             val isEdit : Boolean = false
             val categoryID : Long = 1
             val categoryName : String = ""
-            val categoryType : String = argList.transactionType
             val iconResource : Int = R.drawable.help
             val colorResource : Int = R.color.teal_700
-            val category : String = argList.categoryType
+            val categoryType : CategoryType = argList.categoryType
 
             view?.findNavController()?.navigate(
                 SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(
                     isEdit,
                     categoryID,
                     categoryName,
-                    categoryType,
                     iconResource,
                     colorResource,
-                    category
+                    categoryType
                 )
             )
         }
@@ -100,7 +99,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         val itemColor : Int = item.categoryColor
         val itemTitle : String = item.categoryName
 
-        setFragmentResult("SelectCategory", bundleOf("transaction" to argList.transactionType, "category" to argList.categoryType,"itemId" to itemId, "itemColor" to itemColor, "itemImage" to itemImage, "itemTitle" to itemTitle))
+        setFragmentResult("SelectCategory", bundleOf("categoryPosition" to argList.categoryPosition,"categoryType" to argList.categoryType,"itemId" to itemId, "itemColor" to itemColor, "itemImage" to itemImage, "itemTitle" to itemTitle))
 
         view?.findNavController()?.navigateUp()
 
@@ -115,10 +114,9 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         val isEdit : Boolean = true
         val itemId : Long = item?.categoryId!!
         val itemName : String = item.categoryName
-        val itemType : String = argList.transactionType
         val itemIcon : Int = item.categoryImage
         val itemColor : Int = item.categoryColor
-        val category : String = argList.categoryType
+        val categoryType : CategoryType = argList.categoryType
 
 
         view?.findNavController()?.navigate(
@@ -126,10 +124,9 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
                 isEdit,
                 itemId,
                 itemName,
-                itemType,
                 itemIcon,
                 itemColor,
-                category
+                categoryType
             )
         )
     }

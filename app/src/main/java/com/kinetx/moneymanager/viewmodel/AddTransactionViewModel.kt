@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.viewmodel
 
+import android.app.Application
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.view.View
@@ -8,9 +9,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kinetx.moneymanager.dataclass.ImageButtonData
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.enums.CategoryType
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.AddTransactionFragmentArgs
 
-class AddTransactionViewModel: ViewModel() {
+class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val application: Application): ViewModel() {
 
     private val monthArray = arrayOf(
         "Jan", "Feb",
@@ -56,17 +59,42 @@ class AddTransactionViewModel: ViewModel() {
     private val myCalendar: Calendar = Calendar.getInstance()
 
     init {
+
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
         _categoryPositionOne.value = ImageButtonData(1,
-            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
         _categoryPositionTwo.value = ImageButtonData(1,
-            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"")
-        _categoryPositionOneText.value = "Account"
-        _categoryPositionTwoText.value = "Category"
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
+
+        when(argList.transactionType)
+        {
+            TransactionType.INCOME ->
+            {
+                _categoryPositionTwo.value!!.buttonType = CategoryType.INCOME
+                _categoryPositionOneText.value = "Account"
+                _categoryPositionTwoText.value = "Category"
+                _fragmentTitle.value = "Add Income"
+            }
+            TransactionType.EXPENSE ->
+            {
+                _categoryPositionTwo.value!!.buttonType = CategoryType.EXPENSE
+                _categoryPositionOneText.value = "Account"
+                _fragmentTitle.value = "Add Expense"
+            }
+            TransactionType.TRANSFER->
+            {
+                _categoryPositionTwo.value!!.buttonType = CategoryType.ACCOUNT
+                _categoryPositionOneText.value = "Source"
+                _categoryPositionTwoText.value = "Destination"
+                _fragmentTitle.value = "Add Account"
+            }
+        }
+
         _selectedDay.value = myCalendar.get(Calendar.DAY_OF_MONTH).toString()
         _selectedMonth.value = monthArray[myCalendar.get(
             Calendar.MONTH)]
         _selectedYear.value = myCalendar.get(Calendar.YEAR).toString()
+
     }
 
     private val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, dayofMonth ->
@@ -105,12 +133,4 @@ class AddTransactionViewModel: ViewModel() {
         _categoryPositionOne.value?.buttonTitle = itemTitle
     }
 
-    fun initializeLayout(argList: AddTransactionFragmentArgs) {
-        _fragmentTitle.value = "Add ${argList.transactionType}"
-        if (argList.transactionType=="transfer")
-        {
-            _categoryPositionOneText.value = "Source"
-            _categoryPositionTwoText.value = "Destination"
-        }
-    }
 }

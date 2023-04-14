@@ -19,14 +19,14 @@
         android:name="com.kinetx.moneymanager.fragment.SelectCategoryFragment"
         android:label="SelectCategoryFragment" >
         <argument
-            android:name="transactionType"
-            app:argType="string" />
-        <argument
             android:name="categoryType"
-            app:argType="string" />
+            app:argType="com.kinetx.moneymanager.enums.CategoryType" />
         <action
             android:id="@+id/action_selectCategoryFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <argument
+            android:name="categoryPosition"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -41,16 +41,14 @@
         <argument
             android:name="itemName"
             app:argType="string" />
-        <argument android:name="itemType"
-            app:argType="string" />
         <argument android:name="itemIcon"
             app:argType="integer" />
         <argument
             android:name="itemColor"
             app:argType="integer" />
         <argument
-            android:name="category"
-            app:argType="string" />
+            android:name="categoryType"
+            app:argType="com.kinetx.moneymanager.enums.CategoryType" />
         <action
             android:id="@+id/action_categoryFragment_to_selectColorIconFragment"
             app:destination="@id/selectColorIconFragment" />
@@ -61,7 +59,7 @@
         android:label="SelectColorIconFragment" >
         <argument
             android:name="colorIconType"
-            app:argType="string" />
+            app:argType="com.kinetx.moneymanager.enums.ColorIconType" />
     </fragment>
     <fragment
         android:id="@+id/addTransactionFragment"
@@ -69,7 +67,7 @@
         android:label="AddTransactionFragment" >
         <argument
             android:name="transactionType"
-            app:argType="string" />
+            app:argType="com.kinetx.moneymanager.enums.TransactionType" />
         <action
             android:id="@+id/action_addTransactionFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />

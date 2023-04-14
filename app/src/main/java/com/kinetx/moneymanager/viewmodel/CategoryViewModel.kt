@@ -13,6 +13,7 @@ import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class CategoryViewModel (val argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
 
@@ -71,84 +72,62 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
         _radioEnabled.value = false
-
+        var titleString = "Create"
         if (argList.isEdit)
         {
             _addVisible.value = View.GONE
             _editVisible.value = View.VISIBLE
-            _fragmentTitle.value = "Edit ${argList.category}"
+
+
+
+            _categoryId.value = argList.itemId
+            categoryName.value = argList.itemName
+            _iconImageSource.value = argList.itemIcon
+            _colorColorCode.value = argList.itemColor
+
+            titleString = "Edit"
 
         }
         else
         {
             _addVisible.value = View.VISIBLE
             _editVisible.value = View.GONE
-            _fragmentTitle.value = "Create ${argList.category}"
-        }
 
 
-        if (argList.category=="account" || argList.itemType=="transfer")
-        {
-            _radioVisible.value = View.GONE
-            _categoryHint.value = "Account name"
-        }
-        else
-        {
-            _radioVisible.value = View.VISIBLE
-            when(argList.itemType)
-            {
-                "income" -> incomeSelected.value = true
-                "expense" -> expenseSelected.value = true
-            }
-        }
 
-
-        if (argList.isEdit)
-        {
-            _categoryId.value = argList.itemId
-            categoryName.value = argList.itemName
-            _iconImageSource.value = argList.itemIcon
-            _colorColorCode.value = argList.itemColor
-
-        }
-        else
-        {
             _categoryId.value = 1
             _iconImageSource.value = R.drawable.help
             _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
-            _categoryHint.value = "Category name"
 
         }
-    }
 
-    fun insertCategory()
-    {
-        lateinit var C : CategoryType
 
-        if (argList.category=="account" || argList.itemType=="transfer")
+
+        when(argList.categoryType)
         {
-           C = CategoryType.ACCOUNT
-        }
-        else
-        {
-            when(argList.itemType)
+            CategoryType.INCOME ->
             {
-                "income" -> C = CategoryType.INCOME
-                "expense" -> C = CategoryType.EXPENSE
+                _radioVisible.value = View.VISIBLE
+                incomeSelected.value = true
+                _categoryHint.value = "Income name"
+                _fragmentTitle.value = "$titleString Income Category"
+            }
+            CategoryType.EXPENSE->
+            {
+                _radioVisible.value = View.VISIBLE
+                expenseSelected.value = true
+                _categoryHint.value = "Expense name"
+                _fragmentTitle.value = "$titleString Expense Category"
+            }
+            CategoryType.ACCOUNT->
+            {
+                _radioVisible.value = View.GONE
+                _categoryHint.value = "Account name"
+                _categoryHint.value = "Account name"
+                _fragmentTitle.value = "$titleString Account"
             }
         }
 
-        val category = CategoryDatabase(0,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
-
-        insertCategoryDao(category)
-    }
-
-    fun insertCategoryDao(category: CategoryDatabase)
-    {
-        viewModelScope.launch(Dispatchers.IO)
-        {
-            repository.insertCategory(category)
-        }
     }
 
     fun updateIcon(itemBackgroundImage: Int) {
@@ -159,23 +138,25 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         _colorColorCode.value = itemBackgroundColor
     }
 
-    fun updateCategory() {
 
-        lateinit var C : CategoryType
+    fun insertCategory()
+    {
+        val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
+        insertCategoryDao(category)
+    }
 
-        if (argList.category=="account" || argList.itemType=="transfer")
+    private fun insertCategoryDao(category: CategoryDatabase)
+    {
+        viewModelScope.launch(Dispatchers.IO)
         {
-            C = CategoryType.ACCOUNT
+            repository.insertCategory(category)
         }
-        else
-        {
-            when(argList.itemType)
-            {
-                "income" -> C = CategoryType.INCOME
-                "expense" -> C = CategoryType.EXPENSE
-            }
-        }
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
+    }
+
+
+    fun updateCategory()
+    {
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         updateCategoryDao(category)
     }
 
@@ -187,22 +168,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     }
 
     fun deleteCategory() {
-        lateinit var C : CategoryType
 
-        if (argList.category=="account" || argList.itemType=="transfer")
-        {
-            C = CategoryType.ACCOUNT
-        }
-        else
-        {
-            when(argList.itemType)
-            {
-                "income" -> C = CategoryType.INCOME
-                "expense" -> C = CategoryType.EXPENSE
-            }
-        }
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, C,_iconImageSource.value!!,_colorColorCode.value!!)
-
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         deleteCategoryDao(category)
     }
 

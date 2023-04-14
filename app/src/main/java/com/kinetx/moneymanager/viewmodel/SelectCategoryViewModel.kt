@@ -9,6 +9,7 @@ import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseDao
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.enums.CategoryType
 
 class SelectCategoryViewModel (val database: DatabaseDao, application: Application, argList: SelectCategoryFragmentArgs) : AndroidViewModel(application) {
 
@@ -24,28 +25,26 @@ class SelectCategoryViewModel (val database: DatabaseDao, application: Applicati
         repository = DatabaseRepository(userDao)
 
 
-        if (argList.categoryType=="category" && argList.transactionType=="expense")
+        when(argList.categoryType)
         {
-            readAllCategories = repository.readAllExpeneCategory
-            _fragmentTitle.value = "Select category"
+            CategoryType.INCOME ->
+            {
+                readAllCategories = repository.readAllIncomeCategory
+                _fragmentTitle.value = "Select Income Category"
+            }
+            CategoryType.EXPENSE->
+            {
+                readAllCategories = repository.readAllExpeneCategory
+                _fragmentTitle.value = "Select Expense Category"
 
+            }
+            CategoryType.ACCOUNT->
+            {
+                readAllCategories = repository.readAllAccountCategory
+                _fragmentTitle.value = "Select Account"
+            }
         }
 
-        if (argList.categoryType=="category" && argList.transactionType=="income")
-        {
-            readAllCategories = repository.readAllIncomeCategory
-            _fragmentTitle.value = "Select category"
-
-
-        }
-
-        if (argList.categoryType=="account" || argList.transactionType=="transfer")
-        {
-            readAllCategories = repository.readAllAccountCategory
-            _fragmentTitle.value = "Select account"
-
-
-        }
 
     }
 

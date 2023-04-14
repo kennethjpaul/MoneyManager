@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.dataclass.IconDataClass
+import com.kinetx.moneymanager.enums.ColorIconType
 import com.kinetx.moneymanager.fragment.SelectColorIconFragmentArgs
 
 
@@ -20,19 +21,25 @@ class SelectColorIconViewModel(argList : SelectColorIconFragmentArgs, applicatio
         get() = _itemList
 
     init {
-        _fragmentTitle.value = ""
-        _fragmentTitle.value = "Select ${argList.colorIconType}"
+
 
         when(argList.colorIconType)
         {
-            "icon" -> initializeIconData()
-            "color"-> initializeColorData()
+            ColorIconType.ICON ->
+            {
+                _fragmentTitle.value = "Select Icon"
+                initializeIconData()
+            }
+            ColorIconType.COLOR->
+            {
+                _fragmentTitle.value = "Select Color"
+                initializeColorData()
+            }
         }
     }
 
 
     private fun initializeIconData() {
-        Log.i("ColorIcon","Icon")
         val tmp = ArrayList<IconDataClass>()
         tmp.add(IconDataClass(R.drawable.shopping,java.lang.Long.decode("0xFF000000").toInt()))
         tmp.add(IconDataClass(R.drawable.moneytransfer,java.lang.Long.decode("0xFF000000").toInt()))
@@ -79,7 +86,6 @@ class SelectColorIconViewModel(argList : SelectColorIconFragmentArgs, applicatio
     }
 
     private fun initializeColorData() {
-        Log.i("ColorIcon","Color")
         val tmp = ArrayList<IconDataClass>()
         tmp.add(IconDataClass(0,java.lang.Long.decode("0xFF6B8E23").toInt()))
         tmp.add(IconDataClass(0,java.lang.Long.decode("0xFFa4c639").toInt()))

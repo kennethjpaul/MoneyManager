@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
+import com.kinetx.moneymanager.enums.ColorIconType
 import com.kinetx.moneymanager.viewmodel.CategoryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.CategoryViewModelFactory
 
@@ -66,7 +67,7 @@ class CategoryFragment : Fragment() {
             {
                 view?.findNavController()?.navigate(
                     CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment(
-                        "icon"
+                        ColorIconType.ICON
                     )
                 )
             }
@@ -75,7 +76,7 @@ class CategoryFragment : Fragment() {
             {
                 view?.findNavController()?.navigate(
                     CategoryFragmentDirections.actionCategoryFragmentToSelectColorIconFragment(
-                        "color"
+                        ColorIconType.COLOR
                     )
                 )
             }
@@ -83,11 +84,6 @@ class CategoryFragment : Fragment() {
             binding.categoryAddButton.setOnClickListener()
             {
 
-                var catType : String = if (argList.category=="account" || argList.itemType=="transfer") {
-                    "account"
-                } else {
-                    argList.itemType
-                }
                 viewModel.insertCategory()
                 view?.findNavController()?.navigateUp()
             }
@@ -121,15 +117,15 @@ class CategoryFragment : Fragment() {
             setFragmentResultListener("SelectColorIcon")
             { _, bundle ->
 
-                val colorIconType = bundle.getString("colorIconType")
+                val colorIconType = bundle.get("colorIconType")
                 val itemBackgroundColor= bundle.getInt("itemBackgroundColor")
                 val itemBackgroundImage = bundle.getInt("itemBackgroundImage")
 
 
                 when(colorIconType)
                 {
-                    "icon" -> viewModel.updateIcon(itemBackgroundImage)
-                    "color" -> viewModel.updateColor(itemBackgroundColor)
+                    ColorIconType.ICON-> viewModel.updateIcon(itemBackgroundImage)
+                    ColorIconType.COLOR -> viewModel.updateColor(itemBackgroundColor)
                 }
 
             }
