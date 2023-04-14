@@ -11,7 +11,7 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <TextView
@@ -121,6 +121,5 @@
             app:expenses="1000"
             app:balance="-500"
             app:currency="CHF"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
