@@ -72,4 +72,8 @@
             android:id="@+id/action_addTransactionFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/plotTransactionFragment"
+        android:name="com.kinetx.moneymanager.fragment.PlotTransactionFragment"
+        android:label="PlotTransactionFragment" />
 </navigation>
