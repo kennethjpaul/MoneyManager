@@ -86,7 +86,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
                 _categoryPositionTwo.value!!.buttonType = CategoryType.ACCOUNT
                 _categoryPositionOneText.value = "Source"
                 _categoryPositionTwoText.value = "Destination"
-                _fragmentTitle.value = "Add Account"
+                _fragmentTitle.value = "Add Transfer"
             }
         }
 
