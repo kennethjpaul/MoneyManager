@@ -10,7 +10,7 @@ interface DatabaseDao {
     @Update
     suspend fun updateCategory(category: CategoryDatabase)
     @Delete
-    fun deleteCategory(category: CategoryDatabase)
+    suspend fun deleteCategory(category: CategoryDatabase)
 
     @Query("SELECT * FROM category_table")
     fun getAllCategory(): LiveData<List<CategoryDatabase>>
@@ -22,5 +22,20 @@ interface DatabaseDao {
     fun getAllAccountCategory(): LiveData<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table ORDER BY categoryId DESC LIMIT 1")
     fun getLatestCategory(): CategoryDatabase?
+    @Query("SELECT * FROM CATEGORY_TABLE where categoryId = :categoryId")
+    fun getCategory(categoryId: Long) : CategoryDatabase?
+
+
+
+
+    @Insert
+    suspend fun insertTransaction(transaction: TransactionDatabase)
+    @Update
+    suspend fun updateTransaction(transaction: TransactionDatabase)
+    @Delete
+    suspend fun deleteTransaction(transaction: TransactionDatabase)
+
+    @Query("SELECT * FROM transaction_table")
+    fun getAllTransaction() : LiveData<List<TransactionDatabase>>
 
 }
