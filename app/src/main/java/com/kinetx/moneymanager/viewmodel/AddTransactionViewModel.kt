@@ -4,14 +4,21 @@ import android.app.Application
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kinetx.moneymanager.dataclass.ImageButtonData
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.DatabaseMain
+import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.AddTransactionFragmentArgs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val application: Application): ViewModel() {
 
@@ -19,6 +26,10 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         "Jan", "Feb",
         "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     )
+
+    val transactionAmount = MutableLiveData<String>()
+    val transactionComment = MutableLiveData<String>()
+
 
     private val _selectedDay = MutableLiveData<String>()
     val selectedDay : LiveData<String>
@@ -58,14 +69,21 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
     private val myCalendar: Calendar = Calendar.getInstance()
 
+    private val repository : DatabaseRepository
+
     init {
 
-        _currencySpinner.value = listOf("CHF","EUR","INR","USD")
-        _categoryPositionOne.value = ImageButtonData(1,
-            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
-        _categoryPositionTwo.value = ImageButtonData(1,
-            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
+        val userDao = DatabaseMain.getInstance(application).databaseDao
+        repository = DatabaseRepository(userDao)
 
+
+        _currencySpinner.value = listOf("CHF","EUR","INR","USD")
+        _categoryPositionOne.value = ImageButtonData(-1,
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
+        _categoryPositionTwo.value = ImageButtonData(-1,
+            R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
+        transactionAmount.value = "0.0"
+        transactionComment.value=""
         when(argList.transactionType)
         {
             TransactionType.INCOME ->
@@ -79,6 +97,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
             {
                 _categoryPositionTwo.value!!.buttonType = CategoryType.EXPENSE
                 _categoryPositionOneText.value = "Account"
+                _categoryPositionTwoText.value = "Category"
                 _fragmentTitle.value = "Add Expense"
             }
             TransactionType.TRANSFER->
@@ -131,6 +150,42 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         _categoryPositionOne.value?.buttonImage =varImgId
         _categoryPositionOne.value?.buttonColor = varBgColor
         _categoryPositionOne.value?.buttonTitle = itemTitle
+    }
+
+    fun addTransaction(): Boolean {
+
+        if (_categoryPositionOne.value?.buttonId==-1L)
+        {
+            Toast.makeText(application, "Select the ${_categoryPositionOneText.value}", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (_categoryPositionTwo.value?.buttonId==-1L)
+        {
+            Toast.makeText(application, "Select the ${_categoryPositionTwoText.value}", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (transactionAmount.value?.toFloat()==0.0f)
+        {
+            Toast.makeText(application, "Enter an amount greater than zero", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        var dateLong : Long = myCalendar.timeInMillis
+        val transaction = TransactionDatabase(0,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.buttonId,categoryPositionTwo.value!!.buttonId,dateLong,transactionComment.value!!)
+
+        addTransactionDao(transaction)
+
+        return true
+    }
+
+    private fun addTransactionDao(transaction: TransactionDatabase) {
+
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.insertTransaction(transaction)
+        }
     }
 
 }

@@ -42,9 +42,47 @@ class PlotTransactionFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
 
+        viewModel.accountDbList.observe(viewLifecycleOwner)
+        {
 
+        }
 
+        viewModel.expenseDbList.observe(viewLifecycleOwner)
+        {
 
+        }
+
+        viewModel.incomeDbList.observe(viewLifecycleOwner)
+        {
+
+        }
+
+        binding.plotSubmitButton.setOnClickListener()
+        {
+
+            val accountAll : Boolean = binding.plotAccountSpinner.selectedItemPosition == 0
+            val categoryAll : Boolean = binding.plotCategorySpinner.selectedItemPosition ==0
+
+            if (categoryAll and accountAll)
+            {
+
+            }
+            else if (categoryAll)
+            {
+                val accountId : Long = viewModel.accountDbList.value?.get(binding.plotAccountSpinner.selectedItemPosition-1)?.categoryId!!
+            }
+            else if (accountAll)
+            {
+
+            }
+            else
+            {
+                val accountId : Long = viewModel.accountDbList.value?.get(binding.plotAccountSpinner.selectedItemPosition-1)?.categoryId!!
+            }
+
+            //
+
+        }
 
 
         return binding.root

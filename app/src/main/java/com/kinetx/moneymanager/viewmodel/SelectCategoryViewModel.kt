@@ -34,7 +34,7 @@ class SelectCategoryViewModel (val database: DatabaseDao, application: Applicati
             }
             CategoryType.EXPENSE->
             {
-                readAllCategories = repository.readAllExpeneCategory
+                readAllCategories = repository.readAllExpenseCategory
                 _fragmentTitle.value = "Select Expense Category"
 
             }

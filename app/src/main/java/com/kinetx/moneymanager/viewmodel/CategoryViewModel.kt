@@ -50,8 +50,6 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         get() = _editVisible
 
     val expenseSelected =  MutableLiveData<Boolean>()
-
-
     val incomeSelected =  MutableLiveData<Boolean>()
 
 

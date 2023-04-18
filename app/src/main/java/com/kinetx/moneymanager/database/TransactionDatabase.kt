@@ -3,6 +3,7 @@ package com.kinetx.moneymanager.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.kinetx.moneymanager.enums.TransactionType
 
 @Entity(tableName = "transaction_table")
 data class TransactionDatabase(
@@ -13,6 +14,9 @@ data class TransactionDatabase(
     @ColumnInfo(name = "amount")
     val transactionAmount : Float = 0.0f,
 
+    @ColumnInfo(name="transaction_type")
+    val transactionType : TransactionType,
+
     @ColumnInfo(name="category_one")
     val transactionCategoryOne : Long = 0L,
 
@@ -20,7 +24,7 @@ data class TransactionDatabase(
     val transactionCategoryTwo : Long = 0L,
 
     @ColumnInfo(name="date")
-    val transactionDate : Int = 0,
+    val transactionDate : Long = 0,
 
     @ColumnInfo(name="comments")
     val transactionComment : String =""

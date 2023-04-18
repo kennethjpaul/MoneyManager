@@ -3,5 +3,6 @@
 
     <item
         android:id="@+id/plotTransactionFragment"
+        android:icon="@drawable/graph"
         android:title="@string/plots" />
 </menu>

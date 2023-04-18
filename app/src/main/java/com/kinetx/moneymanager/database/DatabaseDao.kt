@@ -2,6 +2,9 @@ package com.kinetx.moneymanager.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.kinetx.moneymanager.enums.CategoryType
+import com.kinetx.moneymanager.enums.TransactionType
+
 @Dao
 interface DatabaseDao {
 
@@ -35,7 +38,13 @@ interface DatabaseDao {
     @Delete
     suspend fun deleteTransaction(transaction: TransactionDatabase)
 
-    @Query("SELECT * FROM transaction_table")
-    fun getAllTransaction() : LiveData<List<TransactionDatabase>>
+    @Query("SELECT * FROM transaction_table WHERE transaction_type=:transactionType AND date >=:dateStart AND date <=:dateEnd")
+    fun getTransactionsAllAccountsAllCategories(transactionType: TransactionType, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionDatabase>>
+    @Query("SELECT * FROM transaction_table WHERE transaction_type=:transactionType AND category_two=:categoryId AND date >=:dateStart AND date <=:dateEnd")
+    fun getTransactionsAllAccountWithCategory(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionDatabase>>
+    @Query("SELECT * FROM transaction_table WHERE transaction_type=:transactionType AND category_one=:accountId AND date >=:dateStart AND date <=:dateEnd")
+    fun getTransactionsWithAccountAllCategory(transactionType: TransactionType, accountId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionDatabase>>
+    @Query("SELECT * FROM transaction_table WHERE transaction_type=:transactionType AND category_one=:accountId AND category_two=:categoryId AND date >=:dateStart AND date <=:dateEnd")
+    fun getTransactionsWithAccountWithCategory(transactionType: TransactionType, accountId: Long, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionDatabase>>
 
 }

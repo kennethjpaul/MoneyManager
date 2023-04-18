@@ -31,6 +31,7 @@
             android:autofillHints="Expense"
             android:ems="5"
             android:hint="@string/empty_string_placeholder"
+            android:text="@={addTransactionViewModel.transactionAmount}"
             android:inputType="numberDecimal"
             android:minHeight="48dp"
             android:textAlignment="textEnd"
@@ -130,7 +131,7 @@
             android:hint="@string/comments"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text=""
+            android:text="@={addTransactionViewModel.transactionComment}"
             android:textColorHint="#757575"
             app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
             app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn"  />

@@ -104,6 +104,17 @@ class AddTransactionFragment : Fragment() {
 
         }
 
+        binding.addTransactionSubmitBtn.setOnClickListener()
+        {
+            if(viewModel.addTransaction())
+            {
+                view?.findNavController()?.navigateUp()
+            }
+        }
+
+
+
+
         return binding.root
     }
 
