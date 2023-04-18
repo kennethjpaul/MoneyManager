@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentPlotTransactionBinding
 import com.kinetx.moneymanager.viewmodel.PlotTransactionViewModel
@@ -60,8 +61,13 @@ class PlotTransactionFragment : Fragment() {
         binding.plotSubmitButton.setOnClickListener()
         {
 
+            view?.findNavController()?.navigate(PlotTransactionFragmentDirections.actionPlotTransactionFragmentToTransactionListFragment("d"))
+
+            /*
             val accountAll : Boolean = binding.plotAccountSpinner.selectedItemPosition == 0
             val categoryAll : Boolean = binding.plotCategorySpinner.selectedItemPosition ==0
+
+
 
             if (categoryAll and accountAll)
             {
@@ -80,7 +86,7 @@ class PlotTransactionFragment : Fragment() {
                 val accountId : Long = viewModel.accountDbList.value?.get(binding.plotAccountSpinner.selectedItemPosition-1)?.categoryId!!
             }
 
-            //
+            */
 
         }
 

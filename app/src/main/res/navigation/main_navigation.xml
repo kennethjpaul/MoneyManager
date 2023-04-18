@@ -75,5 +75,15 @@
     <fragment
         android:id="@+id/plotTransactionFragment"
         android:name="com.kinetx.moneymanager.fragment.PlotTransactionFragment"
-        android:label="PlotTransactionFragment" />
+        android:label="PlotTransactionFragment" >
+        <action
+            android:id="@+id/action_plotTransactionFragment_to_transactionListFragment"
+            app:destination="@id/transactionListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionListFragment"
+        android:name="com.kinetx.moneymanager.fragment.TransactionListFragment"
+        android:label="TransactionListFragment" >
+        <argument android:name="g" />
+    </fragment>
 </navigation>
