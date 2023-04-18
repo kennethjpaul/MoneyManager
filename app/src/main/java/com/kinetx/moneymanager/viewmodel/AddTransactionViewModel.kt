@@ -75,7 +75,10 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
-
+        myCalendar.set(Calendar.HOUR_OF_DAY,0)
+        myCalendar.set(Calendar.MINUTE,0)
+        myCalendar.set(Calendar.SECOND,0)
+        myCalendar.set(Calendar.MILLISECOND,0)
 
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
         _categoryPositionOne.value = ImageButtonData(-1,
