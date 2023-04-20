@@ -2,17 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/balancesFragment"
-        android:icon="@drawable/graph"
+        android:icon="@drawable/scale"
         android:title="Account Balance"
         />
 
     <item
         android:id="@+id/summaryFragment"
-        android:icon="@drawable/graph"
+        android:icon="@drawable/summary"
         android:title="Summary"
         />
     <item
         android:id="@+id/plotTransactionFragment"
         android:icon="@drawable/graph"
         android:title="@string/plots" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/settings"
+        android:title="Settings" />
 </menu>
