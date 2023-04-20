@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.recyclerview
 
+import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.TransactionDatabase
+import com.kinetx.moneymanager.dataclass.TransactionListClass
 
 class TransactionListAdapter(val listener: OnTransactionListListener) : RecyclerView.Adapter<TransactionListAdapter.MyViewHolder>()
 {
 
-    private var _transactionList = emptyList<TransactionDatabase>()
+    private var _transactionList = emptyList<TransactionListClass>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
@@ -24,11 +26,15 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
         val currentItem = _transactionList[position]
-        holder.itemCategoryTwo.text = currentItem.transactionCategoryTwo.toString()
-        holder.itemCategoryOne.text = currentItem.transactionCategoryOne.toString()
-        holder.itemComment.text     = currentItem.transactionComment
-        holder.itemDate.text        = currentItem.transactionDate.toString()
-        holder.itemAmount.text      = currentItem.transactionAmount.toString()
+        holder.itemCategoryTwo.text = currentItem.categoryTwo
+        holder.itemCategoryOne.text = currentItem.categoryOne
+        holder.itemComment.text     = currentItem.comments
+
+        val myCalendar: Calendar = Calendar.getInstance()
+        myCalendar.timeInMillis = currentItem.date
+
+        holder.itemDate.text        = "${myCalendar.get(Calendar.DAY_OF_MONTH)}-${myCalendar.get(Calendar.MONTH)+1}-${myCalendar.get(Calendar.YEAR)}"
+        holder.itemAmount.text      = currentItem.amount.toString()
 
     }
 
@@ -37,7 +43,7 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
         return _transactionList.size
     }
 
-    fun setData(it: List<TransactionDatabase>) {
+    fun setData(it: List<TransactionListClass>) {
         this._transactionList = it
         notifyDataSetChanged()
     }

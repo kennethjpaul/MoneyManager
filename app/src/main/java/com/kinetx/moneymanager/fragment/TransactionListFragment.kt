@@ -1,11 +1,13 @@
 package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,10 +47,21 @@ class TransactionListFragment : Fragment(), TransactionListAdapter.OnTransaction
         binding.transactionListViewModel = viewModel
 
 
-        viewModel.readAllTransaction.observe(viewLifecycleOwner)
+        viewModel.listTransformed.observe(viewLifecycleOwner)
         {
             adapter.setData(it)
         }
+
+       viewModel.listTransactionAmount.observe(viewLifecycleOwner)
+        {
+            viewModel.setTotal()
+        }
+
+        viewModel.fragmentTitle.observe(viewLifecycleOwner)
+        {
+            (activity as AppCompatActivity).supportActionBar?.title = it
+        }
+
 
         return binding.root
     }

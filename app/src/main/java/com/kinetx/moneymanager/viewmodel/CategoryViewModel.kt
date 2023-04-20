@@ -1,9 +1,9 @@
 package com.kinetx.moneymanager.viewmodel
 
-import android.app.AlertDialog
 import android.app.Application
-import android.util.Log
+import android.database.sqlite.SQLiteConstraintException
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.CategoryDatabase
@@ -13,7 +13,6 @@ import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class CategoryViewModel (val argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
 
@@ -137,18 +136,35 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     }
 
 
-    fun insertCategory()
+    fun insertCategory() : Boolean
     {
+
+        if (categoryName.value=="")
+        {
+            Toast.makeText(getApplication(), "Empty name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (_iconImageSource.value==R.drawable.help)
+        {
+            Toast.makeText(getApplication(), "Select an icon", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         insertCategoryDao(category)
+
+        return true
     }
 
     private fun insertCategoryDao(category: CategoryDatabase)
     {
+
         viewModelScope.launch(Dispatchers.IO)
         {
             repository.insertCategory(category)
         }
+
+
     }
 
 

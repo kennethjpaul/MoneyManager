@@ -84,8 +84,10 @@ class CategoryFragment : Fragment() {
             binding.categoryAddButton.setOnClickListener()
             {
 
-                viewModel.insertCategory()
-                view?.findNavController()?.navigateUp()
+               if(viewModel.insertCategory())
+               {
+                   view?.findNavController()?.navigateUp()
+               }
             }
 
             binding.categoryUpdateButton.setOnClickListener()

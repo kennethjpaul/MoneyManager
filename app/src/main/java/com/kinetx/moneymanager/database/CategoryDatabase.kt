@@ -2,10 +2,11 @@ package com.kinetx.moneymanager.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.kinetx.moneymanager.enums.CategoryType
 
-@Entity(tableName = "category_table")
+@Entity(tableName = "category_table", indices =  [Index(value = ["category_name"], unique = true)] )
 data class CategoryDatabase(
 
     @PrimaryKey(autoGenerate = true)

@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentPlotTransactionBinding
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.viewmodel.PlotTransactionViewModel
 import com.kinetx.moneymanager.viewmodelfactory.PlotTransactionViewModelFactory
 
@@ -42,6 +45,20 @@ class PlotTransactionFragment : Fragment() {
         binding.plotTransactionViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.plotTransactionDateStart.setOnClickListener()
+        {
+            viewModel.dateStartPick(it)
+        }
+
+        binding.plotTransactionDateEnd.setOnClickListener()
+        {
+            viewModel.dateEndPick(it)
+        }
+
+        viewModel.fragmentTitle.observe(viewLifecycleOwner)
+        {
+            (activity as AppCompatActivity).supportActionBar?.title = it
+        }
 
         viewModel.accountDbList.observe(viewLifecycleOwner)
         {
@@ -61,32 +78,35 @@ class PlotTransactionFragment : Fragment() {
         binding.plotSubmitButton.setOnClickListener()
         {
 
-            view?.findNavController()?.navigate(PlotTransactionFragmentDirections.actionPlotTransactionFragmentToTransactionListFragment("d"))
-
-            /*
-            val accountAll : Boolean = binding.plotAccountSpinner.selectedItemPosition == 0
-            val categoryAll : Boolean = binding.plotCategorySpinner.selectedItemPosition ==0
 
 
-
-            if (categoryAll and accountAll)
+            val transactionType : TransactionType = when(binding.radioGroup.checkedRadioButtonId)
             {
-
-            }
-            else if (categoryAll)
-            {
-                val accountId : Long = viewModel.accountDbList.value?.get(binding.plotAccountSpinner.selectedItemPosition-1)?.categoryId!!
-            }
-            else if (accountAll)
-            {
-
-            }
-            else
-            {
-                val accountId : Long = viewModel.accountDbList.value?.get(binding.plotAccountSpinner.selectedItemPosition-1)?.categoryId!!
+                R.id.plot_category_income ->
+                {
+                    TransactionType.INCOME
+                }
+                R.id.plot_category_expense ->
+                {
+                     TransactionType.EXPENSE
+                }
+                R.id.plot_category_transfer ->
+                {
+                    TransactionType.TRANSFER
+                }
+                else ->
+                {
+                    TransactionType.EXPENSE
+                }
             }
 
-            */
+            val(accountId : Long, categoryId : Long) = viewModel.getAccountCategoryIds(transactionType)
+            //Toast.makeText(context, "Account id is $accountId and category id is $categoryId", Toast.LENGTH_SHORT).show()
+
+            val dateStart   = viewModel.myCalendarStart.timeInMillis
+            val dateEnd     = viewModel.myCalendarEnd.timeInMillis
+
+            view?.findNavController()?.navigate(PlotTransactionFragmentDirections.actionPlotTransactionFragmentToTransactionListFragment(transactionType,accountId,categoryId,dateStart,dateEnd))
 
         }
 

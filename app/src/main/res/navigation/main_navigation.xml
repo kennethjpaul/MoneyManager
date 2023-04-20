@@ -84,6 +84,19 @@
         android:id="@+id/transactionListFragment"
         android:name="com.kinetx.moneymanager.fragment.TransactionListFragment"
         android:label="TransactionListFragment" >
-        <argument android:name="g" />
+        <argument android:name="transactionType"
+            app:argType="com.kinetx.moneymanager.enums.TransactionType" />
+        <argument
+            android:name="accountId"
+            app:argType="long" />
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="dateStart"
+            app:argType="long" />
+        <argument
+            android:name="dateEnd"
+            app:argType="long" />
     </fragment>
 </navigation>
