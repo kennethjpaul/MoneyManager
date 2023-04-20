@@ -85,7 +85,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
             R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
         _categoryPositionTwo.value = ImageButtonData(-1,
             R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt(),"", CategoryType.ACCOUNT)
-        transactionAmount.value = "0.0"
+        transactionAmount.value = ""
         transactionComment.value=""
         when(argList.transactionType)
         {
@@ -166,6 +166,12 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         if (_categoryPositionTwo.value?.buttonId==-1L)
         {
             Toast.makeText(application, "Select the ${_categoryPositionTwoText.value}", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (transactionAmount.value=="")
+        {
+            Toast.makeText(application, "Enter an amount", Toast.LENGTH_SHORT).show()
             return false
         }
 
