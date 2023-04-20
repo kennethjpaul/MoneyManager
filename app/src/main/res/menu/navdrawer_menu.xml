@@ -5,6 +5,12 @@
         android:icon="@drawable/graph"
         android:title="Account Balance"
         />
+
+    <item
+        android:id="@+id/summaryFragment"
+        android:icon="@drawable/graph"
+        android:title="Summary"
+        />
     <item
         android:id="@+id/plotTransactionFragment"
         android:icon="@drawable/graph"

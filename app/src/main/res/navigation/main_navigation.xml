@@ -103,4 +103,8 @@
         android:id="@+id/balancesFragment"
         android:name="com.kinetx.moneymanager.fragment.BalancesFragment"
         android:label="BalancesFragment" />
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="com.kinetx.moneymanager.fragment.SummaryFragment"
+        android:label="SummaryFragment" />
 </navigation>
