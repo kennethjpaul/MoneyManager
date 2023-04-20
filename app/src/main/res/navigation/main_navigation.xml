@@ -99,4 +99,8 @@
             android:name="dateEnd"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/balancesFragment"
+        android:name="com.kinetx.moneymanager.fragment.BalancesFragment"
+        android:label="BalancesFragment" />
 </navigation>
