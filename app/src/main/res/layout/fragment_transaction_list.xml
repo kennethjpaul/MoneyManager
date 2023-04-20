@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
+            android:textSize="20sp"
             android:text="@string/total"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView4" />
@@ -36,9 +37,11 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
+            android:textSize="20sp"
             android:layout_height="wrap_content"
             android:text="@{transactionListViewModel.totalTransactionAmount}"
             android:layout_marginEnd="30dp"
+            tools:text="3000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView3" />
 
