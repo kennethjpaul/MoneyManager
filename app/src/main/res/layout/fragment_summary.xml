@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -13,11 +14,63 @@
         android:layout_height="match_parent"
         tools:context=".fragment.SummaryFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Summary" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:onCheckedChanged="@{summaryViewModel.onRadioClick}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/summary_year_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year" />
+
+            <RadioButton
+                android:id="@+id/summary_month_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Month" />
+
+            <RadioButton
+                android:id="@+id/summary_week_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Week" />
+
+            <RadioButton
+                android:id="@+id/summary_day_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Day" />
+
+        </RadioGroup>
+
+        <com.kinetx.moneymanager.customview.CustomDateView
+            android:id="@+id/customDateView1"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/air_force_blue"
+            app:day_c="@{summaryViewModel.selectedDay}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup3"
+            app:month_c="@{summaryViewModel.selectedMonth}"
+            app:type_c="@{summaryViewModel.selectedType}"
+            app:weekEnd_c="@{summaryViewModel.selectedWeekEnd}"
+            app:weekEndMonth_c="@{summaryViewModel.selectedWeekEndMonth}"
+            app:weekStart_c="@{summaryViewModel.selectedWeekStart}"
+            app:weekStartMonth_c="@{summaryViewModel.selectedWeekStartMonth}"
+            app:year_c="@{summaryViewModel.selectedYear}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
