@@ -18,6 +18,8 @@ interface DatabaseDao {
 
     @Query("SELECT * FROM category_table")
     fun getAllCategory(): LiveData<List<CategoryDatabase>>
+    @Query("SELECT category_name FROM category_table")
+    fun getAllCategoryNames(): LiveData<List<String>>
     @Query("SELECT * FROM category_table WHERE category_type = 'INCOME'")
     fun getAllIncomeCategory(): LiveData<List<CategoryDatabase>>
     @Query("SELECT * FROM category_table WHERE category_type =  'EXPENSE'")
@@ -27,7 +29,7 @@ interface DatabaseDao {
     @Query("SELECT * FROM category_table ORDER BY categoryId DESC LIMIT 1")
     fun getLatestCategory(): CategoryDatabase?
     @Query("SELECT * FROM CATEGORY_TABLE where categoryId = :categoryId")
-    fun getCategory(categoryId: Long) : CategoryDatabase?
+    suspend fun getCategory(categoryId: Long) : CategoryDatabase?
     @Query("SELECT * FROM CATEGORY_TABLE where category_name = :categoryName")
     fun getCategoryByName(categoryName: String) : CategoryDatabase?
     @Query("SELECT category_name FROM CATEGORY_TABLE where categoryId= :categoryId")

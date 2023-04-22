@@ -45,21 +45,20 @@ class AddTransactionFragment : Fragment() {
             (activity as AppCompatActivity).supportActionBar?.title = it
         }
 
+
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setBackgroundColor(it.buttonColor)
-            binding.addTransactionCategoryOneBtn.setImageResource(it.buttonImage)
-            binding.transactionCategoryOneSelect.text = it.buttonTitle
+            binding.addTransactionCategoryOneBtn.setBackgroundColor(it.categoryColor)
+            binding.addTransactionCategoryOneBtn.setImageResource(it.categoryImage)
+            binding.transactionCategoryOneSelect.text = it.categoryName
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.buttonColor)
-            binding.addTransactionCategoryTwoBtn.setImageResource(it.buttonImage)
-            binding.transactionCategoryTwoSelect.text = it.buttonTitle
+            binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.categoryColor)
+            binding.addTransactionCategoryTwoBtn.setImageResource(it.categoryImage)
+            binding.transactionCategoryTwoSelect.text = it.categoryName
         }
-
-
 
 
 
@@ -72,7 +71,7 @@ class AddTransactionFragment : Fragment() {
         {
             view?.findNavController()?.navigate(
                 AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
-                    viewModel.categoryPositionOne.value?.buttonType ?: CategoryType.ACCOUNT,
+                    viewModel.categoryPositionOne.value?.categoryType ?: CategoryType.ACCOUNT,
                     1
                 )
             )
@@ -82,7 +81,7 @@ class AddTransactionFragment : Fragment() {
         {
             view?.findNavController()?.navigate(
                 AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
-                    viewModel.categoryPositionTwo.value?.buttonType ?: CategoryType.ACCOUNT,
+                    viewModel.categoryPositionTwo.value?.categoryType ?: CategoryType.ACCOUNT,
                 2
                 )
             )
@@ -90,17 +89,10 @@ class AddTransactionFragment : Fragment() {
 
         setFragmentResultListener("SelectCategory")
         { _, bundle ->
-            val itemColor = bundle.getInt("itemColor")
             val categoryPosition = bundle.getInt("categoryPosition")
-            val itemImage = bundle.getInt("itemImage")
             val itemId = bundle.getLong("itemId")
-            val itemTitle= bundle.getString("itemTitle")!!
 
-            when(categoryPosition)
-            {
-                1 -> viewModel.updateCategoryPositionOne(itemId,itemImage,itemColor,itemTitle)
-                2 -> viewModel.updateCategoryPositionTwo(itemId,itemImage,itemColor,itemTitle)
-            }
+            viewModel.categoryUpdate(itemId,categoryPosition)
 
         }
 
@@ -112,10 +104,20 @@ class AddTransactionFragment : Fragment() {
             }
         }
 
-
-
-
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (viewModel.categoryPositionOne.value!!.categoryId!=-1L)
+        {
+            viewModel.categoryUpdate(viewModel.categoryPositionOne.value!!.categoryId, 1)
+        }
+
+        if (viewModel.categoryPositionTwo.value!!.categoryId!=-1L)
+        {
+            viewModel.categoryUpdate(viewModel.categoryPositionTwo.value!!.categoryId, 2)
+        }
+    }
 }

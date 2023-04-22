@@ -95,16 +95,10 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
         val item = viewModel.readAllCategories.value?.get(position)
         val itemId : Long = item?.categoryId!!
-        val itemImage : Int = item.categoryImage
-        val itemColor : Int = item.categoryColor
-        val itemTitle : String = item.categoryName
 
-        setFragmentResult("SelectCategory", bundleOf("categoryPosition" to argList.categoryPosition,"categoryType" to argList.categoryType,"itemId" to itemId, "itemColor" to itemColor, "itemImage" to itemImage, "itemTitle" to itemTitle))
+        setFragmentResult("SelectCategory", bundleOf("categoryPosition" to argList.categoryPosition,"itemId" to itemId))
 
         view?.findNavController()?.navigateUp()
-
-        //Toast.makeText(context, "An item of $id, image $itemImage, color $itemColor and title $itemTitle was clicked", Toast.LENGTH_SHORT).show()
-
     }
 
     override fun onSelectCategoryLongClick(position: Int) {

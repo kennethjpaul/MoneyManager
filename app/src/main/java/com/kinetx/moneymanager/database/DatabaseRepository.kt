@@ -11,7 +11,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     val readAllIncomeCategory : LiveData<List<CategoryDatabase>> = databaseDao.getAllIncomeCategory()
     val readAllExpenseCategory : LiveData<List<CategoryDatabase>> = databaseDao.getAllExpenseCategory()
     val readAllAccountCategory : LiveData<List<CategoryDatabase>> = databaseDao.getAllAccountCategory()
-
+    val readAllCategoryNames : LiveData<List<String>> = databaseDao.getAllCategoryNames()
 
 
 
@@ -30,6 +30,8 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         databaseDao.deleteCategory(category)
     }
 
+    //suspend fun getAllCategoryNames : List<String>
+
     fun getCategoryByName(categoryName : String) : CategoryDatabase?
     {
         return databaseDao.getCategoryByName(categoryName)
@@ -38,6 +40,11 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     suspend fun getCategoryNameById(categoryId : Long) : String
     {
         return databaseDao.getCategoryNameById(categoryId)
+    }
+
+    suspend fun getCategory(categoryId : Long) : CategoryDatabase?
+    {
+        return databaseDao.getCategory(categoryId)
     }
 
 

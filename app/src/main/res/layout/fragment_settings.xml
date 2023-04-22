@@ -14,7 +14,15 @@
         android:layout_height="match_parent"
         tools:context=".fragment.SettingsFragment">
 
-
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:id="@+id/settings_numberpicker_startday"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/settings_guideline"
@@ -31,21 +39,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="Start day of the month"
-            app:layout_constraintEnd_toStartOf="@+id/settings_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="376dp"
             android:layout_marginEnd="40dp"
             android:text="Backup"
             app:layout_constraintEnd_toStartOf="@+id/settings_guideline"
@@ -59,6 +61,17 @@
             android:text="Restore"
             app:layout_constraintStart_toStartOf="@+id/settings_guideline"
             app:layout_constraintTop_toTopOf="@+id/button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Save"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settings_numberpicker_startday" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

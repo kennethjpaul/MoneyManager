@@ -63,6 +63,11 @@ class CategoryFragment : Fragment() {
             }
 
 
+            viewModel.categoryNamesDb.observe(viewLifecycleOwner)
+            {
+                viewModel.categoryNames = it
+            }
+
             binding.categoryIconButton.setOnClickListener()
             {
                 view?.findNavController()?.navigate(
@@ -92,8 +97,10 @@ class CategoryFragment : Fragment() {
 
             binding.categoryUpdateButton.setOnClickListener()
             {
-                viewModel.updateCategory()
-                view?.findNavController()?.navigateUp()
+                if(viewModel.updateCategory())
+                {
+                    view?.findNavController()?.navigateUp()
+                }
             }
 
             binding.categoryDeleteButton.setOnClickListener()

@@ -40,6 +40,10 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
     val categorySpinnerIsVisible : LiveData<Int>
         get() = _categorySpinnerIsVisible
 
+    private val _accountSpinnerIsVisible = MutableLiveData<Int>()
+    val accountSpinnderIsVisible : LiveData<Int>
+        get() = _accountSpinnerIsVisible
+
     val categorySpinnerSelectedPosition = MutableLiveData<Int>()
 
     private val _categorySpinnerEntries = MutableLiveData<List<String>>()
@@ -82,7 +86,8 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
 
     init {
         _fragmentTitle.value = "Select data to plot"
-        _categorySpinnerIsVisible.value = View.VISIBLE
+        _categorySpinnerIsVisible.value = View.GONE
+        _accountSpinnerIsVisible.value = View.GONE
 
         myCalendarEnd = resetToMidnight(myCalendarEnd)
         myCalendarStart = resetToMidnight(myCalendarStart)
@@ -193,12 +198,14 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
     fun onRadioClick(radioGroup : RadioGroup, id : Int)
     {
         _accountSpinnerEntries.value = populateSpinner(accountDbList.value)
+        _accountSpinnerIsVisible.value = View.VISIBLE
         when(id)
         {
             R.id.plot_category_income ->
             {
                 _categorySpinnerEntries.value = populateSpinner(incomeDbList.value)
                 _categorySpinnerIsVisible.value = View.VISIBLE
+
             }
             R.id.plot_category_expense ->
             {

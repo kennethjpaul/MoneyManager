@@ -98,6 +98,9 @@
         <argument
             android:name="dateEnd"
             app:argType="long" />
+        <action
+            android:id="@+id/action_transactionListFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
     </fragment>
     <fragment
         android:id="@+id/balancesFragment"

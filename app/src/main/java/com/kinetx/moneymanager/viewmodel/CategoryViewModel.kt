@@ -60,6 +60,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     val coloColorCode : LiveData<Int>
         get() = _colorColorCode
 
+    var categoryNames : List<String> = emptyList()
+    var categoryNamesDb : LiveData<List<String>>
 
     private val repository : DatabaseRepository
 
@@ -68,6 +70,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
+
+
+        categoryNamesDb = repository.readAllCategoryNames
+
         _radioEnabled.value = false
         var titleString = "Create"
         if (argList.isEdit)
@@ -139,6 +145,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     fun insertCategory() : Boolean
     {
 
+        //TODO : Check for trailing spaces and other things in the category name
+
         if (categoryName.value=="")
         {
             Toast.makeText(getApplication(), "Empty name", Toast.LENGTH_SHORT).show()
@@ -147,6 +155,11 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         if (_iconImageSource.value==R.drawable.help)
         {
             Toast.makeText(getApplication(), "Select an icon", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (categoryName.value?.trim() in categoryNames)
+        {
+            Toast.makeText(getApplication(), "An account or cateory with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -168,10 +181,21 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     }
 
 
-    fun updateCategory()
+    fun updateCategory() : Boolean
     {
+
+        //TODO : Check for trailing spaces and other things in the category name
+
+
+
+        if (categoryName.value?.trim()  in categoryNames)
+        {
+            Toast.makeText(getApplication(), "An account or cateory with the same name exists", Toast.LENGTH_SHORT).show()
+            return false
+        }
         val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         updateCategoryDao(category)
+        return true
     }
 
     private fun updateCategoryDao(category: CategoryDatabase) {

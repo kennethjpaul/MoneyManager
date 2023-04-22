@@ -35,6 +35,8 @@ class SettingsFragment : Fragment() {
         binding.settingsViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.settingsNumberpickerStartday.maxValue = 31
+        binding.settingsNumberpickerStartday.minValue = 1
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner){
             (activity as AppCompatActivity).supportActionBar?.title =it
