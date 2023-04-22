@@ -143,7 +143,7 @@ class AddTransactionFragment : Fragment() {
                     _,_ ->
             }
             builder.setTitle("Do you want to delete this category")
-            builder.setMessage("Deleting will purge all entries associated with it")
+            builder.setMessage("This action is permanent")
             builder.create().show()
         }
 
