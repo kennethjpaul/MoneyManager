@@ -1,5 +1,7 @@
 package com.kinetx.moneymanager.fragment
 
+import android.app.AlertDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -60,6 +62,21 @@ class AddTransactionFragment : Fragment() {
             binding.transactionCategoryTwoSelect.text = it.categoryName
         }
 
+        viewModel.transaction.observe(viewLifecycleOwner)
+        {
+
+            viewModel.categoryUpdate(it.transactionCategoryOne,1)
+            viewModel.categoryUpdate(it.transactionCategoryTwo,2)
+            viewModel.transactionAmount.value = it.transactionAmount.toString()
+            viewModel.transactionComment.value = it.transactionComment
+
+            val cal : Calendar = Calendar.getInstance()
+            cal.timeInMillis = it.transactionDate
+
+            viewModel.setCalendar(cal)
+
+            it.transactionDate
+        }
 
 
         binding.addTransactionAddDateBtn.setOnClickListener()
@@ -102,6 +119,32 @@ class AddTransactionFragment : Fragment() {
             {
                 view?.findNavController()?.navigateUp()
             }
+        }
+
+        binding.addTransactionUpdateBtn.setOnClickListener()
+        {
+            if (viewModel.updateTransaction())
+            {
+                view?.findNavController()?.navigateUp()
+            }
+        }
+
+        binding.addTransactionDeleteBtn.setOnClickListener()
+        {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setPositiveButton("Yes")
+            {
+                    _,_ ->
+                viewModel.deleteTransaction()
+                view?.findNavController()?.navigateUp()
+            }
+            builder.setNegativeButton("No")
+            {
+                    _,_ ->
+            }
+            builder.setTitle("Do you want to delete this category")
+            builder.setMessage("Deleting will purge all entries associated with it")
+            builder.create().show()
         }
 
         return binding.root

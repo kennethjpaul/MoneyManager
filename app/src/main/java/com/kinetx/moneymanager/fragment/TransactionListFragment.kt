@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentTransactionListBinding
@@ -67,7 +68,11 @@ class TransactionListFragment : Fragment(), TransactionListAdapter.OnTransaction
     }
 
     override fun onTransactionListLonClick(position: Int) {
-        Toast.makeText(context, "Long Click", Toast.LENGTH_SHORT).show()
+
+        val transactionId = viewModel.listTransformed.value?.get(position)?.transactionId
+        val transactionType = argList.transactionType
+        view?.findNavController()?.navigate(TransactionListFragmentDirections.actionTransactionListFragmentToAddTransactionFragment(transactionType,transactionId!!))
+        //Toast.makeText(context, "Long Click", Toast.LENGTH_SHORT).show()
     }
 
 }

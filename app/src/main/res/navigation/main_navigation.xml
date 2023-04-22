@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_addTransactionFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
+        <argument
+            android:name="transactionId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/plotTransactionFragment"

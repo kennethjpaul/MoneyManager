@@ -31,6 +31,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     val transactionAmount = MutableLiveData<String>()
     val transactionComment = MutableLiveData<String>()
 
+    val transaction = MutableLiveData<TransactionDatabase>()
 
     private val _selectedDay = MutableLiveData<String>()
     val selectedDay : LiveData<String>
@@ -44,7 +45,13 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     val selectedYear : LiveData<String>
         get() = _selectedYear
 
+    private val _isAddBtnVisible = MutableLiveData<Int>()
+    val isAddBtnVisible : LiveData<Int>
+        get() = _isAddBtnVisible
 
+    private val _isUpdateDeleteBtnVisible = MutableLiveData<Int>()
+    val isUpdateDeleteBtnVisible : LiveData<Int>
+        get() = _isUpdateDeleteBtnVisible
 
     private val _categoryPositionOne = MutableLiveData<CategoryDatabase>()
     val categoryPositionOne : LiveData<CategoryDatabase>
@@ -78,13 +85,12 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     private val repository : DatabaseRepository
 
     val ttt = MutableLiveData<CategoryDatabase>()
-
+    var titleStringStart : String = ""
 
     init {
 
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
-
 
         myCalendar.set(Calendar.HOUR_OF_DAY,0)
         myCalendar.set(Calendar.MINUTE,0)
@@ -93,13 +99,42 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
         _currencySpinner.value = listOf("CHF","EUR","INR","USD")
 
-        _categoryPositionOne.value = CategoryDatabase(-1,"",CategoryType.ACCOUNT,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt())
-        _categoryPositionTwo.value = CategoryDatabase(-1,"",CategoryType.ACCOUNT,R.drawable.help,java.lang.Long.decode("0xFF5d8aa8").toInt())
+        _categoryPositionOne.value = CategoryDatabase(
+            -1,
+            "",
+            CategoryType.ACCOUNT,
+            R.drawable.help,
+            java.lang.Long.decode("0xFF5d8aa8").toInt()
+        )
+        _categoryPositionTwo.value = CategoryDatabase(
+            -1,
+            "",
+            CategoryType.ACCOUNT,
+            R.drawable.help,
+            java.lang.Long.decode("0xFF5d8aa8").toInt()
+        )
 
+        if(argList.transactionId==-1L)
+        {
 
-        transactionAmount.value = ""
-        transactionComment.value=""
+            transactionAmount.value = ""
+            transactionComment.value = ""
+            titleStringStart = "Add"
+            _isAddBtnVisible.value = View.VISIBLE
+            _isUpdateDeleteBtnVisible.value = View.GONE
 
+        }
+        else
+        {
+            viewModelScope.launch (Dispatchers.IO)
+            {
+                transaction.postValue(repository.getTransactionById(argList.transactionId))
+            }
+
+            titleStringStart = "Edit"
+            _isAddBtnVisible.value = View.GONE
+            _isUpdateDeleteBtnVisible.value = View.VISIBLE
+        }
 
         viewModelScope.launch(Dispatchers.IO) {
             ttt.postValue(repository.getCategoryByName("Main"))
@@ -113,21 +148,21 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
                 _categoryPositionTwo.value!!.categoryType = CategoryType.INCOME
                 _buttonPositionOneText.value = "Account"
                 _buttonPositionTwoText.value = "Category"
-                _fragmentTitle.value = "Add Income"
+                _fragmentTitle.value = "$titleStringStart Income Transaction"
             }
             TransactionType.EXPENSE ->
             {
                 _categoryPositionTwo.value!!.categoryType = CategoryType.EXPENSE
                 _buttonPositionOneText.value = "Account"
                 _buttonPositionTwoText.value = "Category"
-                _fragmentTitle.value = "Add Expense"
+                _fragmentTitle.value = "$titleStringStart Expense Transaction"
             }
             TransactionType.TRANSFER->
             {
                 _categoryPositionTwo.value!!.categoryType = CategoryType.ACCOUNT
                 _buttonPositionOneText.value = "Source"
                 _buttonPositionTwoText.value = "Destination"
-                _fragmentTitle.value = "Add Transfer"
+                _fragmentTitle.value = "$titleStringStart Transfer Transaction"
             }
         }
 
@@ -203,6 +238,49 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         }
     }
 
+
+    fun updateTransaction() : Boolean
+    {
+        if (transactionAmount.value=="")
+        {
+            Toast.makeText(application, "Enter an amount", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (transactionAmount.value?.toFloat()==0.0f)
+        {
+            Toast.makeText(application, "Enter an amount greater than zero", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        var dateLong : Long = myCalendar.timeInMillis
+        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
+        updateTransactionDao(transaction)
+        return true
+    }
+
+    private fun updateTransactionDao(transaction: TransactionDatabase) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.updateTransaction(transaction)
+        }
+    }
+
+
+    fun deleteTransaction()
+    {
+        var dateLong : Long = myCalendar.timeInMillis
+        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
+        deleteTransactionDao(transaction)
+    }
+
+    private fun deleteTransactionDao(transaction: TransactionDatabase) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.deleteTransaction(transaction)
+        }
+    }
+
     fun categoryUpdate(itemId: Long, categoryPosition : Int) {
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -213,6 +291,16 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
             }
         }
 
+    }
+
+    fun setCalendar(cal: Calendar) {
+
+        myCalendar.set(Calendar.YEAR, cal.get(Calendar.YEAR))
+        myCalendar.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+        myCalendar.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
+        _selectedDay.value = cal.get(Calendar.DAY_OF_MONTH).toString()
+        _selectedMonth.value = monthArray[cal.get(Calendar.MONTH)]
+        _selectedYear.value = cal.get(Calendar.YEAR).toString()
     }
 
 }

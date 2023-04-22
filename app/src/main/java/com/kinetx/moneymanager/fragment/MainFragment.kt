@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "expense"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    TransactionType.EXPENSE
+                    TransactionType.EXPENSE,-1
                 )
             )
         }
@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "income"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    TransactionType.INCOME
+                    TransactionType.INCOME,-1
                 )
             )
         }
@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
             var transactionType : String = "transfer"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
-                    TransactionType.TRANSFER
+                    TransactionType.TRANSFER,-1
                 )
             )
         }

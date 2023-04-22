@@ -186,7 +186,11 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
         //TODO : Check for trailing spaces and other things in the category name
 
-
+        if (categoryName.value=="")
+        {
+            Toast.makeText(getApplication(), "Empty name", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
         if (categoryName.value?.trim()  in categoryNames)
         {
