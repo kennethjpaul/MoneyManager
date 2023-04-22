@@ -16,12 +16,12 @@
 
 
         <RadioGroup
-            android:id="@+id/radioGroup3"
+            android:id="@+id/summary_scope_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
-            android:onCheckedChanged="@{summaryViewModel.onRadioClick}"
+            android:onCheckedChanged="@{summaryViewModel::onRadioClick}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -54,7 +54,7 @@
         </RadioGroup>
 
         <com.kinetx.moneymanager.customview.CustomDateView
-            android:id="@+id/customDateView1"
+            android:id="@+id/summary_custom_date_view"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="40dp"
@@ -62,7 +62,7 @@
             app:day_c="@{summaryViewModel.selectedDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup3"
+            app:layout_constraintTop_toBottomOf="@+id/summary_scope_radio_group"
             app:month_c="@{summaryViewModel.selectedMonth}"
             app:type_c="@{summaryViewModel.selectedType}"
             app:weekEnd_c="@{summaryViewModel.selectedWeekEnd}"
@@ -70,6 +70,27 @@
             app:weekStart_c="@{summaryViewModel.selectedWeekStart}"
             app:weekStartMonth_c="@{summaryViewModel.selectedWeekStartMonth}"
             app:year_c="@{summaryViewModel.selectedYear}" />
+
+        <Button
+            android:id="@+id/summary_advance_left_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="L"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
+            app:layout_constraintEnd_toStartOf="@+id/summary_custom_date_view"
+            app:layout_constraintTop_toTopOf="@+id/summary_custom_date_view" />
+
+        <Button
+            android:id="@+id/summary_advance_right_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:text="R"
+            android:layout_marginStart="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
+            app:layout_constraintStart_toEndOf="@+id/summary_custom_date_view"
+            app:layout_constraintTop_toTopOf="@+id/summary_custom_date_view" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

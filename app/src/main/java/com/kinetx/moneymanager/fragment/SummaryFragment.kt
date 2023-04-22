@@ -37,6 +37,22 @@ class SummaryFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
 
+
+        binding.summaryAdvanceLeftBtn.setOnClickListener()
+        {
+            val scope = binding.summaryScopeRadioGroup.checkedRadioButtonId
+            viewModel.changeDate(-1,scope)
+        }
+
+        binding.summaryAdvanceRightBtn.setOnClickListener()
+        {
+            val scope = binding.summaryScopeRadioGroup.checkedRadioButtonId
+            viewModel.changeDate(1,scope)
+        }
+
+
+
+
         viewModel.fragmentTitle.observe(viewLifecycleOwner){
             (activity as AppCompatActivity).supportActionBar?.title =it
         }

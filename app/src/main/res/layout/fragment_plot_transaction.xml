@@ -30,7 +30,7 @@
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onCheckedChanged="@{ plotTransactionViewModel.onRadioClick}"
+            android:onCheckedChanged="@{ plotTransactionViewModel::onRadioClick}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

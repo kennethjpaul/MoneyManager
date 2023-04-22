@@ -87,19 +87,19 @@ class DateView @JvmOverloads constructor(
     }
 }
 
-@BindingAdapter("app:day")
+@BindingAdapter("day")
 fun setDay(view: DateView, text: LiveData<String>)
 {
     view.setTextDay(text.value.toString())
 }
 
-@BindingAdapter("app:month")
+@BindingAdapter("month")
 fun setMonth(view: DateView, text: LiveData<String>)
 {
     view.setTextMonth(text.value.toString())
 }
 
-@BindingAdapter("app:year")
+@BindingAdapter("year")
 fun setYear(view: DateView, text: LiveData<String>)
 {
     view.setTextYear(text.value.toString())

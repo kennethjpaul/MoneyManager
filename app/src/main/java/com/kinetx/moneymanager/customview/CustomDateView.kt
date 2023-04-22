@@ -176,49 +176,49 @@ class CustomDateView @JvmOverloads constructor(
 }
 
 
-@BindingAdapter("app:day_c")
+@BindingAdapter("day_c")
 fun setDay(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextDay(text.value.toString())
 }
 
-@BindingAdapter("app:month_c")
+@BindingAdapter("month_c")
 fun setMonth(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextMonth(text.value.toString())
 }
 
-@BindingAdapter("app:year_c")
+@BindingAdapter("year_c")
 fun setYear(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextYear(text.value.toString())
 }
 
-@BindingAdapter("app:weekStart_c")
+@BindingAdapter("weekStart_c")
 fun setWeekStart(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextWeekStart(text.value.toString())
 }
 
-@BindingAdapter("app:weekEnd_c")
+@BindingAdapter("weekEnd_c")
 fun setWeekEnd(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextWeekEnd(text.value.toString())
 }
 
-@BindingAdapter("app:weekStartMonth_c")
+@BindingAdapter("weekStartMonth_c")
 fun setWeekStartMonth(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextWeekStartMonth(text.value.toString())
 }
 
-@BindingAdapter("app:weekEndMonth_c")
+@BindingAdapter("weekEndMonth_c")
 fun setWeekEndMonth(view: CustomDateView, text: LiveData<String>)
 {
     view.setTextWeekEndMonth(text.value.toString())
 }
 
-@BindingAdapter("app:type_c")
+@BindingAdapter("type_c")
 fun setViewType(view: CustomDateView, text: LiveData<Int>)
 {
     view.setViewType(text.value!!.toInt())
