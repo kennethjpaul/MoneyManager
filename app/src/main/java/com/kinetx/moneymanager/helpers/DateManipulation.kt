@@ -1,7 +1,9 @@
 package com.kinetx.moneymanager.helpers
 
 import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import android.util.Log
+import kotlin.math.min
 
 object DateManipulation {
 
@@ -15,8 +17,9 @@ object DateManipulation {
     }
 
 
-    fun getStartOfWeek(myCalendar: Calendar) : Pair< Int, Int>
+    fun getStartOfWeek(myCalendar: Calendar) : Calendar
     {
+        val startOfWeekCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
         var calendarNew: Calendar = Calendar.getInstance()
         calendarNew = copyDayMonthYear(calendarNew,myCalendar)
 
@@ -37,14 +40,17 @@ object DateManipulation {
             day = 1
         }
 
-        return Pair(day,month)
+        startOfWeekCalendar.set(Calendar.DAY_OF_MONTH,day)
+        startOfWeekCalendar.set(Calendar.MONTH,month)
+        return startOfWeekCalendar
     }
 
 
-    fun getEndOfWeek(myCalendar: Calendar): Pair<Int,Int>
+    fun getEndOfWeek(myCalendar: Calendar): Calendar
     {
+        val endOfWeekCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
         val dayOfWeek = myCalendar.get(Calendar.DAY_OF_WEEK)
-        val shift = dayOfWeek-7
+        val shift = 7-dayOfWeek
 
         var day = myCalendar.get(Calendar.DAY_OF_MONTH)+shift
         var month = myCalendar.get(Calendar.MONTH)
@@ -59,7 +65,70 @@ object DateManipulation {
         {
             day = 31
         }
-        return Pair(day,month)
+
+        endOfWeekCalendar.set(Calendar.DAY_OF_MONTH,day)
+        endOfWeekCalendar.set(Calendar.MONTH,month)
+        return endOfWeekCalendar
+    }
+
+    fun getStartOfMonth(myCalendar: Calendar, startOfMonth : Int) : Calendar
+    {
+        val startMonthCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
+
+        val day  = myCalendar.get(Calendar.DAY_OF_MONTH)
+        var month = myCalendar.get(Calendar.MONTH)
+        var year = myCalendar.get(Calendar.YEAR)
+
+
+
+        if (month==0 && day < startOfMonth)
+        {
+            month =11
+            year -=1
+        }
+        else if(month >0 && day < startOfMonth)
+        {
+            month -=1
+        }
+
+
+        startMonthCalendar.set(Calendar.MONTH,month)
+        startMonthCalendar.set(Calendar.YEAR,year)
+
+        val maxDays = startMonthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        startMonthCalendar.set(Calendar.DAY_OF_MONTH,min(maxDays,startOfMonth))
+
+        return startMonthCalendar
+
+    }
+
+
+    fun getEndOfMonth(myCalendar: Calendar, startOfMonth : Int) : Calendar
+    {
+
+        val endMonthCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
+        val day  = myCalendar.get(Calendar.DAY_OF_MONTH)
+        var month = myCalendar.get(Calendar.MONTH)
+        var year = myCalendar.get(Calendar.YEAR)
+
+        if (day>startOfMonth && month == 11)
+        {
+            month =0
+            year +=1
+        }
+        else if (day >startOfMonth && month < 11)
+        {
+            month +=1
+        }
+
+        endMonthCalendar.set(Calendar.MONTH,month)
+        endMonthCalendar.set(Calendar.YEAR,year)
+        val maxDays = endMonthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        endMonthCalendar.set(Calendar.DAY_OF_MONTH,min(maxDays,startOfMonth-1))
+
+        return endMonthCalendar
+
     }
 
     fun changeDayByN(myCalendar: Calendar,n : Int,direction: Int) : Calendar

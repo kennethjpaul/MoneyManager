@@ -3,6 +3,7 @@ package com.kinetx.moneymanager.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.IncomeExpenseData
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
@@ -69,4 +70,11 @@ interface DatabaseDao {
             "K AS (SELECT E.m, E.a,E.b,F.c,F.d FROM E LEFT JOIN F ON E.m=F.m UNION SELECT F.m, E.a,E.b,F.c,F.d FROM F LEFT JOIN E ON E.m=F.m )"+
             "SELECT K.m AS categoryName, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(K.a,0)-IFNULL(K.b,0)-IFNULL(K.c,0)+IFNULL(K.d,0) AS amount FROM K,Z WHERE K.m=Z.category_name")
     fun getAccountSummary() : LiveData<List<CategoryListData>>
+
+    @Query("SELECT c.category_name AS categoryName, c.category_image AS categoryImage, c.category_color AS categoryColor , SUM(d.amount) AS amount FROM transaction_table d JOIN category_table c on d.category_two=c.categoryId AND c.category_type='EXPENSE' WHERE d.transaction_type='EXPENSE' AND d.date BETWEEN :dateStart AND :dateEnd GROUP BY c.category_name")
+    fun getCategorySummary(dateStart: Long, dateEnd : Long) : List<CategoryListData>
+
+    @Query("SELECT SUM(CASE WHEN transaction_type='INCOME' THEN amount ELSE 0 END) AS income,SUM(CASE WHEN transaction_type='EXPENSE' THEN amount ELSE 0 END) AS expense FROM transaction_table WHERE date BETWEEN :dateStart AND :dateEnd")
+    fun getIncomeExpenseSummary(dateStart: Long, dateEnd : Long): IncomeExpenseData
+
 }

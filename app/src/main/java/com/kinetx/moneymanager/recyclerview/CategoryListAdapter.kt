@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.recyclerview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,10 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
         val itemImageButton :ImageButton = itemView.findViewById(R.id.category_list_image_button)
         val itemCategoryName : TextView = itemView.findViewById(R.id.category_list_category_name)
         val itemAmount : TextView = itemView.findViewById(R.id.category_list_amount)
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         override fun onClick(v: View?) {
             val position = adapterPosition

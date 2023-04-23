@@ -2,6 +2,7 @@ package com.kinetx.moneymanager.database
 
 import androidx.lifecycle.LiveData
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.IncomeExpenseData
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.enums.TransactionType
 
@@ -91,5 +92,15 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     fun getAccountSummary() : LiveData<List<CategoryListData>>
     {
         return databaseDao.getAccountSummary()
+    }
+
+    fun getCategorySummary(dateStart: Long, dateEnd: Long) : List<CategoryListData>
+    {
+        return databaseDao.getCategorySummary(dateStart,dateEnd)
+    }
+
+    fun getIncomeExpenseSummary(dateStart: Long, dateEnd: Long) : IncomeExpenseData
+    {
+        return databaseDao.getIncomeExpenseSummary(dateStart,dateEnd)
     }
 }
