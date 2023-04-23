@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/custom_radio_selector.xml" value="0.2965" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/add_expense.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/category_list.xml" value="0.10666666666666667" />
         <entry key="app/src/main/res/layout/fragment_add_expense.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_income.xml" value="0.24183006535947713" />
         <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.5" />

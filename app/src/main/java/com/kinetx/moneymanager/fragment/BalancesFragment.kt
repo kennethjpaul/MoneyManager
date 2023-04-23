@@ -5,16 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentBalancesBinding
+import com.kinetx.moneymanager.recyclerview.CategoryListAdapter
 import com.kinetx.moneymanager.viewmodel.BalancesViewModel
 import com.kinetx.moneymanager.viewmodelfactory.BalancesViewModelFactory
 
 
-class BalancesFragment : Fragment() {
+class BalancesFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListListener {
 
     lateinit var binding :FragmentBalancesBinding
     lateinit var viewModel: BalancesViewModel
@@ -34,11 +37,26 @@ class BalancesFragment : Fragment() {
         binding.balanceViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+
+        val adapter = CategoryListAdapter(this)
+        binding.balancesRecyclerview.layoutManager = LinearLayoutManager(context)
+        binding.balancesRecyclerview.setHasFixedSize(true)
+        binding.balancesRecyclerview.adapter = adapter
+
         viewModel.fragmentTitle.observe(viewLifecycleOwner){
             (activity as AppCompatActivity).supportActionBar?.title =it
         }
 
+        viewModel.list.observe(viewLifecycleOwner)
+        {
+            adapter.setData(it)
+        }
+
         return binding.root
+    }
+
+    override fun onSelectCategoryListClick(position: Int) {
+        Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show()
     }
 
 }

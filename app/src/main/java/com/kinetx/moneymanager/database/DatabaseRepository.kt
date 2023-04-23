@@ -1,6 +1,7 @@
 package com.kinetx.moneymanager.database
 
 import androidx.lifecycle.LiveData
+import com.kinetx.moneymanager.dataclass.CategoryListData
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.enums.TransactionType
 import kotlinx.coroutines.Dispatchers
@@ -89,7 +90,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionsWithAccountWithCategory(transactionType,accountId,categoryId,dateStart,dateEnd)
     }
 
-    fun testingQuery() : LiveData<List<TransactionListClass>>
+    fun testingQuery() : LiveData<List<CategoryListData>>
     {
         return databaseDao.testingQuery()
     }
