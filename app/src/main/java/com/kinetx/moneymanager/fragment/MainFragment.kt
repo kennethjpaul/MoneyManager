@@ -32,7 +32,6 @@ class MainFragment : Fragment() {
 
         binding.mainAddExpenseBtn.setOnClickListener()
         {
-            var transactionType : String = "expense"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
                     TransactionType.EXPENSE,-1
@@ -42,7 +41,6 @@ class MainFragment : Fragment() {
 
         binding.mainAddIncomeBtn.setOnClickListener()
         {
-            var transactionType : String = "income"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
                     TransactionType.INCOME,-1
@@ -52,7 +50,6 @@ class MainFragment : Fragment() {
 
         binding.mainAddTransferBtn.setOnClickListener()
         {
-            var transactionType : String = "transfer"
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
                     TransactionType.TRANSFER,-1

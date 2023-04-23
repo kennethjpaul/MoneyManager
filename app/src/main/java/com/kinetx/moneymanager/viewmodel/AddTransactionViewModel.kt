@@ -165,6 +165,13 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
                 _buttonPositionTwoText.value = "Destination"
                 _fragmentTitle.value = "$titleStringStart Transfer Transaction"
             }
+            else ->
+            {
+                _categoryPositionTwo.value!!.categoryType = CategoryType.EXPENSE
+                _buttonPositionOneText.value = "Account"
+                _buttonPositionTwoText.value = "Category"
+                _fragmentTitle.value = "$titleStringStart Expense Transaction"
+            }
         }
 
 
