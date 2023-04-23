@@ -18,10 +18,10 @@ data class TransactionDatabase(
     val transactionType : TransactionType,
 
     @ColumnInfo(name="category_one")
-    val transactionCategoryOne : Long = 0L,
+    var transactionCategoryOne : Long = 0L,
 
     @ColumnInfo(name="category_two")
-    val transactionCategoryTwo : Long = 0L,
+    var transactionCategoryTwo : Long = 0L,
 
     @ColumnInfo(name="date")
     val transactionDate : Long = 0,

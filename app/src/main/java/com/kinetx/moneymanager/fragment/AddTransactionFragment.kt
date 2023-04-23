@@ -3,10 +3,12 @@ package com.kinetx.moneymanager.fragment
 import android.app.AlertDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
@@ -64,7 +66,7 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.transaction.observe(viewLifecycleOwner)
         {
-
+            Log.i("Date","Transaction changed")
             viewModel.categoryUpdate(it.transactionCategoryOne,1)
             viewModel.categoryUpdate(it.transactionCategoryTwo,2)
             viewModel.transactionAmount.value = it.transactionAmount.toString()
@@ -108,7 +110,6 @@ class AddTransactionFragment : Fragment() {
         { _, bundle ->
             val categoryPosition = bundle.getInt("categoryPosition")
             val itemId = bundle.getLong("itemId")
-
             viewModel.categoryUpdate(itemId,categoryPosition)
 
         }
@@ -155,12 +156,14 @@ class AddTransactionFragment : Fragment() {
 
         if (viewModel.categoryPositionOne.value!!.categoryId!=-1L)
         {
-            viewModel.categoryUpdate(viewModel.categoryPositionOne.value!!.categoryId, 1)
+            Log.i("Date","${viewModel.categoryPositionOne.value!!.categoryId} for 1")
+          //  viewModel.categoryUpdate(viewModel.categoryPositionOne.value!!.categoryId, 1)
         }
 
         if (viewModel.categoryPositionTwo.value!!.categoryId!=-1L)
         {
-            viewModel.categoryUpdate(viewModel.categoryPositionTwo.value!!.categoryId, 2)
+            Log.i("Date","${viewModel.categoryPositionTwo.value!!.categoryId} for 2")
+          //  viewModel.categoryUpdate(viewModel.categoryPositionTwo.value!!.categoryId, 2)
         }
     }
 }

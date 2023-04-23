@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController,drawerLayout)
         NavigationUI.setupWithNavController(binding.navDrawer,navController)
         supportActionBar?.title = "Money Manager"
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

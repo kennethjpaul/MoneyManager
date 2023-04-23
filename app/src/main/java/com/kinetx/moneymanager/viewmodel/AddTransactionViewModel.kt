@@ -3,6 +3,7 @@ package com.kinetx.moneymanager.viewmodel
 import android.app.Application
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -198,6 +199,9 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
     fun addTransaction(): Boolean {
 
+
+
+
         if (_categoryPositionOne.value?.categoryId==-1L)
         {
             Toast.makeText(application, "Select the ${_buttonPositionOneText.value}", Toast.LENGTH_SHORT).show()
@@ -283,11 +287,27 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
     fun categoryUpdate(itemId: Long, categoryPosition : Int) {
 
+        when(categoryPosition)
+        {
+            1->transaction.value?.transactionCategoryOne = itemId
+            2->transaction.value?.transactionCategoryTwo = itemId
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
+
+            Log.i("Date","corotuine $itemId $categoryPosition")
             when(categoryPosition)
             {
-                1 -> _categoryPositionOne.postValue(repository.getCategory(itemId))
-                2 -> _categoryPositionTwo.postValue(repository.getCategory(itemId))
+                1 ->
+                {
+                    _categoryPositionOne.postValue(repository.getCategory(itemId))
+
+                }
+                2 ->
+                {
+                    _categoryPositionTwo.postValue(repository.getCategory(itemId))
+
+                }
             }
         }
 

@@ -1,7 +1,7 @@
 package com.kinetx.moneymanager.viewmodel
 
 import android.app.Application
-import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.*
@@ -62,6 +62,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     var categoryNames : List<String> = emptyList()
     var categoryNamesDb : LiveData<List<String>>
+    var initialCategoryName : String =""
 
     private val repository : DatabaseRepository
 
@@ -88,6 +89,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _iconImageSource.value = argList.itemIcon
             _colorColorCode.value = argList.itemColor
 
+            initialCategoryName = argList.itemName
+
             titleString = "Edit"
 
         }
@@ -97,7 +100,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _editVisible.value = View.GONE
 
 
-
+            initialCategoryName = ""
             _categoryId.value = 1
             _iconImageSource.value = R.drawable.help
             _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
@@ -157,9 +160,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             Toast.makeText(getApplication(), "Select an icon", Toast.LENGTH_SHORT).show()
             return false
         }
+
         if (categoryName.value?.trim() in categoryNames)
         {
-            Toast.makeText(getApplication(), "An account or cateory with the same name exists", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
 
@@ -192,9 +196,9 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             return false
         }
 
-        if (categoryName.value?.trim()  in categoryNames)
+        if (categoryName.value?.trim()  in categoryNames && categoryName.value != initialCategoryName)
         {
-            Toast.makeText(getApplication(), "An account or cateory with the same name exists", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
         val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
