@@ -26,7 +26,7 @@ class BalancesViewModel (application: Application): AndroidViewModel(application
         _fragmentTitle.value = "Current Balance"
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
-        list = repository.testingQuery()
+        list = repository.getAccountSummary()
 
     }
 

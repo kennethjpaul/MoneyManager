@@ -68,5 +68,5 @@ interface DatabaseDao {
             "F AS (SELECT C.b as m, C.a AS c, D.a AS d FROM C LEFT JOIN D ON C.b = D.b UNION SELECT D.b as m, C.a AS c, D.a AS d FROM D LEFT JOIN C ON C.b = D.b),\n" +
             "K AS (SELECT E.m, E.a,E.b,F.c,F.d FROM E LEFT JOIN F ON E.m=F.m UNION SELECT F.m, E.a,E.b,F.c,F.d FROM F LEFT JOIN E ON E.m=F.m )"+
             "SELECT K.m AS categoryName, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(K.a,0)-IFNULL(K.b,0)-IFNULL(K.c,0)+IFNULL(K.d,0) AS amount FROM K,Z WHERE K.m=Z.category_name")
-    fun testingQuery() : LiveData<List<CategoryListData>>
+    fun getAccountSummary() : LiveData<List<CategoryListData>>
 }
