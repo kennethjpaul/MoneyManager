@@ -53,6 +53,12 @@ class TransactionListViewModel (argList: TransactionListFragmentArgs, applicatio
         }
 
 
+        listTransformed = Transformations.map(listTransformed){
+            it.sortedBy {
+                it.date
+            }
+        }
+
         listTransactionAmount = Transformations.map(listTransformed)
         {
                 list ->
