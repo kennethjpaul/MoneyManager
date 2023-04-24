@@ -68,10 +68,12 @@ interface DatabaseDao {
             "B AS (SELECT SUM(amount) AS a, category_name AS b FROM transaction_table JOIN Z ON transaction_table.category_one=Z.categoryId WHERE transaction_type='EXPENSE' GROUP BY category_name)," +
             "C AS (SELECT SUM(amount) AS a, category_name AS b FROM transaction_table JOIN Z ON transaction_table.category_one=Z.categoryId WHERE transaction_type='TRANSFER' GROUP BY category_name)," +
             "D AS (SELECT SUM(amount) AS a, category_name AS b FROM transaction_table JOIN Z ON transaction_table.category_two=Z.categoryId WHERE transaction_type='TRANSFER' GROUP BY category_name)," +
+            "DD AS (SELECT SUM(amount) AS e,  category_name AS m FROM transaction_table JOIN Z ON transaction_table.category_one=Z.categoryId WHERE transaction_type='BALANCE' GROUP BY category_name),"+
             "E AS (SELECT A.b as m, A.a AS a, B.a AS b FROM A LEFT JOIN B ON A.b = B.b UNION SELECT B.b as m, A.a AS a, B.a AS b FROM B LEFT JOIN A ON A.b = B.b),\n" +
             "F AS (SELECT C.b as m, C.a AS c, D.a AS d FROM C LEFT JOIN D ON C.b = D.b UNION SELECT D.b as m, C.a AS c, D.a AS d FROM D LEFT JOIN C ON C.b = D.b),\n" +
-            "K AS (SELECT E.m, E.a,E.b,F.c,F.d FROM E LEFT JOIN F ON E.m=F.m UNION SELECT F.m, E.a,E.b,F.c,F.d FROM F LEFT JOIN E ON E.m=F.m )"+
-            "SELECT K.m AS categoryName, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(K.a,0)-IFNULL(K.b,0)-IFNULL(K.c,0)+IFNULL(K.d,0) AS amount FROM K,Z WHERE K.m=Z.category_name")
+            "K AS (SELECT E.m, E.a,E.b,F.c,F.d FROM E LEFT JOIN F ON E.m=F.m UNION SELECT F.m, E.a,E.b,F.c,F.d FROM F LEFT JOIN E ON E.m=F.m ),"+
+            "L AS (SELECT K.m,K.a,K.b,K.c,K.d, DD.e FROM K LEFT JOIN DD on K.m=DD.m UNION SELECT DD.m,K.a,K.b,K.c,K.d, DD.e FROM DD LEFT JOIN K ON K.m=DD.m)"+
+            "SELECT L.m AS categoryName, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(L.e,0)+IFNULL(L.a,0)-IFNULL(L.b,0)-IFNULL(L.c,0)+IFNULL(L.d,0) AS amount FROM L,Z WHERE L.m=Z.category_name")
     fun getAccountSummary() : LiveData<List<CategoryListData>>
 
     @Query("SELECT c.category_name AS categoryName, c.category_image AS categoryImage, c.category_color AS categoryColor , SUM(d.amount) AS amount FROM transaction_table d JOIN category_table c on d.category_two=c.categoryId AND c.category_type='EXPENSE' WHERE d.transaction_type='EXPENSE' AND d.date BETWEEN :dateStart AND :dateEnd GROUP BY c.category_name")
