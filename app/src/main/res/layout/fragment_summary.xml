@@ -74,22 +74,24 @@
             app:weekStartMonth_c="@{summaryViewModel.selectedWeekStartMonth}"
             app:year_c="@{summaryViewModel.selectedYear}" />
 
-        <Button
+        <ImageButton
             android:id="@+id/summary_advance_left_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:text="L"
+            android:src="@drawable/arrow_left"
             android:layout_marginEnd="40dp"
+            android:background="@color/android_green"
             app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
             app:layout_constraintEnd_toStartOf="@+id/summary_custom_date_view"
             app:layout_constraintTop_toTopOf="@+id/summary_custom_date_view" />
 
-        <Button
+        <ImageButton
             android:id="@+id/summary_advance_right_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
-            android:text="R"
+            android:src="@drawable/arrow_right"
+            android:background="@color/android_green"
             android:layout_marginStart="40dp"
             app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
             app:layout_constraintStart_toEndOf="@+id/summary_custom_date_view"
