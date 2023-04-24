@@ -1,30 +1,77 @@
 package com.kinetx.moneymanager.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.icu.util.Calendar
+import android.util.Log
+import androidx.lifecycle.*
+import com.kinetx.moneymanager.database.DatabaseMain
+import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.dataclass.IncomeExpenseData
+import com.kinetx.moneymanager.helpers.DateManipulation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
-class MainViewModel : ViewModel () {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _incomeMonth = MutableLiveData<Float>()
-    val incomeMonth : LiveData<Float>
-        get() = _incomeMonth
+
+
+    private val startOfMonth = 25
+
+    val exp = MutableLiveData<Float>()
 
 
     private val _expenseMonth = MutableLiveData<Float>()
     val expenseMonth : LiveData<Float>
         get() = _expenseMonth
 
-    private val _accountTotal = MutableLiveData<Float>()
-    val accountTotal : LiveData<Float>
-        get() = _accountTotal
+    private val _balanceMonth = MutableLiveData<Float>()
+    val balanceMonth : LiveData<Float>
+        get() = _balanceMonth
 
+    private val _fragmentTitle = MutableLiveData<String>()
+    val fragmentTitle : LiveData<String>
+        get() = _fragmentTitle
 
+    private val _incomeExpenseQuery = MutableLiveData<IncomeExpenseData>()
+    val incomeExpenseQuery :LiveData<IncomeExpenseData>
+        get() = _incomeExpenseQuery
+
+    private val repository : DatabaseRepository
 
     init {
-        _incomeMonth.value = 0.00f
-        _expenseMonth.value = 0.00f
-        _accountTotal.value = 0.00f
+
+        val userDao = DatabaseMain.getInstance(application).databaseDao
+        repository = DatabaseRepository(userDao)
+
+        _expenseMonth.value = 0.0f
+        _balanceMonth.value = 0.0f
+
+        var myCalendar : Calendar = Calendar.getInstance()
+        myCalendar = DateManipulation.resetToMidnight(myCalendar)
+
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
+            val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
+            _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(s.timeInMillis,e.timeInMillis))
+        }
+
+        _fragmentTitle.value = "Money Manager"
+    }
+
+
+    fun updateIncomeExpense(it: IncomeExpenseData?) {
+
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
+
+        val a = it?.income!! - it.expense
+        Log.i("Balance","$a")
+        _expenseMonth.value = it.expense
+        _balanceMonth.value =  a
+
     }
 
 }

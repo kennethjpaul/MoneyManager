@@ -13,6 +13,7 @@ import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.viewmodel.MainViewModel
+import com.kinetx.moneymanager.viewmodelfactory.MainViewModelFactory
 
 
 class MainFragment : Fragment() {
@@ -24,11 +25,19 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = MainViewModelFactory(application)
 
         // Inflate the layout for this fragment
         val binding : FragmentMainBinding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_main, container, false)
+
+        viewModel = ViewModelProvider(this,viewModelFactory).get(MainViewModel::class.java)
+
+
+        binding.mainViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
 
         binding.mainAddExpenseBtn.setOnClickListener()
         {
@@ -57,12 +66,22 @@ class MainFragment : Fragment() {
             )
         }
 
-       viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        binding.mainViewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.fragmentTitle.observe(viewLifecycleOwner)
+        {
+            (activity as AppCompatActivity).supportActionBar?.title = it
+        }
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Money Manager"
+        viewModel.incomeExpenseQuery.observe(viewLifecycleOwner)
+        {
+            viewModel.updateIncomeExpense(it)
+        }
+
+
+
+
+
+
         return binding.root
     }
 

@@ -3,9 +3,12 @@ package com.kinetx.moneymanager.customview
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import com.kinetx.moneymanager.R
 import kotlin.math.cos
 import kotlin.math.min
@@ -38,6 +41,7 @@ class DialView @JvmOverloads constructor(
             expenses = getFloat(R.styleable.DialView_expenses,0.0f)
             balance = getFloat(R.styleable.DialView_balance, 0.0f)
             currency = getString(R.styleable.DialView_currency).toString()
+
         }
     }
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -94,4 +98,30 @@ class DialView @JvmOverloads constructor(
         canvas?.drawText("$balance $currency",(width / 2).toFloat(), (height / 2+100).toFloat(),numberCircle)
 
     }
+
+    fun setExpenses(e: Float)
+    {
+        expenses = e
+        invalidate()
+    }
+
+    fun setTextBalance(b: Float)
+    {
+        balance = b
+        invalidate()
+    }
+
 }
+
+@BindingAdapter("expenses")
+fun setExpense(view: DialView, text: LiveData<Float>)
+{
+    view.setExpenses(text.value!!.toFloat())
+}
+
+@BindingAdapter("balance")
+fun setB(view: DialView, text: LiveData<Float>)
+{
+    view.setTextBalance(text.value!!.toFloat())
+}
+

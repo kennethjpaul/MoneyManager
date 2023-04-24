@@ -118,8 +118,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_this_month_text"
-            app:expenses="1000"
-            app:balance="-500"
+            app:expenses="@{mainViewModel.expenseMonth}"
+            app:balance="@{mainViewModel.balanceMonth}"
             app:currency="CHF"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

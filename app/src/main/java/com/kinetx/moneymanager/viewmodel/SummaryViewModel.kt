@@ -260,7 +260,6 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     }
 
     fun updateIncomeExpense(it: IncomeExpenseData?) {
-        Log.i("Date","${it?.income} ${it?.expense}")
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.DOWN
 

@@ -17,7 +17,7 @@ class SelectCategoryViewModel (val database: DatabaseDao, application: Applicati
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
 
-    lateinit var readAllCategories : LiveData<List<CategoryDatabase>>
+    var readAllCategories : LiveData<List<CategoryDatabase>>
     private val repository : DatabaseRepository
 
     init {
