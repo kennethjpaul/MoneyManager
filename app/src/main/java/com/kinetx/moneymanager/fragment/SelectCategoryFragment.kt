@@ -70,7 +70,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         binding.selectCategorySelectButton.setOnClickListener()
         {
             val isEdit : Boolean = false
-            val categoryID : Long = 1
+            val categoryID : Long = -1
             val categoryName : String = ""
             val iconResource : Int = R.drawable.help
             val colorResource : Int = R.color.teal_700

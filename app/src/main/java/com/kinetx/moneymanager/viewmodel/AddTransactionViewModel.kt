@@ -137,9 +137,9 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
             _isUpdateDeleteBtnVisible.value = View.VISIBLE
         }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            ttt.postValue(repository.getCategoryByName("Main"))
-        }
+       // viewModelScope.launch(Dispatchers.IO) {
+       //     ttt.postValue(repository.getCategoryByName("Main"))
+       // }
 
 
         when(argList.transactionType)

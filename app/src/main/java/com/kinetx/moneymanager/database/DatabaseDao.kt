@@ -33,7 +33,7 @@ interface DatabaseDao {
     @Query("SELECT * FROM CATEGORY_TABLE where categoryId = :categoryId")
     suspend fun getCategory(categoryId: Long) : CategoryDatabase?
     @Query("SELECT * FROM CATEGORY_TABLE where category_name = :categoryName")
-    fun getCategoryByName(categoryName: String) : CategoryDatabase?
+    suspend fun getCategoryByName(categoryName: String) : CategoryDatabase?
     @Query("SELECT category_name FROM CATEGORY_TABLE where categoryId= :categoryId")
     suspend fun getCategoryNameById(categoryId: Long) : String
 
@@ -46,6 +46,9 @@ interface DatabaseDao {
     @Delete
     suspend fun deleteTransaction(transaction: TransactionDatabase)
 
+
+    @Query("DELETE FROM transaction_table WHERE category_one=:categoryId OR category_two=:categoryId")
+    suspend fun deleteTransactionsOfCategory(categoryId: Long)
 
     @Query("SELECT * FROM transaction_table WHERE transactionId=:transactionId")
     suspend fun getTransactionById(transactionId:Long) : TransactionDatabase?

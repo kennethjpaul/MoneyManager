@@ -32,7 +32,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
 
     //suspend fun getAllCategoryNames : List<String>
 
-    fun getCategoryByName(categoryName : String) : CategoryDatabase?
+    suspend fun getCategoryByName(categoryName : String) : CategoryDatabase?
     {
         return databaseDao.getCategoryByName(categoryName)
     }
@@ -63,6 +63,10 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         databaseDao.deleteTransaction(transaction)
     }
 
+    suspend fun deleteTransactionsOfCategory(categoryId: Long)
+    {
+        databaseDao.deleteTransactionsOfCategory(categoryId)
+    }
 
     suspend fun getTransactionById(transctionId : Long) : TransactionDatabase?
     {
