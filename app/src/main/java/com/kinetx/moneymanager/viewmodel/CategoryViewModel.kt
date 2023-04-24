@@ -9,7 +9,9 @@ import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,18 +29,23 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         get() = _categoryId
 
     val categoryName = MutableLiveData<String>()
+    val accountBalance = MutableLiveData<String>()
 
     private val _categoryHint = MutableLiveData<String>()
     val categoryHint : LiveData<String>
         get() = _categoryHint
 
-    private val _radioEnabled = MutableLiveData<Boolean>()
-    val radioEnabled :LiveData<Boolean>
-        get() = _radioEnabled
+    private val _accountBalanceVisible = MutableLiveData<Int>()
+    val accountBalanceVisible : LiveData<Int>
+        get() = _accountBalanceVisible
 
-    private val _radioVisible = MutableLiveData<Int>()
-    val radioVisible : LiveData<Int>
-        get() = _radioVisible
+    private val _initialBalanceTransactionId = MutableLiveData<Long>()
+    val initialBalanceTransactionId : LiveData<Long>
+        get() = _initialBalanceTransactionId
+
+    private val _accountBalanceQuery = MutableLiveData<TransactionDatabase>()
+    val accountBalanceQuery : LiveData<TransactionDatabase>
+        get() = _accountBalanceQuery
 
     private val _addVisible = MutableLiveData<Int>()
     val addVisible : LiveData<Int>
@@ -47,10 +54,6 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     private val _editVisible = MutableLiveData<Int>()
     val editVisible : LiveData<Int>
         get() = _editVisible
-
-    val expenseSelected =  MutableLiveData<Boolean>()
-    val incomeSelected =  MutableLiveData<Boolean>()
-
 
     private  val _iconImageSource = MutableLiveData<Int>()
     val iconImageSource : LiveData<Int>
@@ -75,7 +78,6 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
         categoryNamesDb = repository.readAllCategoryNames
 
-        _radioEnabled.value = false
         var titleString = "Create"
         if (argList.isEdit)
         {
@@ -113,24 +115,36 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         {
             CategoryType.INCOME ->
             {
-                _radioVisible.value = View.VISIBLE
-                incomeSelected.value = true
                 _categoryHint.value = "Income name"
                 _fragmentTitle.value = "$titleString Income Category"
+                _accountBalanceVisible.value = View.GONE
             }
             CategoryType.EXPENSE->
             {
-                _radioVisible.value = View.VISIBLE
-                expenseSelected.value = true
                 _categoryHint.value = "Expense name"
                 _fragmentTitle.value = "$titleString Expense Category"
+                _accountBalanceVisible.value = View.GONE
             }
             CategoryType.ACCOUNT->
             {
-                _radioVisible.value = View.GONE
                 _categoryHint.value = "Account name"
                 _categoryHint.value = "Account name"
                 _fragmentTitle.value = "$titleString Account"
+                _accountBalanceVisible.value = View.VISIBLE
+
+                if (argList.isEdit)
+                {
+                    viewModelScope.launch(Dispatchers.IO)
+                    {
+                        _accountBalanceQuery.postValue(repository.getTransactionInitialBalance(argList.itemId))
+                    }
+                }
+                else
+                {
+                    accountBalance.value = "0"
+                    _initialBalanceTransactionId.value = 0
+                }
+
             }
         }
 
@@ -166,10 +180,17 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
+        if (accountBalance.value=="")
+        {
+            Toast.makeText(getApplication(), "Enter an initial balance", Toast.LENGTH_SHORT).show()
+            return false
+        }
 
         val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         insertCategoryDao(category)
 
+        val transaction = TransactionDatabase(-1,accountBalance.value!!.toFloat(),TransactionType.BALANCE,argList.itemId,-1L,0,"")
+        insertInitialBalanceDao(transaction)
         return true
     }
 
@@ -184,6 +205,14 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     }
 
+    private fun insertInitialBalanceDao(transaction: TransactionDatabase)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.insertTransaction(transaction)
+        }
+    }
+
 
     fun updateCategory() : Boolean
     {
@@ -196,6 +225,12 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             return false
         }
 
+        if (accountBalance.value=="")
+        {
+            Toast.makeText(getApplication(), "Enter an initial balance", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         if (categoryName.value?.trim()  in categoryNames && categoryName.value != initialCategoryName)
         {
             Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
@@ -203,14 +238,39 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         }
         val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         updateCategoryDao(category)
+
+        val transaction = TransactionDatabase(_initialBalanceTransactionId.value!!,accountBalance.value!!.toFloat(),TransactionType.BALANCE,argList.itemId,-1L,0,"")
+
+        if (_initialBalanceTransactionId.value==0L)
+        {
+            Log.i("DD","${_initialBalanceTransactionId.value} insert update")
+            insertInitialBalanceDao(transaction)
+        }
+        else
+        {
+            updateInitialBalanceDao(transaction)
+        }
+
         return true
     }
+
+
+
 
     private fun updateCategoryDao(category: CategoryDatabase) {
         viewModelScope.launch(Dispatchers.IO)
         {
             repository.updateCategory(category)
         }
+    }
+
+    private fun updateInitialBalanceDao(transaction: TransactionDatabase)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.updateTransaction(transaction)
+        }
+
     }
 
     fun deleteCategory() {
@@ -223,6 +283,18 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         viewModelScope.launch(Dispatchers.IO)
         {
             repository.deleteCategory(category)
+        }
+    }
+
+    fun updateInitialBalance(it: TransactionDatabase?) {
+        if (it!=null) {
+            accountBalance.value = it.transactionAmount.toString()
+            _initialBalanceTransactionId.value = it.transactionId
+        }
+        else
+        {
+            _initialBalanceTransactionId.value = 0
+            accountBalance.value = "0"
         }
     }
 

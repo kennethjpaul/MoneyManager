@@ -63,6 +63,13 @@ class CategoryFragment : Fragment() {
             }
 
 
+            viewModel.accountBalanceQuery.observe(viewLifecycleOwner)
+            {
+
+                viewModel.updateInitialBalance(it)
+
+            }
+
             viewModel.categoryNamesDb.observe(viewLifecycleOwner)
             {
                 viewModel.categoryNames = it

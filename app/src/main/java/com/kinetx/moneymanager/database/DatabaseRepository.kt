@@ -69,6 +69,11 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionById(transctionId)
     }
 
+    suspend fun getTransactionInitialBalance(categoryId: Long) : TransactionDatabase?
+    {
+        return databaseDao.getTransactionInitialBalance(categoryId)
+    }
+
     fun getTransactionsAllAccountsAllCategories(transactionType :TransactionType, dateStart :Long, dateEnd: Long) : LiveData<List<TransactionListClass>>
     {
        return databaseDao.getTransactionsAllAccountsAllCategories(transactionType, dateStart, dateEnd)
