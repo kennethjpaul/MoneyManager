@@ -27,8 +27,8 @@ import kotlin.math.round
 class SummaryViewModel (application: Application): AndroidViewModel(application)
 {
 
-    //private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
-    private val startOfMonth = 25
+    private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
+    private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
 
     private val monthArray = arrayOf(
         "Jan", "Feb",
@@ -106,6 +106,8 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     {
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
+
+        Log.i("Date", startOfMonth.toString())
 
         _fragmentTitle.value = "Summary"
         myCalendar  = DateManipulation.resetToMidnight(myCalendar)

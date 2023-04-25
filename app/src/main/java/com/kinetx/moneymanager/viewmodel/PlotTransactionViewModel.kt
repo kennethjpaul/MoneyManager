@@ -8,11 +8,13 @@ import android.widget.RadioGroup
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.DateManipulation
 
 class PlotTransactionViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -24,7 +26,9 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
         "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     )
 
-    private val startDayofMonth : Int = 25
+    private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
+    private val startDayofMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
+
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -99,37 +103,12 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
             Calendar.MONTH)]
         _endYear.value = myCalendarEnd.get(Calendar.YEAR).toString()
 
-        _startDay.value = startDayofMonth.toString()
-        myCalendarStart.set(Calendar.DAY_OF_MONTH, startDayofMonth)
-        if(myCalendarEnd.get(Calendar.DAY_OF_MONTH)>startDayofMonth)
-        {
-            _startMonth.value = monthArray[myCalendarEnd.get(
-                Calendar.MONTH)]
-            _startYear.value = myCalendarEnd.get(Calendar.YEAR).toString()
-        }
-        else
-        {
-            if (myCalendarEnd.get(
-                    Calendar.MONTH)==0)
-            {
-                _startMonth.value = monthArray[11]
-                _startYear.value = {myCalendarEnd.get(Calendar.YEAR)-1}.toString()
 
-                myCalendarStart.set(Calendar.YEAR, myCalendarEnd.get(Calendar.YEAR)-1)
-                myCalendarStart.set(Calendar.MONTH, 11)
-            }
-            else
-            {
-                _startMonth.value = monthArray[myCalendarEnd.get(
-                    Calendar.MONTH)-1]
-                _startYear.value = myCalendarEnd.get(Calendar.YEAR).toString()
+        myCalendarStart = DateManipulation.getStartOfMonth(myCalendarEnd,startDayofMonth)
 
-                myCalendarStart.set(Calendar.YEAR, myCalendarEnd.get(Calendar.YEAR))
-                myCalendarStart.set(Calendar.MONTH, myCalendarEnd.get(
-                    Calendar.MONTH)-1)
-            }
-        }
-
+        _startDay.value = myCalendarStart.get(Calendar.DAY_OF_MONTH).toString()
+        _startMonth.value = monthArray[myCalendarStart.get(Calendar.MONTH)]
+        _startYear.value = myCalendarStart.get(Calendar.YEAR).toString()
 
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)

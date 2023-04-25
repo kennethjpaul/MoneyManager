@@ -4,6 +4,7 @@ import android.app.Application
 import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.preference.PreferenceManager
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
@@ -17,7 +18,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
 
-    private val startOfMonth = 25
+    private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
+    private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
 
     val exp = MutableLiveData<Float>()
 
@@ -50,11 +52,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
-
+        Log.i("Date","Hi")
         viewModelScope.launch(Dispatchers.IO)
         {
             val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
             val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
+            Log.i("Date","${s.timeInMillis} and ${e.timeInMillis}")
             _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(s.timeInMillis,e.timeInMillis))
         }
 

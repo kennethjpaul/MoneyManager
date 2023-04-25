@@ -142,7 +142,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 }
                 else
                 {
-                    accountBalance.value = "0"
+                    accountBalance.value = ""
                     _initialBalanceTransactionId.value = 0
                 }
 
@@ -199,9 +199,14 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         viewModelScope.launch(Dispatchers.IO)
         {
             repository.insertCategory(category)
-            val insertedCategory = repository.getCategoryByName(category.categoryName)
-            val transaction = TransactionDatabase(0,accountBalance.value!!.toFloat(),TransactionType.BALANCE,insertedCategory!!.categoryId,-1L,0,"")
-            repository.insertTransaction(transaction)
+
+            if (argList.categoryType==CategoryType.ACCOUNT)
+            {
+                val insertedCategory = repository.getCategoryByName(category.categoryName)
+                val transaction = TransactionDatabase(0,accountBalance.value!!.toFloat(),TransactionType.BALANCE,insertedCategory!!.categoryId,-1L,0,"")
+                repository.insertTransaction(transaction)
+
+            }
         }
 
 
@@ -233,11 +238,21 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
         updateCategoryDao(category)
 
-        val transaction = TransactionDatabase(_initialBalanceTransactionId.value!!,accountBalance.value!!.toFloat(),TransactionType.BALANCE,argList.itemId,-1L,0,"")
+        if (argList.categoryType==CategoryType.ACCOUNT)
+        {
+            val transaction = TransactionDatabase(
+                _initialBalanceTransactionId.value!!,
+                accountBalance.value!!.toFloat(),
+                TransactionType.BALANCE,
+                argList.itemId,
+                -1L,
+                0,
+                ""
+            )
 
 
-        updateInitialBalanceDao(transaction)
-
+            updateInitialBalanceDao(transaction)
+        }
 
         return true
     }
@@ -246,7 +261,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
 
     private fun updateCategoryDao(category: CategoryDatabase) {
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.updateCategory(category)
         }
@@ -283,7 +298,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         else
         {
             _initialBalanceTransactionId.value = 0
-            accountBalance.value = "0"
+            accountBalance.value = ""
         }
     }
 
