@@ -113,8 +113,9 @@
         android:id="@+id/summaryFragment"
         android:name="com.kinetx.moneymanager.fragment.SummaryFragment"
         android:label="SummaryFragment" />
+
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.kinetx.moneymanager.fragment.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:id="@+id/settingsFragment2"
+        android:name="com.kinetx.moneymanager.fragment.SettingsFragment2"
+        android:label="Settings" />
 </navigation>

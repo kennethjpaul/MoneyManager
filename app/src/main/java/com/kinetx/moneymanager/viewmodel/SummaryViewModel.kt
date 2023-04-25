@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
@@ -26,6 +27,7 @@ import kotlin.math.round
 class SummaryViewModel (application: Application): AndroidViewModel(application)
 {
 
+    //private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startOfMonth = 25
 
     private val monthArray = arrayOf(
