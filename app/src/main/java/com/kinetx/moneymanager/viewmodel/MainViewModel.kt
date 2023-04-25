@@ -36,7 +36,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
 
-    private val _incomeExpenseQuery = MutableLiveData<IncomeExpenseData>()
+    private var _incomeExpenseQuery = MutableLiveData<IncomeExpenseData>()
     val incomeExpenseQuery :LiveData<IncomeExpenseData>
         get() = _incomeExpenseQuery
 
@@ -53,6 +53,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
         Log.i("Date","Hi")
+
+        updateIncomeExpenseQuery(myCalendar)
+
+
+
+        _fragmentTitle.value = "Money Manager"
+    }
+
+    fun updateIncomeExpenseQuery(myCalendar: Calendar) {
         viewModelScope.launch(Dispatchers.IO)
         {
             val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
@@ -60,8 +69,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             Log.i("Date","${s.timeInMillis} and ${e.timeInMillis}")
             _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(s.timeInMillis,e.timeInMillis))
         }
-
-        _fragmentTitle.value = "Money Manager"
     }
 
 

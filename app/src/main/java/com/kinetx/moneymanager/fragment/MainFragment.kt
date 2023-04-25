@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.fragment
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMainBinding
 import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.DateManipulation
 import com.kinetx.moneymanager.viewmodel.MainViewModel
 import com.kinetx.moneymanager.viewmodelfactory.MainViewModelFactory
 
@@ -85,4 +87,10 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        var myCalendar : Calendar = Calendar.getInstance()
+        myCalendar = DateManipulation.resetToMidnight(myCalendar)
+        viewModel.updateIncomeExpenseQuery(myCalendar)
+    }
 }
