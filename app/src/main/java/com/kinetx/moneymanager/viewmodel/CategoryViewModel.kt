@@ -250,7 +250,6 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 ""
             )
 
-
             updateInitialBalanceDao(transaction)
         }
 

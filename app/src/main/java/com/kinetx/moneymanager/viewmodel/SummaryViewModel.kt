@@ -120,6 +120,11 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
         _balanceCalculated.value = "0"
         _isIncomeBalanceVisible.value = View.VISIBLE
 
+        if(myCalendar.get(Calendar.DAY_OF_MONTH)>=startOfMonth)
+        {
+            myCalendar.set(Calendar.MONTH,myCalendar.get(Calendar.MONTH)+1)
+            myCalendar.set(Calendar.DAY_OF_MONTH,1)
+        }
         updateCustomDateView(myCalendar)
 
         updateTransactions(myCalendar,2)
@@ -215,6 +220,13 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
                 _selectedType.value = 2
                 _isIncomeBalanceVisible.value = View.VISIBLE
                 myCalendar = DateManipulation.copyDayMonthYear(myCalendar,curCalendar)
+
+                if(myCalendar.get(Calendar.DAY_OF_MONTH)>=startOfMonth)
+                {
+                    myCalendar.set(Calendar.MONTH,myCalendar.get(Calendar.MONTH)+1)
+                    myCalendar.set(Calendar.DAY_OF_MONTH,1)
+                }
+
                 updateCustomDateView(myCalendar)
                 updateTransactions(myCalendar,2)
             }
