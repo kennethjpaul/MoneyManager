@@ -9,7 +9,7 @@
             app:entries="@array/start_of_month_entries"
             app:entryValues="@array/start_of_month_values"
             app:key="startDayOfMonth"
-            app:title="Start day of month"
+            app:title="End day of the month"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
