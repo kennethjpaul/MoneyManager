@@ -9,7 +9,7 @@
         <entry key="app/src/main/res/drawable/custom_radio_selector.xml" value="0.2965" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/add_expense.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/category_list.xml" value="0.10666666666666667" />
+        <entry key="app/src/main/res/layout/category_list.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_expense.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_income.xml" value="0.24183006535947713" />
         <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.5" />
@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_select_category.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_color_icon.xml" value="0.5098958333333333" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_summary.xml" value="0.3795309168443497" />
+        <entry key="app/src/main/res/layout/fragment_summary.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_transaction_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.5088541666666667" />
         <entry key="app/src/main/res/layout/select_category_item.xml" value="0.1" />
