@@ -112,7 +112,6 @@ object DateManipulation {
         var month = myCalendar.get(Calendar.MONTH)
         var year = myCalendar.get(Calendar.YEAR)
 
-        Log.i("Datee","$day and $startOfMonth")
         if (day>=startOfMonth && month == 11)
         {
             month =0

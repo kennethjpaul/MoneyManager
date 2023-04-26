@@ -107,8 +107,6 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
 
-        Log.i("Date", startOfMonth.toString())
-
         _fragmentTitle.value = "Summary"
         myCalendar  = DateManipulation.resetToMidnight(myCalendar)
         curCalendar = DateManipulation.resetToMidnight(curCalendar)

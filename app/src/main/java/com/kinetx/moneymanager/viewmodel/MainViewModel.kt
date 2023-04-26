@@ -52,7 +52,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
-        Log.i("Date","Hi")
 
         updateIncomeExpenseQuery(myCalendar)
 
@@ -66,7 +65,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         {
             val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
             val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
-            Log.i("Date","${s.timeInMillis} and ${e.timeInMillis}")
             _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(s.timeInMillis,e.timeInMillis))
         }
     }
@@ -78,7 +76,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         df.roundingMode = RoundingMode.DOWN
 
         val a = it?.income!! - it.expense
-        Log.i("Balance","$a")
         _expenseMonth.value = it.expense
         _balanceMonth.value =  a
 
