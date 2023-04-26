@@ -127,7 +127,7 @@
             android:ems="10"
             android:text="@={categoryViewModel.accountBalance}"
             android:hint="@string/initial_balance"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             app:layout_constraintStart_toStartOf="@+id/categoryNameEditText"
             app:layout_constraintTop_toBottomOf="@+id/categoryNameEditText" />
 
