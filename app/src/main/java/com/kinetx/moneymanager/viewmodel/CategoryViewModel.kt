@@ -13,6 +13,7 @@ import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -193,10 +194,11 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         return true
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun insertCategoryDao(category: CategoryDatabase)
     {
 
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.insertCategory(category)
 
@@ -259,6 +261,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun updateCategoryDao(category: CategoryDatabase) {
         GlobalScope.launch(Dispatchers.IO)
         {
@@ -266,9 +269,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun updateInitialBalanceDao(transaction: TransactionDatabase)
     {
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.updateTransaction(transaction)
         }
