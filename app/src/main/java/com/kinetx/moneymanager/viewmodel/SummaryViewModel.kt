@@ -6,10 +6,7 @@ import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.view.View
 import android.widget.RadioGroup
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -206,6 +203,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
                     _categorySummaryQuery.postValue(repository.getCategorySummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
                 }
             }
+
         }
 
     }
