@@ -19,7 +19,9 @@ import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.AddTransactionFragmentArgs
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val application: Application): ViewModel() {
@@ -241,9 +243,10 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         return true
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun addTransactionDao(transaction: TransactionDatabase) {
 
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.insertTransaction(transaction)
         }
@@ -270,8 +273,9 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         return true
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun updateTransactionDao(transaction: TransactionDatabase) {
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.updateTransaction(transaction)
         }
@@ -285,8 +289,9 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         deleteTransactionDao(transaction)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun deleteTransactionDao(transaction: TransactionDatabase) {
-        viewModelScope.launch(Dispatchers.IO)
+        GlobalScope.launch(Dispatchers.IO)
         {
             repository.deleteTransaction(transaction)
         }
@@ -302,7 +307,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            Log.i("Date","corotuine $itemId $categoryPosition")
+            Log.i("Date","coroutine $itemId $categoryPosition")
             when(categoryPosition)
             {
                 1 ->

@@ -14,6 +14,10 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
 {
 
     private var _transactionList = emptyList<TransactionListClass>()
+    private val monthArray = arrayOf(
+        "Jan", "Feb",
+        "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    )
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
@@ -33,7 +37,9 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
         val myCalendar: Calendar = Calendar.getInstance()
         myCalendar.timeInMillis = currentItem.date
 
-        holder.itemDate.text        = "${myCalendar.get(Calendar.DAY_OF_MONTH)}-${myCalendar.get(Calendar.MONTH)+1}-${myCalendar.get(Calendar.YEAR)}"
+        holder.itemDay.text         = myCalendar.get(Calendar.DAY_OF_MONTH).toString()
+        holder.itemMonth.text       = monthArray[myCalendar.get(Calendar.MONTH)]
+        holder.itemYear.text        = myCalendar.get(Calendar.YEAR).toString()
         holder.itemAmount.text      = currentItem.amount.toString()
 
     }
@@ -55,7 +61,9 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
         val itemCategoryOne : TextView  = itemView.findViewById(R.id.transaction_list_category_one)
         val itemCategoryTwo : TextView  = itemView.findViewById(R.id.transaction_list_category_two)
         val itemComment : TextView      = itemView.findViewById(R.id.transaction_list_comment)
-        val itemDate : TextView         = itemView.findViewById(R.id.transaction_list_date)
+        val itemDay : TextView         = itemView.findViewById(R.id.transaction_list_day)
+        val itemMonth : TextView         = itemView.findViewById(R.id.transaction_list_month)
+        val itemYear : TextView         = itemView.findViewById(R.id.transaction_list_year)
         val itemAmount : TextView       = itemView.findViewById(R.id.transaction_list_amount)
 
         init
