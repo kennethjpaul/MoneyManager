@@ -1,14 +1,19 @@
 package com.kinetx.moneymanager.recyclerview
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.dataclass.TransactionListClass
+import com.kinetx.moneymanager.enums.TransactionType
+import kotlin.coroutines.coroutineContext
 
 class TransactionListAdapter(val listener: OnTransactionListListener) : RecyclerView.Adapter<TransactionListAdapter.MyViewHolder>()
 {
@@ -33,6 +38,28 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
         holder.itemCategoryTwo.text = currentItem.categoryTwo
         holder.itemCategoryOne.text = currentItem.categoryOne
         holder.itemComment.text     = currentItem.comments
+
+        when(currentItem.transactionType)
+        {
+            TransactionType.TRANSFER ->
+            {
+                holder.itemType.setBackgroundColor(Color.parseColor("#FFa4c639"))
+            }
+            TransactionType.INCOME ->
+            {
+                holder.itemType.setBackgroundColor(Color.parseColor("#FF5d8aa8"))
+            }
+            TransactionType.EXPENSE ->
+            {
+                holder.itemType.setBackgroundColor(Color.parseColor("#FF970203"))
+            }
+            else->
+            {
+                holder.itemType.setBackgroundColor(Color.parseColor("#FFa4c639"))
+            }
+        }
+
+
 
         val myCalendar: Calendar = Calendar.getInstance()
         myCalendar.timeInMillis = currentItem.date
@@ -65,6 +92,7 @@ class TransactionListAdapter(val listener: OnTransactionListListener) : Recycler
         val itemMonth : TextView         = itemView.findViewById(R.id.transaction_list_month)
         val itemYear : TextView         = itemView.findViewById(R.id.transaction_list_year)
         val itemAmount : TextView       = itemView.findViewById(R.id.transaction_list_amount)
+        val itemType : TextView         = itemView.findViewById(R.id.transaction_list_type)
 
         init
         {

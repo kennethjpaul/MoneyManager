@@ -68,6 +68,11 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         databaseDao.deleteTransactionsOfCategory(categoryId)
     }
 
+    fun getAllTransactions(dateStart: Long, dateEnd: Long) : LiveData<List<TransactionDatabase>>
+    {
+        return databaseDao.getAllTransactions(dateStart,dateEnd)
+    }
+
     suspend fun getTransactionById(transctionId : Long) : TransactionDatabase?
     {
         return databaseDao.getTransactionById(transctionId)
