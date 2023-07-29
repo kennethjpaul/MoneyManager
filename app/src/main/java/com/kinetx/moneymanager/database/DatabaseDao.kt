@@ -51,8 +51,8 @@ interface DatabaseDao {
     suspend fun deleteTransactionsOfCategory(categoryId: Long)
 
 
-    @Query("SELECT * FROM transaction_table WHERE date >=:dateStart AND date <=:dateEnd")
-    fun getAllTransactions( dateStart: Long, dateEnd : Long ): LiveData<List<TransactionDatabase>>
+    @Query("WITH A AS (SELECT category_name, transactionId FROM category_table C, transaction_table D WHERE C.categoryId=D.category_one AND date >=:dateStart AND date <=:dateEnd), B AS(SELECT category_name, transactionId FROM category_table C, transaction_table D WHERE C.categoryId=D.category_two AND date >=:dateStart AND date <=:dateEnd), C AS (SELECT transactionId, amount, transaction_type, date, comments FROM transaction_table WHERE date >=:dateStart AND date <=:dateEnd) SELECT A.transactionId, A.category_name categoryOne,B.category_name categoryTwo,C.transaction_type transactionType, C.comments,C.date,C.amount FROM A,B,C WHERE A.transactionId=B.transactionId AND A.transactionId=C.transactionId")
+    fun getAllTransactions( dateStart: Long, dateEnd : Long ): List<TransactionListClass>
 
     @Query("SELECT * FROM transaction_table WHERE transactionId=:transactionId")
     suspend fun getTransactionById(transactionId:Long) : TransactionDatabase?

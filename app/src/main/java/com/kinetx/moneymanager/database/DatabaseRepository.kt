@@ -68,7 +68,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         databaseDao.deleteTransactionsOfCategory(categoryId)
     }
 
-    fun getAllTransactions(dateStart: Long, dateEnd: Long) : LiveData<List<TransactionDatabase>>
+    fun getAllTransactions(dateStart: Long, dateEnd: Long) : List<TransactionListClass>
     {
         return databaseDao.getAllTransactions(dateStart,dateEnd)
     }

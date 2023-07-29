@@ -121,5 +121,9 @@
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="com.kinetx.moneymanager.fragment.TransactionsFragment"
-        android:label="Transactions" />
+        android:label="Transactions" >
+        <action
+            android:id="@+id/action_transactionsFragment_to_addTransactionFragment"
+            app:destination="@id/addTransactionFragment" />
+    </fragment>
 </navigation>
