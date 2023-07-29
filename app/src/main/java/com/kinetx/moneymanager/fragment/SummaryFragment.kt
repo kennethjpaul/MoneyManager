@@ -56,6 +56,7 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
         binding.summaryPieChart.legend.isWordWrapEnabled = true
         binding.summaryPieChart.legend.textColor = Color.WHITE
         binding.summaryPieChart.isDrawHoleEnabled = true
+        binding.summaryPieChart.holeRadius = 25F
         binding.summaryPieChart.setUsePercentValues(true)
         binding.summaryPieChart.setDrawEntryLabels(false)
         binding.summaryPieChart.description.isEnabled = false

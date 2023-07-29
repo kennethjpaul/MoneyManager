@@ -23,7 +23,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = _list[position]
         holder.itemCategoryName.text = currentItem.categoryName
-        holder.itemAmount.text = currentItem.amount.toString()
+        holder.itemAmount.text = String.format("%.2f",currentItem.amount)
         holder.itemImageButton.setImageResource(currentItem.categoryImage)
         holder.itemImageButton.setBackgroundColor(currentItem.categoryColor)
     }

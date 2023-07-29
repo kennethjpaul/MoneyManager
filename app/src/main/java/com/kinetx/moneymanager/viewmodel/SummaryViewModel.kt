@@ -153,8 +153,8 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
         pieDateSet.valueTextSize=11f
         pieDateSet.valueTextColor = Color.WHITE
         pieDateSet.label = ""
-        pieDateSet.valueLinePart1Length = 0.4f
-        pieDateSet.valueLinePart2Length = 0.4f
+        pieDateSet.valueLinePart1Length = 0.6f
+        pieDateSet.valueLinePart2Length = 1f
         pieDateSet.valueLinePart1OffsetPercentage = 80f
         pieDateSet.valueLineColor = Color.WHITE
         pieDateSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE

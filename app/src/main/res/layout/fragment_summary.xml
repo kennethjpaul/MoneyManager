@@ -61,7 +61,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="40dp"
-            android:background="@color/air_force_blue"
+            android:background="@color/white"
             app:day_c="@{summaryViewModel.selectedDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
             android:layout_height="40dp"
             android:src="@drawable/arrow_left"
             android:layout_marginEnd="40dp"
-            android:background="@color/android_green"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
             app:layout_constraintEnd_toStartOf="@+id/summary_custom_date_view"
             app:layout_constraintTop_toTopOf="@+id/summary_custom_date_view" />
@@ -91,7 +91,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/arrow_right"
-            android:background="@color/android_green"
+            android:background="@color/white"
             android:layout_marginStart="40dp"
             app:layout_constraintBottom_toBottomOf="@+id/summary_custom_date_view"
             app:layout_constraintStart_toEndOf="@+id/summary_custom_date_view"
@@ -160,7 +160,7 @@
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/summary_pie_chart"
-            android:layout_width="320dp"
+            android:layout_width="220dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"

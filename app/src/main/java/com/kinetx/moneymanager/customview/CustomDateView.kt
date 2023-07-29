@@ -32,7 +32,7 @@ class CustomDateView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 120.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
 
     private val paintMonth0 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -40,14 +40,14 @@ class CustomDateView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 50.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
     private val paintYear0 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 30.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
 
     private val paintWeek1 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -55,7 +55,7 @@ class CustomDateView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 40.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
 
     private val paintMonth2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -63,14 +63,14 @@ class CustomDateView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 120.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
     private val paintYear2 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
         textSize = 50.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
 
     private val paintYear3 = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -78,7 +78,7 @@ class CustomDateView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = 100.0f
         typeface = Typeface.create( "", Typeface.BOLD)
-        color = Color.WHITE
+        color = Color.BLACK
     }
 
     init
