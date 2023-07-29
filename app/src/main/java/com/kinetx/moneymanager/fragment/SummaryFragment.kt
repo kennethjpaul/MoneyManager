@@ -9,10 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.databinding.FragmentSummaryBinding
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.recyclerview.CategoryListAdapter
 import com.kinetx.moneymanager.viewmodel.SummaryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.SummaryViewModelFactory
@@ -91,7 +96,7 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
             viewModel.updatePieChart(newList)
             binding.summaryPieChart.data = viewModel.pieData
             binding.summaryPieChart.invalidate()
-            adapter.setData(newList)
+            adapter.setData(it)
         }
 
 
@@ -99,7 +104,12 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
     }
 
     override fun onSelectCategoryListClick(position: Int) {
-       Log.i("","")
+
+        val categoryId  = viewModel.categorySummaryQuery.value?.get(position)?.categoryId
+
+        val(dateStart: Long, dateEnd: Long) = viewModel.getCategoryDetails()
+
+        view?.findNavController()?.navigate(SummaryFragmentDirections.actionSummaryFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,categoryId!!,dateStart,dateEnd))
     }
 
 }

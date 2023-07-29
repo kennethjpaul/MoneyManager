@@ -13,6 +13,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.CategoryListData
@@ -93,7 +94,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     val incomeExpenseQuery :LiveData<IncomeExpenseData>
         get() = _incomeExpenseQuery
 
-    private val _categorySummaryQuery = MutableLiveData<List<CategoryListData>>()
+    private var _categorySummaryQuery = MutableLiveData<List<CategoryListData>>()
     val categorySummaryQuery : LiveData<List<CategoryListData>>
         get() = _categorySummaryQuery
 
@@ -335,5 +336,37 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             }
         }
 
+    }
+
+    fun getCategoryDetails(): Pair<Long,Long> {
+
+        var dateStart : Long = -1L
+        var dateEnd : Long = -1L
+
+        when(_selectedType.value)
+        {
+            0 ->
+            {
+                dateStart = myCalendar.timeInMillis
+                dateEnd = myCalendar.timeInMillis
+            }
+            1 ->
+            {
+                dateStart = DateManipulation.getStartOfWeek(myCalendar).timeInMillis
+                dateEnd = DateManipulation.getEndOfWeek(myCalendar).timeInMillis
+            }
+            2 ->
+            {
+                dateStart = DateManipulation.getStartOfMonth(myCalendar,startOfMonth).timeInMillis
+                dateEnd = DateManipulation.getEndOfMonth(myCalendar,startOfMonth).timeInMillis
+            }
+            3->
+            {
+                dateStart = GregorianCalendar(myCalendar.get(Calendar.YEAR),0,1).timeInMillis
+                dateEnd = GregorianCalendar(myCalendar.get(Calendar.YEAR),11,31).timeInMillis
+            }
+        }
+
+        return Pair(dateStart,dateEnd)
     }
 }

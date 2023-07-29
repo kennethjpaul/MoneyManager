@@ -83,10 +83,10 @@ interface DatabaseDao {
             "F AS (SELECT C.b as m, C.a AS c, D.a AS d FROM C LEFT JOIN D ON C.b = D.b UNION SELECT D.b as m, C.a AS c, D.a AS d FROM D LEFT JOIN C ON C.b = D.b),\n" +
             "K AS (SELECT E.m, E.a,E.b,F.c,F.d FROM E LEFT JOIN F ON E.m=F.m UNION SELECT F.m, E.a,E.b,F.c,F.d FROM F LEFT JOIN E ON E.m=F.m ),"+
             "L AS (SELECT K.m,K.a,K.b,K.c,K.d, DD.e FROM K LEFT JOIN DD on K.m=DD.m UNION SELECT DD.m,K.a,K.b,K.c,K.d, DD.e FROM DD LEFT JOIN K ON K.m=DD.m)"+
-            "SELECT L.m AS categoryName, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(L.e,0)+IFNULL(L.a,0)-IFNULL(L.b,0)-IFNULL(L.c,0)+IFNULL(L.d,0) AS amount FROM L,Z WHERE L.m=Z.category_name")
+            "SELECT L.m AS categoryName,Z.categoryId, Z.category_image AS categoryImage, Z.category_color AS categoryColor, IFNULL(L.e,0)+IFNULL(L.a,0)-IFNULL(L.b,0)-IFNULL(L.c,0)+IFNULL(L.d,0) AS amount FROM L,Z WHERE L.m=Z.category_name")
     fun getAccountSummary() : LiveData<List<CategoryListData>>
 
-    @Query("SELECT c.category_name AS categoryName, c.category_image AS categoryImage, c.category_color AS categoryColor , SUM(d.amount) AS amount FROM transaction_table d JOIN category_table c on d.category_two=c.categoryId AND c.category_type='EXPENSE' WHERE d.transaction_type='EXPENSE' AND d.date BETWEEN :dateStart AND :dateEnd GROUP BY c.category_name")
+    @Query("SELECT c.category_name AS categoryName, c.categoryId ,c.category_image AS categoryImage, c.category_color AS categoryColor , SUM(d.amount) AS amount FROM transaction_table d JOIN category_table c on d.category_two=c.categoryId AND c.category_type='EXPENSE' WHERE d.transaction_type='EXPENSE' AND d.date BETWEEN :dateStart AND :dateEnd GROUP BY c.category_name")
     fun getCategorySummary(dateStart: Long, dateEnd : Long) : List<CategoryListData>
 
     @Query("SELECT SUM(CASE WHEN transaction_type='INCOME' THEN amount ELSE 0 END) AS income,SUM(CASE WHEN transaction_type='EXPENSE' THEN amount ELSE 0 END) AS expense FROM transaction_table WHERE date BETWEEN :dateStart AND :dateEnd")
