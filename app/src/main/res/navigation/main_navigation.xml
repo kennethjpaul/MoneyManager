@@ -118,4 +118,8 @@
         android:id="@+id/settingsFragment2"
         android:name="com.kinetx.moneymanager.fragment.SettingsFragment2"
         android:label="Settings" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.kinetx.moneymanager.fragment.TransactionsFragment"
+        android:label="Transactions" />
 </navigation>

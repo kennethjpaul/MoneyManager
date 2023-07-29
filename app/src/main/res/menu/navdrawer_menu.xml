@@ -7,6 +7,9 @@
         />
 
     <item
+        android:id="@+id/transactionsFragment"
+        android:title="Transactions" />
+    <item
         android:id="@+id/summaryFragment"
         android:icon="@drawable/summary"
         android:title="Summary"
