@@ -3,7 +3,6 @@ package com.kinetx.moneymanager.viewmodel
 import android.app.Application
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -61,8 +60,8 @@ class TransactionsViewModel (application: Application) : AndroidViewModel(applic
 
     private val repository : DatabaseRepository
 
-    var listTransformed = MutableLiveData<List<TransactionListClass>>()
-
+    var listRoomDatabase = MutableLiveData<List<TransactionListClass>>()
+    var listSorted : List<TransactionListClass> = emptyList()
 
     init {
 
@@ -114,10 +113,17 @@ class TransactionsViewModel (application: Application) : AndroidViewModel(applic
         updateTransactions()
     }
 
+
+    private fun updateList()
+    {
+
+    }
+
+
     private fun updateTransactions() {
         viewModelScope.launch(Dispatchers.IO)
         {
-            listTransformed.postValue(
+            listRoomDatabase.postValue(
                 repository.getAllTransactions(
                     myCalendarStart.timeInMillis,
                     myCalendarEnd.timeInMillis

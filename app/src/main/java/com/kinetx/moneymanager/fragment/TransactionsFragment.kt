@@ -62,9 +62,13 @@ class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionLis
         }
 
 
-        viewModel.listTransformed.observe(viewLifecycleOwner)
+
+        viewModel.listRoomDatabase.observe(viewLifecycleOwner)
         {
-            adapter.setData(it)
+            viewModel.listSorted = it.sortedByDescending {
+                it.date
+            }
+            adapter.setData(viewModel.listSorted)
         }
 
 
@@ -73,9 +77,11 @@ class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionLis
     }
 
     override fun onTransactionListLonClick(position: Int) {
-        val transactionId = viewModel.listTransformed.value?.get(position)?.transactionId
-        val transactionType = viewModel.listTransformed.value?.get(position)?.transactionType
-        view?.findNavController()?.navigate(TransactionsFragmentDirections.actionTransactionsFragmentToAddTransactionFragment(transactionType!!,transactionId!!))
+        val transactionId = viewModel.listSorted[position].transactionId
+        val transactionType = viewModel.listSorted[position].transactionType
+        view?.findNavController()?.navigate(TransactionsFragmentDirections.actionTransactionsFragmentToAddTransactionFragment(
+            transactionType, transactionId
+        ))
     }
 
 }
