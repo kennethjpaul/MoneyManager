@@ -93,11 +93,11 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
         viewModel.categorySummaryQuery.observe(viewLifecycleOwner){
 
-            val newList = it.sortedByDescending { it.amount }
-            viewModel.updatePieChart(newList)
+            viewModel.categorySummaryList =  it.sortedByDescending { it.amount }
+            viewModel.updatePieChart(viewModel.categorySummaryList)
             binding.summaryPieChart.data = viewModel.pieData
             binding.summaryPieChart.invalidate()
-            adapter.setData(it)
+            adapter.setData(viewModel.categorySummaryList)
         }
 
 
@@ -106,11 +106,12 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
     override fun onSelectCategoryListClick(position: Int) {
 
-        val categoryId  = viewModel.categorySummaryQuery.value?.get(position)?.categoryId
+        val categoryId  = viewModel.categorySummaryList[position].categoryId
 
         val(dateStart: Long, dateEnd: Long) = viewModel.getCategoryDetails()
 
-        view?.findNavController()?.navigate(SummaryFragmentDirections.actionSummaryFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,categoryId!!,dateStart,dateEnd))
+        view?.findNavController()?.navigate(SummaryFragmentDirections.actionSummaryFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,
+            categoryId,dateStart,dateEnd))
     }
 
 }

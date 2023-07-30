@@ -98,6 +98,8 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     val categorySummaryQuery : LiveData<List<CategoryListData>>
         get() = _categorySummaryQuery
 
+    var categorySummaryList : List<CategoryListData> = emptyList()
+
     private val repository : DatabaseRepository
 
     private var myCalendar : Calendar = Calendar.getInstance()
