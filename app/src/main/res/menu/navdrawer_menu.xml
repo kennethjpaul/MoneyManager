@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/mainFragment"
+        android:icon="@drawable/home"
+        android:title="Home" />
+
+    <item
         android:id="@+id/balancesFragment"
         android:icon="@drawable/scale"
         android:title="Account Balances" />
