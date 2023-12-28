@@ -3,6 +3,7 @@ package com.kinetx.moneymanager.viewmodel
 import android.app.Application
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -120,7 +121,8 @@ class TransactionsViewModel (application: Application) : AndroidViewModel(applic
     }
 
 
-    private fun updateTransactions() {
+    fun updateTransactions() {
+        Log.i("III","Update")
         viewModelScope.launch(Dispatchers.IO)
         {
             listRoomDatabase.postValue(
