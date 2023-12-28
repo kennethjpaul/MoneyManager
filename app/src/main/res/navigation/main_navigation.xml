@@ -9,7 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="com.kinetx.moneymanager.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/selectCategoryFragment"
         android:name="com.kinetx.moneymanager.fragment.SelectCategoryFragment"
-        android:label="SelectCategoryFragment" >
+        android:label="SelectCategoryFragment">
         <argument
             android:name="categoryType"
             app:argType="com.kinetx.moneymanager.enums.CategoryType" />
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.kinetx.moneymanager.fragment.CategoryFragment"
-        android:label="CategoryFragment" >
+        android:label="CategoryFragment">
         <argument
             android:name="isEdit"
             app:argType="boolean" />
@@ -41,7 +41,8 @@
         <argument
             android:name="itemName"
             app:argType="string" />
-        <argument android:name="itemIcon"
+        <argument
+            android:name="itemIcon"
             app:argType="integer" />
         <argument
             android:name="itemColor"
@@ -56,7 +57,7 @@
     <fragment
         android:id="@+id/selectColorIconFragment"
         android:name="com.kinetx.moneymanager.fragment.SelectColorIconFragment"
-        android:label="SelectColorIconFragment" >
+        android:label="SelectColorIconFragment">
         <argument
             android:name="colorIconType"
             app:argType="com.kinetx.moneymanager.enums.ColorIconType" />
@@ -64,7 +65,7 @@
     <fragment
         android:id="@+id/addTransactionFragment"
         android:name="com.kinetx.moneymanager.fragment.AddTransactionFragment"
-        android:label="AddTransactionFragment" >
+        android:label="AddTransactionFragment">
         <argument
             android:name="transactionType"
             app:argType="com.kinetx.moneymanager.enums.TransactionType" />
@@ -78,7 +79,7 @@
     <fragment
         android:id="@+id/plotTransactionFragment"
         android:name="com.kinetx.moneymanager.fragment.PlotTransactionFragment"
-        android:label="PlotTransactionFragment" >
+        android:label="PlotTransactionFragment">
         <action
             android:id="@+id/action_plotTransactionFragment_to_transactionListFragment"
             app:destination="@id/transactionListFragment" />
@@ -86,8 +87,9 @@
     <fragment
         android:id="@+id/transactionListFragment"
         android:name="com.kinetx.moneymanager.fragment.TransactionListFragment"
-        android:label="TransactionListFragment" >
-        <argument android:name="transactionType"
+        android:label="TransactionListFragment">
+        <argument
+            android:name="transactionType"
             app:argType="com.kinetx.moneymanager.enums.TransactionType" />
         <argument
             android:name="accountId"
@@ -112,7 +114,7 @@
     <fragment
         android:id="@+id/summaryFragment"
         android:name="com.kinetx.moneymanager.fragment.SummaryFragment"
-        android:label="SummaryFragment" >
+        android:label="SummaryFragment">
         <action
             android:id="@+id/action_summaryFragment_to_transactionListFragment"
             app:destination="@id/transactionListFragment" />
@@ -125,7 +127,7 @@
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="com.kinetx.moneymanager.fragment.TransactionsFragment"
-        android:label="Transactions" >
+        android:label="Transactions">
         <action
             android:id="@+id/action_transactionsFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
