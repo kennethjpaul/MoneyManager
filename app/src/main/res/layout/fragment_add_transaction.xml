@@ -23,8 +23,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <View
+                android:layout_width="10dp"
+                android:layout_height="120dp"
+                android:background="@color/ao"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+
 
                 <TextView
                     android:id="@+id/textView11"
@@ -174,7 +184,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView5">
-
+            <View
+                android:layout_width="10dp"
+                android:layout_height="120dp"
+                android:background="@color/ao"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
 
                 <TextView
@@ -188,6 +204,7 @@
                     android:id="@+id/add_transaction_expense_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="48dp"
                     android:autofillHints="Expense"
                     android:backgroundTint="@color/black"
