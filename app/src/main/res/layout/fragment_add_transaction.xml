@@ -41,7 +41,7 @@
                     style="@style/material_card_title"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/transaction_breakdown"
+                    android:text="@string/transaction_info"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
