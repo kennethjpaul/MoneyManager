@@ -14,6 +14,248 @@
         android:layout_height="match_parent"
         tools:context=".fragment.AddTransactionFragment">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView5"
+            style="@style/material_card"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    style="@style/material_card_title"
+                    android:text="@string/transaction_breakdown"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/t11"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@{addTransactionViewModel.buttonPositionOneText}"
+                    app:layout_constraintBottom_toTopOf="@+id/add_transaction_add_date_btn"
+                    app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_one_btn"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
+                    tools:text="Account" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/add_transaction_category_one_btn"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    app:cardBackgroundColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/add_transaction_category_two_btn"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/add_transaction_add_date_btn">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/transaction_category_one_select_img"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/help" />
+
+                        <TextView
+                            android:id="@+id/transaction_category_one_select"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/category"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <TextView
+                    android:id="@+id/t10"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@{addTransactionViewModel.buttonPositionTwoText}"
+                    app:layout_constraintBottom_toTopOf="@+id/add_transaction_category_two_btn"
+                    app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_two_btn"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_category_two_btn"
+                    tools:text="Category" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/add_transaction_category_two_btn"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    app:cardBackgroundColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@+id/add_transaction_add_date_btn"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/add_transaction_category_one_btn"
+                    app:layout_constraintTop_toTopOf="@+id/add_transaction_add_date_btn">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/transaction_category_two_select_img"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="8dp"
+                            android:src="@drawable/help" />
+
+                        <TextView
+                            android:id="@+id/transaction_category_two_select"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:text="@string/category"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/t12"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/date"
+                    app:layout_constraintBottom_toTopOf="@+id/add_transaction_add_date_btn"
+                    app:layout_constraintEnd_toEndOf="@+id/add_transaction_add_date_btn"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_add_date_btn" />
+
+
+                <com.kinetx.moneymanager.customview.DateView
+                    android:id="@+id/add_transaction_add_date_btn"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="32dp"
+                    android:background="@color/black"
+                    app:day="@{addTransactionViewModel.selectedDay}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/add_transaction_category_two_btn"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11"
+                    app:month="@{addTransactionViewModel.selectedMonth}"
+                    app:year="@{addTransactionViewModel.selectedYear}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView6"
+            style="@style/material_card"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView5">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    style="@style/material_card_title"
+                    android:text="@string/transaction_details"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/add_transaction_expense_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:autofillHints="Expense"
+                    android:backgroundTint="@color/black"
+                    android:ems="5"
+                    android:hint="@string/empty_string_placeholder"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp"
+                    android:text="@={addTransactionViewModel.transactionAmount}"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black_500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                <Spinner
+                    android:id="@+id/add_transaction_currency_spinner"
+                    style="@android:style/Widget.TextView.SpinnerItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/currencies"
+                    android:entries="@{addTransactionViewModel.currencySpinner}"
+                    android:minHeight="48dp"
+                    android:theme="@style/ThemeOverlay.Material3.Light"
+                    app:layout_constraintBottom_toBottomOf="@+id/add_transaction_expense_amount"
+                    app:layout_constraintStart_toEndOf="@+id/add_transaction_expense_amount"
+                    app:layout_constraintTop_toTopOf="@+id/add_transaction_expense_amount" />
+
+
+                <EditText
+                    android:id="@+id/add_transaction_comments_edittext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:autofillHints="Comments"
+                    android:backgroundTint="@color/black"
+                    android:ems="10"
+                    android:hint="@string/comments"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:text="@={addTransactionViewModel.transactionComment}"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black_500"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_expense_amount"
+                    app:layout_constraintTop_toBottomOf="@+id/add_transaction_expense_amount" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/amount"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/add_transaction_expense_amount"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_expense_amount" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    style="@style/material_card_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/comments"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toTopOf="@+id/add_transaction_comments_edittext"
+                    app:layout_constraintStart_toStartOf="@+id/add_transaction_comments_edittext" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
@@ -23,168 +265,32 @@
             app:layout_constraintGuide_percent="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/add_transaction_expense_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:autofillHints="Expense"
-            android:ems="5"
-            android:hint="@string/empty_string_placeholder"
-            android:text="@={addTransactionViewModel.transactionAmount}"
-            android:inputType="numberDecimal"
-            android:minHeight="48dp"
-            android:textAlignment="textEnd"
-            app:layout_constraintRight_toLeftOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Spinner
-            android:id="@+id/add_transaction_currency_spinner"
-            style="@android:style/Widget.TextView.SpinnerItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/currencies"
-            android:minHeight="48dp"
-            android:entries="@{addTransactionViewModel.currencySpinner}"
-            app:layout_constraintBottom_toBottomOf="@+id/add_transaction_expense_amount"
-            app:layout_constraintLeft_toRightOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/add_transaction_expense_amount" />
-
-        <ImageButton
-            android:id="@+id/add_transaction_category_two_btn"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="70dp"
-            android:background="@color/black"
-            android:contentDescription="@string/select_category_two"
-            android:scaleType="fitXY"
-            android:src="@drawable/help"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_transaction_expense_amount"/>
-
-        <TextView
-            android:id="@+id/t10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{addTransactionViewModel.buttonPositionTwoText}"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_two_btn"
-            tools:text="Category" />
-
-        <ImageButton
-            android:id="@+id/add_transaction_category_one_btn"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginEnd="30dp"
-            android:background="@color/black"
-            android:contentDescription="@string/select_category_one"
-            android:scaleType="fitXY"
-            android:src="@drawable/help"
-            app:layout_constraintBottom_toBottomOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintEnd_toStartOf="@+id/add_transaction_category_two_btn"/>
-
-        <TextView
-            android:id="@+id/t11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@{addTransactionViewModel.buttonPositionOneText}"
-            app:layout_constraintBottom_toTopOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
-            tools:text="Account" />
-
-        <TextView
-            android:id="@+id/t12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/date"
-            app:layout_constraintBottom_toTopOf="@+id/add_transaction_add_date_btn"
-            app:layout_constraintEnd_toEndOf="@+id/add_transaction_add_date_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_add_date_btn" />
-
-
-        <com.kinetx.moneymanager.customview.DateView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:background="@color/air_force_blue"
-            android:layout_marginStart="30dp"
-            android:id="@+id/add_transaction_add_date_btn"
-            app:day="@{addTransactionViewModel.selectedDay}"
-            app:month="@{addTransactionViewModel.selectedMonth}"
-            app:year="@{addTransactionViewModel.selectedYear}"
-            app:layout_constraintBottom_toBottomOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintStart_toEndOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintTop_toTopOf="@+id/add_transaction_category_two_btn" />
-
-        <EditText
-            android:id="@+id/add_transaction_comments_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:autofillHints="Comments"
-            android:ems="10"
-            android:hint="@string/comments"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="@={addTransactionViewModel.transactionComment}"
-            android:textColorHint="#757575"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn"  />
-
-
-
-        <TextView
-            android:id="@+id/transaction_category_one_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_one_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_one_btn"
-            tools:text="TextView" />
-
-        <TextView
-            android:id="@+id/transaction_category_two_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintStart_toStartOf="@+id/add_transaction_category_two_btn"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_category_two_btn"
-            tools:text="TextView"  />
 
         <Button
             android:id="@+id/add_transaction_submit_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
+            style="@style/button_normal"
+            android:layout_marginTop="48dp"
+            android:backgroundTint="@color/azure"
             android:text="@string/add"
             android:visibility="@{addTransactionViewModel.isAddBtnVisible()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_comments_edittext" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView6" />
 
         <Button
             android:id="@+id/add_transaction_update_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="90dp"
+            style="@style/button_normal"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="40dp"
+            android:backgroundTint="@color/ao"
             android:text="@string/update"
             android:visibility="@{addTransactionViewModel.isUpdateDeleteBtnVisible()}"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            android:layout_marginEnd="40dp"
-            app:layout_constraintTop_toBottomOf="@+id/add_transaction_comments_edittext" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView6" />
 
         <Button
             android:id="@+id/add_transaction_delete_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/button_normal"
             android:backgroundTint="@color/red"
             android:text="@string/delete"
             android:visibility="@{addTransactionViewModel.isUpdateDeleteBtnVisible()}"

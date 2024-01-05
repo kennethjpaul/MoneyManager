@@ -107,14 +107,14 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
             "",
             CategoryType.ACCOUNT,
             R.drawable.help,
-            java.lang.Long.decode("0xFF5d8aa8").toInt()
+            java.lang.Long.decode("0xFF000000").toInt()
         )
         _categoryPositionTwo.value = CategoryDatabase(
             -1,
             "",
             CategoryType.ACCOUNT,
             R.drawable.help,
-            java.lang.Long.decode("0xFF5d8aa8").toInt()
+            java.lang.Long.decode("0xFF000000").toInt()
         )
 
         if(argList.transactionId==-1L)

@@ -52,15 +52,15 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setBackgroundColor(it.categoryColor)
-            binding.addTransactionCategoryOneBtn.setImageResource(it.categoryImage)
+            binding.addTransactionCategoryOneBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryOneSelectImg.setImageResource(it.categoryImage)
             binding.transactionCategoryOneSelect.text = it.categoryName
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.categoryColor)
-            binding.addTransactionCategoryTwoBtn.setImageResource(it.categoryImage)
+            binding.addTransactionCategoryTwoBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryTwoSelectImg.setImageResource(it.categoryImage)
             binding.transactionCategoryTwoSelect.text = it.categoryName
         }
 
