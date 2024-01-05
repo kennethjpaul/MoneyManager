@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
@@ -35,7 +36,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
 
-        val itemImageButton :ImageButton = itemView.findViewById(R.id.category_list_image_button)
+        val itemImageButton :ImageView = itemView.findViewById(R.id.category_list_image_button)
         val itemCategoryName : TextView = itemView.findViewById(R.id.category_list_category_name)
         val itemAmount : TextView = itemView.findViewById(R.id.category_list_amount)
 
