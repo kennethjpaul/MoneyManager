@@ -32,6 +32,8 @@
         <entry key="app/src/main/res/layout/select_icon_item.xml" value="0.23550724637681159" />
         <entry key="app/src/main/res/layout/test.xml" value="0.10638297872340426" />
         <entry key="app/src/main/res/layout/transaction_item.xml" value="1.0362694300518134" />
+        <entry key="app/src/main/res/layout/transaction_item_child.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/transaction_item_parent.xml" value="0.28541666666666665" />
         <entry key="app/src/main/res/menu/navdrawer_menu.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.254" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.1" />

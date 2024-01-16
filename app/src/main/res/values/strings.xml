@@ -55,4 +55,5 @@
     <string name="transaction_details">Transaction Details</string>
     <string name="amount">Amount</string>
     <string name="transaction_info">Transaction Info</string>
+    <string name="_999_00">999.00</string>
 </resources>
