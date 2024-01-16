@@ -13,6 +13,7 @@ import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
 import com.kinetx.moneymanager.helpers.DateManipulation
 import kotlinx.coroutines.Dispatchers
@@ -94,7 +95,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     val categorySummaryQuery : LiveData<List<CategoryListData>>
         get() = _categorySummaryQuery
 
-    var categorySummaryList : List<CategoryListData> = emptyList()
+    var categorySummaryList : List<CategorySummaryListData> = emptyList()
 
     private val repository : DatabaseRepository
 

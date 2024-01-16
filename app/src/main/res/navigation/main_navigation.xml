@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_selectColorIconFragment"
             app:destination="@id/selectColorIconFragment" />
+        <argument
+            android:name="itemImageString"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/selectColorIconFragment"

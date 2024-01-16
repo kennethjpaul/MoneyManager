@@ -10,11 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
 
 class CategoryListAdapter (val listener: OnSelectCategoryListListener) : RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>()
 {
 
-    private var _list = emptyList<CategoryListData>()
+    private var _list = emptyList<CategorySummaryListData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_list,parent,false)
@@ -59,7 +60,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
         fun onSelectCategoryListClick(position:Int)
     }
 
-    fun setData( c: List<CategoryListData>)
+    fun setData( c: List<CategorySummaryListData>)
     {
         this._list = c
         notifyDataSetChanged()

@@ -17,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.databinding.FragmentSummaryBinding
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
 import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.recyclerview.CategoryListAdapter
 import com.kinetx.moneymanager.viewmodel.SummaryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.SummaryViewModelFactory
@@ -82,8 +84,10 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
         viewModel.categorySummaryQuery.observe(viewLifecycleOwner){
 
-            viewModel.categorySummaryList =  it.sortedByDescending { it.amount }
-            viewModel.updatePieChart(viewModel.categorySummaryList)
+            viewModel.categorySummaryList =  it.sortedByDescending { it.amount }.map {
+                CategorySummaryListData(it.categoryName,it.categoryId,CommonOperations.getResourceInt(application,it.categoryImage),it.categoryColor,it.amount)
+            }
+//            viewModel.updatePieChart(viewModel.categorySummaryList)
 //            binding.summaryPieChart.data = viewModel.pieData
 //            binding.summaryPieChart.invalidate()
             adapter.setData(viewModel.categorySummaryList)

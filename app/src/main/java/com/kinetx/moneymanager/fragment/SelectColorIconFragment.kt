@@ -64,8 +64,9 @@ class SelectColorIconFragment : Fragment(),SelectIconAdapter.OnSelectIconListene
         val item = viewModel.itemList.value?.get(position)
         val itemImage : Int = item?.iconImage!!
         val itemColor : Int = item.iconColor
+        val itemImageString : String = item.iconImageString
 
-        setFragmentResult("SelectColorIcon", bundleOf("colorIconType" to argList.colorIconType,"itemBackgroundColor" to itemColor, "itemBackgroundImage" to itemImage))
+        setFragmentResult("SelectColorIcon", bundleOf("colorIconType" to argList.colorIconType,"itemBackgroundColor" to itemColor, "itemBackgroundImage" to itemImage, "itemImageString" to itemImageString))
         view?.findNavController()?.navigateUp()
     }
 

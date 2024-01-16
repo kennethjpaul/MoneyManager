@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CategoryDatabase::class,TransactionDatabase::class], version = 5, exportSchema = false)
+@Database(entities = [CategoryDatabase::class,TransactionDatabase::class], version = 6, exportSchema = false)
 abstract class DatabaseMain : RoomDatabase(){
 
     abstract val databaseDao : DatabaseDao
@@ -13,6 +15,13 @@ abstract class DatabaseMain : RoomDatabase(){
     companion object
     {
 
+        private val MIGRATION_5_6 = object : Migration(5,6)
+        {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE category_table ADD COLUMN category_image_string TEXT NOT NULL DEFAULT ''")
+            }
+
+        }
         @Volatile
         private var INSTANCE : DatabaseMain? = null
 
@@ -29,7 +38,7 @@ abstract class DatabaseMain : RoomDatabase(){
                         DatabaseMain::class.java,
                         "main_database"
                     )
-                        .fallbackToDestructiveMigration()
+                        .addMigrations(MIGRATION_5_6)
                         .createFromAsset("database/main.db")
                         .build()
 
