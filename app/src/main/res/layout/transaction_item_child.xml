@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/material_card">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/material_card_constraint"
+        android:padding="0dp">
+
+        <View
+            android:id="@+id/transaction_item_child_view"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            android:background="@color/warm_black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/transaction_item_child_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/black"
+            android:padding="8dp"
+            android:src="@drawable/help"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/transaction_item_child_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/transaction_item_child_title"
+            style="@style/material_card_title"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/expense"
+            app:layout_constraintStart_toEndOf="@+id/transaction_item_child_icon"
+            app:layout_constraintTop_toTopOf="@+id/transaction_item_child_icon" />
+
+        <TextView
+            android:id="@+id/transaction_item_child_summary"
+            style="@style/material_card_subtitle"
+            android:text="@string/summary"
+            app:layout_constraintStart_toStartOf="@+id/transaction_item_child_title"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_item_child_title" />
+
+        <TextView
+            android:id="@+id/transaction_item_child_amount"
+            style="@style/material_card_subtitle"
+            android:layout_marginEnd="16dp"
+            android:text="@string/_999_00"
+            app:layout_constraintBottom_toBottomOf="@+id/transaction_item_child_summary"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
