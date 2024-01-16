@@ -53,17 +53,6 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
 
 
-        binding.summaryPieChart.legend.isWordWrapEnabled = true
-        binding.summaryPieChart.legend.textColor = Color.WHITE
-        binding.summaryPieChart.isDrawHoleEnabled = true
-        binding.summaryPieChart.holeRadius = 25F
-        binding.summaryPieChart.setUsePercentValues(true)
-        binding.summaryPieChart.setDrawEntryLabels(false)
-        binding.summaryPieChart.description.isEnabled = false
-        binding.summaryPieChart.setBackgroundColor(Color.TRANSPARENT)
-
-
-
         binding.summaryAdvanceLeftBtn.setOnClickListener()
         {
             val scope = binding.summaryScopeRadioGroup.checkedRadioButtonId
@@ -95,8 +84,8 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
             viewModel.categorySummaryList =  it.sortedByDescending { it.amount }
             viewModel.updatePieChart(viewModel.categorySummaryList)
-            binding.summaryPieChart.data = viewModel.pieData
-            binding.summaryPieChart.invalidate()
+//            binding.summaryPieChart.data = viewModel.pieData
+//            binding.summaryPieChart.invalidate()
             adapter.setData(viewModel.categorySummaryList)
         }
 

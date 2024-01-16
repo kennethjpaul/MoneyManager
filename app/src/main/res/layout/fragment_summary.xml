@@ -97,94 +97,135 @@
             app:layout_constraintStart_toEndOf="@+id/summary_custom_date_view"
             app:layout_constraintTop_toTopOf="@+id/summary_custom_date_view" />
 
-        <TextView
-            android:id="@+id/summary_t1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/income"
-            android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
-            app:layout_constraintBottom_toBottomOf="@+id/summary_income_text"
-            app:layout_constraintStart_toStartOf="@+id/summary_t2" />
-
-        <TextView
-            android:id="@+id/summary_income_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@{summaryViewModel.incomeCalculated}"
-            android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
-            app:layout_constraintBottom_toTopOf="@+id/summary_expense_text"
-            app:layout_constraintStart_toStartOf="@+id/summary_expense_text"
-            android:layout_marginBottom="20dp"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/summary_t2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/expense"
-            android:layout_marginEnd="40dp"
-            app:layout_constraintBottom_toBottomOf="@+id/summary_expense_text"
-            app:layout_constraintEnd_toStartOf="@+id/summary_guideline" />
-
-        <TextView
-            android:id="@+id/summary_expense_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:layout_marginStart="40dp"
-            android:text="@{summaryViewModel.expenseCalculated}"
-            app:layout_constraintStart_toStartOf="@+id/summary_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/summary_custom_date_view"
-            tools:text="0" />
-
-        <TextView
-            android:id="@+id/summary_t3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/balance"
-            android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
-            app:layout_constraintBottom_toBottomOf="@+id/summary_balance_text"
-            app:layout_constraintStart_toStartOf="@+id/summary_t2" />
-
-        <TextView
-            android:id="@+id/summary_balance_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            tools:text="0"
-            android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
-            android:text="@{summaryViewModel.balanceCalculated}"
-            app:layout_constraintStart_toStartOf="@+id/summary_expense_text"
-            app:layout_constraintTop_toBottomOf="@+id/summary_expense_text" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/summary_pie_chart"
-            android:layout_width="220dp"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView"
+            style="@style/material_card"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/summary_t3" />
+            app:layout_constraintTop_toBottomOf="@+id/summary_custom_date_view">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/summary_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/summary_t1"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/income"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/summary_income_text"
+                    style="@style/material_card_subtitle"
+                    android:text="@{summaryViewModel.incomeCalculated}"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintStart_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/summary_t2"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/expense"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                    app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+                <TextView
+                    android:id="@+id/summary_expense_text"
+                    style="@style/material_card_subtitle"
+                    android:text="@{summaryViewModel.expenseCalculated}"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                    app:layout_constraintStart_toStartOf="@+id/imageView2"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/summary_t3"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/balance"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView3"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                    app:layout_constraintStart_toStartOf="@+id/imageView3" />
+
+                <TextView
+                    android:id="@+id/summary_balance_text"
+                    style="@style/material_card_subtitle"
+                    android:text="@{summaryViewModel.balanceCalculated}"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView3"
+                    app:layout_constraintStart_toStartOf="@+id/imageView3"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                    tools:text="0" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@color/indigo"
+                    android:padding="10dp"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="@+id/imageView2"
+                    app:srcCompat="@drawable/deposit" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/falu_red"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/payment" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:padding="10dp"
+                    android:layout_marginStart="32dp"
+                    android:visibility="@{summaryViewModel.isIncomeBalanceVisible()}"
+                    android:background="@color/warm_black"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintTop_toTopOf="@+id/imageView2"
+                    app:srcCompat="@drawable/scale" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/summary_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/summary_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
         <Space
             android:layout_width="wrap_content"
@@ -193,16 +234,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/summary_recyclerview"  />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Transactions by category"
-            android:layout_marginTop="40dp"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/summary_pie_chart" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
