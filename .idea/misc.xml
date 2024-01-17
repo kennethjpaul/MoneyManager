@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../../layout/custom_preview.xml" value="0.21133093525179855" />
+        <entry key="app/src/main/res/drawable/border.xml" value="0.504" />
         <entry key="app/src/main/res/drawable/custom_radio_normal.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/custom_radio_selected.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/custom_radio_selector.xml" value="0.2965" />
@@ -12,25 +13,28 @@
         <entry key="app/src/main/res/layout/category_list.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_expense.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_add_income.xml" value="0.24183006535947713" />
-        <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_add_transaction.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_add_transfer.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_balances.xml" value="0.28489583333333335" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.13855116514690982" />
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.43779160186625193" />
-        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.15606936416184972" />
+        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.4401244167962675" />
         <entry key="app/src/main/res/layout/fragment_main_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_plot_transaction.xml" value="0.37109103544127864" />
         <entry key="app/src/main/res/layout/fragment_select_category.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_color_icon.xml" value="0.5098958333333333" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_summary.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_transaction_list.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/nav_header.xml" value="0.5088541666666667" />
-        <entry key="app/src/main/res/layout/select_category_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_transaction_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_transactions.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.3216374269005848" />
+        <entry key="app/src/main/res/layout/select_category_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/select_icon_item.xml" value="0.23550724637681159" />
         <entry key="app/src/main/res/layout/test.xml" value="0.10638297872340426" />
-        <entry key="app/src/main/res/layout/transaction_item.xml" value="0.5" />
-        <entry key="app/src/main/res/menu/navdrawer_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/transaction_item.xml" value="1.0362694300518134" />
+        <entry key="app/src/main/res/layout/transaction_item_child.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/transaction_item_parent.xml" value="0.28541666666666665" />
+        <entry key="app/src/main/res/menu/navdrawer_menu.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.254" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.1" />
       </map>

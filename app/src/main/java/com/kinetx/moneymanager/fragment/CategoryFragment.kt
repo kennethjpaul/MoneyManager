@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentCategoryBinding
 import com.kinetx.moneymanager.enums.ColorIconType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.viewmodel.CategoryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.CategoryViewModelFactory
 
@@ -55,7 +56,12 @@ class CategoryFragment : Fragment() {
             }
 
             viewModel.iconImageSource.observe(viewLifecycleOwner){
-                binding.categoryIconButton.setImageResource(it)
+              //  binding.categoryIconButton.setImageResource(it)
+            }
+
+            viewModel.iconImageString.observe(viewLifecycleOwner)
+            {
+                binding.categoryIconButton.setImageResource(CommonOperations.getResourceInt(application,it))
             }
 
             viewModel.coloColorCode.observe(viewLifecycleOwner){
@@ -136,11 +142,11 @@ class CategoryFragment : Fragment() {
                 val colorIconType = bundle.get("colorIconType")
                 val itemBackgroundColor= bundle.getInt("itemBackgroundColor")
                 val itemBackgroundImage = bundle.getInt("itemBackgroundImage")
-
+                val itemImageString = bundle.getString("itemImageString")
 
                 when(colorIconType)
                 {
-                    ColorIconType.ICON-> viewModel.updateIcon(itemBackgroundImage)
+                    ColorIconType.ICON-> viewModel.updateIcon(itemBackgroundImage,itemImageString!!)
                     ColorIconType.COLOR -> viewModel.updateColor(itemBackgroundColor)
                 }
 

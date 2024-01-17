@@ -21,6 +21,9 @@ data class CategoryDatabase(
     @ColumnInfo(name = "category_image")
     var categoryImage : Int = 0,
 
+    @ColumnInfo(name = "category_image_string")
+    var categoryImageString : String = "help",
+
     @ColumnInfo(name = "category_color")
     var categoryColor : Int = 0
 )

@@ -38,13 +38,12 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:textSize="20sp"
             android:layout_height="wrap_content"
             android:text="@{transactionListViewModel.totalTransactionAmount}"
-            android:layout_marginEnd="30dp"
-            tools:text="3000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/transaction_list_recyclerview"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            tools:text="3000" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

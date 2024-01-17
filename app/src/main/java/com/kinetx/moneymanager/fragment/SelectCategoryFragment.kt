@@ -16,7 +16,9 @@ import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.SelectCategoryAdapter
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.databinding.FragmentSelectCategoryBinding
+import com.kinetx.moneymanager.dataclass.SelectCategoryData
 import com.kinetx.moneymanager.enums.CategoryType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.viewmodel.SelectCategoryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.SelectCategoryViewModelFactory
 
@@ -58,7 +60,10 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
 
         viewModel.readAllCategories.observe(viewLifecycleOwner)
         {
-            adapter.setData(it)
+            val data = it.map {
+                SelectCategoryData(it.categoryId,it.categoryName,it.categoryType,it.categoryImage,CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor)
+            }
+            adapter.setData(data)
         }
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner)
@@ -83,7 +88,8 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
                     categoryName,
                     iconResource,
                     colorResource,
-                    categoryType
+                    categoryType,
+                    "help"
                 )
             )
         }
@@ -111,7 +117,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         val itemIcon : Int = item.categoryImage
         val itemColor : Int = item.categoryColor
         val categoryType : CategoryType = argList.categoryType
-
+        val itemImageString : String = item.categoryImageString
 
         view?.findNavController()?.navigate(
             SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryFragment(
@@ -120,7 +126,8 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
                 itemName,
                 itemIcon,
                 itemColor,
-                categoryType
+                categoryType,
+                itemImageString
             )
         )
     }

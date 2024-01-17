@@ -1,17 +1,20 @@
 package com.kinetx.moneymanager
 
+import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.database.CategoryDatabase
+import com.kinetx.moneymanager.dataclass.SelectCategoryData
 
 class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
 {
 
-    private var _catergoryList = emptyList<CategoryDatabase>()
+    private var _catergoryList = emptyList<SelectCategoryData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
     {
@@ -23,8 +26,8 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerVi
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
         val currentItem = _catergoryList[position]
-        holder.itemImage.setImageResource(currentItem.categoryImage)
-        holder.itemImage.setBackgroundColor(currentItem.categoryColor)
+        holder.itemImage.setImageResource(currentItem.categoryImageString)
+        holder.itemCard.setCardBackgroundColor(currentItem.categoryColor)
         holder.itemText.text = currentItem.categoryName
     }
 
@@ -36,7 +39,7 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerVi
     {
         val itemImage : ImageView = itemView.findViewById(R.id.select_category_item_image)
         val itemText  : TextView = itemView.findViewById(R.id.select_category_item_text)
-
+        val itemCard : CardView = itemView.findViewById(R.id.select_category_item_card)
 
         init {
             itemView.setOnClickListener(this)
@@ -67,7 +70,7 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerVi
         fun onSelectCategoryLongClick(position: Int)
     }
 
-    fun setData(category : List<CategoryDatabase>)
+    fun setData(category : List<SelectCategoryData>)
     {
         this._catergoryList = category
         notifyDataSetChanged()

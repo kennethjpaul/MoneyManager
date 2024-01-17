@@ -41,7 +41,7 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
 
-        binding.mainAddExpenseBtn.setOnClickListener()
+        binding.mainAddExpenseCard.setOnClickListener()
         {
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
             )
         }
 
-        binding.mainAddIncomeBtn.setOnClickListener()
+        binding.mainAddIncomeCard.setOnClickListener()
         {
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(
@@ -59,7 +59,7 @@ class MainFragment : Fragment() {
             )
         }
 
-        binding.mainAddTransferBtn.setOnClickListener()
+        binding.mainAddTransferCard.setOnClickListener()
         {
             view?.findNavController()?.navigate(
                 MainFragmentDirections.actionMainFragmentToAddTransactionFragment(

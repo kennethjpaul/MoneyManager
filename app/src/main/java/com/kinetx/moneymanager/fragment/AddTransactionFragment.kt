@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentAddTransactionBinding
 import com.kinetx.moneymanager.enums.CategoryType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.viewmodel.AddTransactionViewModel
 import com.kinetx.moneymanager.viewmodelfactory.AddTransactionViewModelFactory
 
@@ -52,15 +53,15 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setBackgroundColor(it.categoryColor)
-            binding.addTransactionCategoryOneBtn.setImageResource(it.categoryImage)
+            binding.addTransactionCategoryOneBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryOneSelectImg.setImageResource(CommonOperations.getResourceInt(application,it.categoryImageString))
             binding.transactionCategoryOneSelect.text = it.categoryName
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setBackgroundColor(it.categoryColor)
-            binding.addTransactionCategoryTwoBtn.setImageResource(it.categoryImage)
+            binding.addTransactionCategoryTwoBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryTwoSelectImg.setImageResource(CommonOperations.getResourceInt(application,it.categoryImageString))
             binding.transactionCategoryTwoSelect.text = it.categoryName
         }
 

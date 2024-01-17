@@ -1,18 +1,25 @@
 package com.kinetx.moneymanager.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.databinding.FragmentSummaryBinding
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
+import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.recyclerview.CategoryListAdapter
 import com.kinetx.moneymanager.viewmodel.SummaryViewModel
 import com.kinetx.moneymanager.viewmodelfactory.SummaryViewModelFactory
@@ -48,7 +55,6 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
 
 
-
         binding.summaryAdvanceLeftBtn.setOnClickListener()
         {
             val scope = binding.summaryScopeRadioGroup.checkedRadioButtonId
@@ -64,6 +70,7 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
 
 
 
+
         viewModel.fragmentTitle.observe(viewLifecycleOwner){
             (activity as AppCompatActivity).supportActionBar?.title =it
         }
@@ -72,8 +79,18 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
             viewModel.updateIncomeExpense(it)
         }
 
+
+
+
         viewModel.categorySummaryQuery.observe(viewLifecycleOwner){
-            adapter.setData(it)
+
+            viewModel.categorySummaryList =  it.sortedByDescending { it.amount }.map {
+                CategorySummaryListData(it.categoryName,it.categoryId,CommonOperations.getResourceInt(application,it.categoryImage),it.categoryColor,it.amount)
+            }
+//            viewModel.updatePieChart(viewModel.categorySummaryList)
+//            binding.summaryPieChart.data = viewModel.pieData
+//            binding.summaryPieChart.invalidate()
+            adapter.setData(viewModel.categorySummaryList)
         }
 
 
@@ -81,7 +98,13 @@ class SummaryFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListList
     }
 
     override fun onSelectCategoryListClick(position: Int) {
-       Log.i("","")
+
+        val categoryId  = viewModel.categorySummaryList[position].categoryId
+
+        val(dateStart: Long, dateEnd: Long) = viewModel.getCategoryDetails()
+
+        view?.findNavController()?.navigate(SummaryFragmentDirections.actionSummaryFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,
+            categoryId,dateStart,dateEnd))
     }
 
 }

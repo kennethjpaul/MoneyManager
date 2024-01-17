@@ -61,6 +61,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     val iconImageSource : LiveData<Int>
         get() = _iconImageSource
 
+    private  val _iconImageString = MutableLiveData<String>()
+    val iconImageString : LiveData<String>
+        get() = _iconImageString
+
     private val _colorColorCode = MutableLiveData<Int>()
     val coloColorCode : LiveData<Int>
         get() = _colorColorCode
@@ -68,6 +72,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     var categoryNames : List<String> = emptyList()
     var categoryNamesDb : LiveData<List<String>>
     var initialCategoryName : String =""
+
+    private var currentCategory = CategoryDatabase()
 
     private val repository : DatabaseRepository
 
@@ -86,11 +92,17 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _addVisible.value = View.GONE
             _editVisible.value = View.VISIBLE
 
-
+            currentCategory.categoryId = argList.itemId
+            currentCategory.categoryName = argList.itemName
+            currentCategory.categoryType = argList.categoryType
+            currentCategory.categoryColor = argList.itemColor
+            currentCategory.categoryImage = argList.itemIcon
+            currentCategory.categoryImageString = argList.itemImageString
 
             _categoryId.value = argList.itemId
             categoryName.value = argList.itemName
             _iconImageSource.value = argList.itemIcon
+            _iconImageString.value = argList.itemImageString
             _colorColorCode.value = argList.itemColor
 
             initialCategoryName = argList.itemName
@@ -103,10 +115,17 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _addVisible.value = View.VISIBLE
             _editVisible.value = View.GONE
 
+            currentCategory.categoryId = 0
+            currentCategory.categoryName = ""
+            currentCategory.categoryType = argList.categoryType
+            currentCategory.categoryColor = java.lang.Long.decode("0xFFdc582a").toInt()
+            currentCategory.categoryImage = R.drawable.help
+            currentCategory.categoryImageString = "help"
 
             initialCategoryName = ""
             _categoryId.value = 1
             _iconImageSource.value = R.drawable.help
+            _iconImageString.value = "help"
             _colorColorCode.value = java.lang.Long.decode("0xFFdc582a").toInt()
 
         }
@@ -130,7 +149,6 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             CategoryType.ACCOUNT->
             {
                 _categoryHint.value = "Account name"
-                _categoryHint.value = "Account name"
                 _fragmentTitle.value = "$titleString Account"
                 _accountBalanceVisible.value = View.VISIBLE
 
@@ -152,12 +170,16 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     }
 
-    fun updateIcon(itemBackgroundImage: Int) {
+    fun updateIcon(itemBackgroundImage: Int, itemImageString : String) {
         _iconImageSource.value = itemBackgroundImage
+        _iconImageString.value = itemImageString
+        currentCategory.categoryImageString = itemImageString
+        currentCategory.categoryImage = itemBackgroundImage
     }
 
     fun updateColor(itemBackgroundColor: Int) {
         _colorColorCode.value = itemBackgroundColor
+        currentCategory.categoryColor = itemBackgroundColor
     }
 
 
@@ -188,7 +210,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             return false
         }
 
-        val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
+        val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
         insertCategoryDao(category)
 
         return true
@@ -237,7 +259,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
         updateCategoryDao(category)
 
         if (argList.categoryType==CategoryType.ACCOUNT)
@@ -281,7 +303,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     fun deleteCategory() {
 
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,_colorColorCode.value!!)
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
         deleteCategoryDao(category)
     }
 

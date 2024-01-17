@@ -8,11 +8,15 @@ import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.fragment.TransactionListFragmentArgs
 import kotlinx.coroutines.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class TransactionListViewModel (argList: TransactionListFragmentArgs, application: Application) : AndroidViewModel(application)
 {
     fun setTotal() {
-        _totalTransactionAmount.value = listTransactionAmount.value?.sum().toString()
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.DOWN
+        _totalTransactionAmount.value = df.format(listTransactionAmount.value?.sum()).toString()
     }
 
 

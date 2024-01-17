@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentBalancesBinding
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.recyclerview.CategoryListAdapter
 import com.kinetx.moneymanager.viewmodel.BalancesViewModel
 import com.kinetx.moneymanager.viewmodelfactory.BalancesViewModelFactory
@@ -50,7 +52,11 @@ class BalancesFragment : Fragment(), CategoryListAdapter.OnSelectCategoryListLis
 
         viewModel.list.observe(viewLifecycleOwner)
         {
-            adapter.setData(it)
+            val data = it.map {
+                CategorySummaryListData(it.categoryName,it.categoryId,
+                    CommonOperations.getResourceInt(application,it.categoryImage),it.categoryColor,it.amount)
+            }
+            adapter.setData(data)
         }
 
         return binding.root

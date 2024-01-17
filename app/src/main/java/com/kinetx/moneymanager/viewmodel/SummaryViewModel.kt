@@ -1,20 +1,19 @@
 package com.kinetx.moneymanager.viewmodel
 
 import android.app.Application
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
 import android.view.View
 import android.widget.RadioGroup
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
 import com.kinetx.moneymanager.helpers.DateManipulation
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +21,6 @@ import kotlinx.coroutines.launch
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
-import kotlin.math.round
 
 class SummaryViewModel (application: Application): AndroidViewModel(application)
 {
@@ -93,17 +91,26 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
     val incomeExpenseQuery :LiveData<IncomeExpenseData>
         get() = _incomeExpenseQuery
 
-    private val _categorySummaryQuery = MutableLiveData<List<CategoryListData>>()
+    private var _categorySummaryQuery = MutableLiveData<List<CategoryListData>>()
     val categorySummaryQuery : LiveData<List<CategoryListData>>
         get() = _categorySummaryQuery
+
+    var categorySummaryList : List<CategorySummaryListData> = emptyList()
 
     private val repository : DatabaseRepository
 
     private var myCalendar : Calendar = Calendar.getInstance()
     private var curCalendar: Calendar = Calendar.getInstance()
 
+
+//    private var  pieChartList : MutableList<PieEntry> = mutableListOf()
+//    private val pieDateSet = PieDataSet(pieChartList,"L")
+//    val pieData = PieData(pieDateSet)
+
+
     init
     {
+//        pieChartList.add(PieEntry(100f,"S"))
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
 
@@ -126,6 +133,30 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
         updateCustomDateView(myCalendar)
 
         updateTransactions(myCalendar,2)
+
+        val colors: ArrayList<Int> = ArrayList()
+
+//        for (c in ColorTemplate.COLORFUL_COLORS) colors.add(c)
+//
+//        for (c in ColorTemplate.LIBERTY_COLORS) colors.add(c)
+//
+//        for (c in ColorTemplate.PASTEL_COLORS) colors.add(c)
+//
+//        for (c in ColorTemplate.VORDIPLOM_COLORS) colors.add(c)
+//
+//        for (c in ColorTemplate.JOYFUL_COLORS) colors.add(c)
+//
+//        colors.add(ColorTemplate.getHoloBlue())
+//
+//        pieDateSet.colors = colors
+//        pieDateSet.valueTextSize=11f
+//        pieDateSet.valueTextColor = Color.WHITE
+//        pieDateSet.label = ""
+//        pieDateSet.valueLinePart1Length = 0.6f
+//        pieDateSet.valueLinePart2Length = 1f
+//        pieDateSet.valueLinePart1OffsetPercentage = 80f
+//        pieDateSet.valueLineColor = Color.WHITE
+//        pieDateSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 
     }
 
@@ -172,6 +203,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
                     _categorySummaryQuery.postValue(repository.getCategorySummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
                 }
             }
+
         }
 
     }
@@ -282,5 +314,58 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
         _expenseCalculated.value = df.format(it.expense).toString()
         _balanceCalculated.value = df.format(a).toString()
 
+    }
+
+    fun updatePieChsart() {
+
+//        pieChartList.add(PieEntry(100f,"S"))
+//        pieChartList.add(PieEntry(400f,"D"))
+//        pieChartList.add(PieEntry(150f,"R"))
+//        pieChartList.add(PieEntry(400f,"Q"))
+
+    }
+
+    fun updatePieChart(it: List<CategoryListData>?) {
+//        pieChartList.clear()
+
+        if (it != null) {
+            for (i in it)
+            {
+//                pieChartList.add(PieEntry(i.amount,i.categoryName))
+            }
+        }
+
+    }
+
+    fun getCategoryDetails(): Pair<Long,Long> {
+
+        var dateStart : Long = -1L
+        var dateEnd : Long = -1L
+
+        when(_selectedType.value)
+        {
+            0 ->
+            {
+                dateStart = myCalendar.timeInMillis
+                dateEnd = myCalendar.timeInMillis
+            }
+            1 ->
+            {
+                dateStart = DateManipulation.getStartOfWeek(myCalendar).timeInMillis
+                dateEnd = DateManipulation.getEndOfWeek(myCalendar).timeInMillis
+            }
+            2 ->
+            {
+                dateStart = DateManipulation.getStartOfMonth(myCalendar,startOfMonth).timeInMillis
+                dateEnd = DateManipulation.getEndOfMonth(myCalendar,startOfMonth).timeInMillis
+            }
+            3->
+            {
+                dateStart = GregorianCalendar(myCalendar.get(Calendar.YEAR),0,1).timeInMillis
+                dateEnd = GregorianCalendar(myCalendar.get(Calendar.YEAR),11,31).timeInMillis
+            }
+        }
+
+        return Pair(dateStart,dateEnd)
     }
 }

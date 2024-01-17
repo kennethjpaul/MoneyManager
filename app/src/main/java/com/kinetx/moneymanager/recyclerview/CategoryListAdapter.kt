@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import com.kinetx.moneymanager.dataclass.CategorySummaryListData
 
 class CategoryListAdapter (val listener: OnSelectCategoryListListener) : RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>()
 {
 
-    private var _list = emptyList<CategoryListData>()
+    private var _list = emptyList<CategorySummaryListData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_list,parent,false)
@@ -23,7 +25,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = _list[position]
         holder.itemCategoryName.text = currentItem.categoryName
-        holder.itemAmount.text = currentItem.amount.toString()
+        holder.itemAmount.text = String.format("%.2f",currentItem.amount)
         holder.itemImageButton.setImageResource(currentItem.categoryImage)
         holder.itemImageButton.setBackgroundColor(currentItem.categoryColor)
     }
@@ -35,7 +37,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener
     {
 
-        val itemImageButton :ImageButton = itemView.findViewById(R.id.category_list_image_button)
+        val itemImageButton :ImageView = itemView.findViewById(R.id.category_list_image_button)
         val itemCategoryName : TextView = itemView.findViewById(R.id.category_list_category_name)
         val itemAmount : TextView = itemView.findViewById(R.id.category_list_amount)
 
@@ -58,7 +60,7 @@ class CategoryListAdapter (val listener: OnSelectCategoryListListener) : Recycle
         fun onSelectCategoryListClick(position:Int)
     }
 
-    fun setData( c: List<CategoryListData>)
+    fun setData( c: List<CategorySummaryListData>)
     {
         this._list = c
         notifyDataSetChanged()
