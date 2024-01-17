@@ -14,36 +14,51 @@
         android:layout_height="match_parent"
         tools:context=".fragment.TransactionListFragment">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/transaction_list_total_card"
+            style="@style/material_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginEnd="30dp"
+                    android:text="@string/total"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/material_card_subtitle"
+                    android:text="@{transactionListViewModel.totalTransactionAmount}"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="3000" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/transaction_list_recyclerview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/transaction_list_total_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_weight="1.0" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:textSize="20sp"
-            android:text="@string/total"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{transactionListViewModel.totalTransactionAmount}"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/transaction_list_recyclerview"
-            app:layout_constraintTop_toTopOf="@+id/textView3"
-            tools:text="3000" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

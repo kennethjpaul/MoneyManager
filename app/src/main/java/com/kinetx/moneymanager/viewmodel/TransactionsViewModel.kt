@@ -62,7 +62,6 @@ class TransactionsViewModel (application: Application) : AndroidViewModel(applic
     private val repository : DatabaseRepository
 
     var listRoomDatabase = MutableLiveData<List<TransactionListClass>>()
-    var listSorted : List<TransactionListClass> = emptyList()
 
     init {
 

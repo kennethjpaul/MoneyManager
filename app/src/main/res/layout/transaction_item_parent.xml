@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="16dp"
     style="@style/material_card">
 <androidx.constraintlayout.widget.ConstraintLayout
     style="@style/material_card_constraint">
@@ -11,12 +12,13 @@
         style="@style/material_card_subtitle"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="26 Dec 2023"
+        android:textSize="20sp"
+        android:text="@string/example_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/transaction_item_parent_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -25,6 +27,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/transaction_item_parent_date" />
+
+    <TextView
+        android:id="@+id/transaction_item_parent_day_total"
+        style="@style/material_card_subtitle"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/_999_00"
+        app:layout_constraintEnd_toEndOf="@+id/transaction_item_parent_recycler_view"
+        app:layout_constraintTop_toBottomOf="@+id/transaction_item_parent_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

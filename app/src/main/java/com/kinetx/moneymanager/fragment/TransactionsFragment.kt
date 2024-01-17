@@ -13,12 +13,17 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentTransactionsBinding
+import com.kinetx.moneymanager.dataclass.TransactionChildList
+import com.kinetx.moneymanager.dataclass.TransactionParentList
+import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.recyclerview.TransactionListAdapter
+import com.kinetx.moneymanager.recyclerview.TransactionParentRV
 import com.kinetx.moneymanager.viewmodel.TransactionsViewModel
 import com.kinetx.moneymanager.viewmodelfactory.TransactionsViewModelFactory
 
 
-class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionListListener {
+class TransactionsFragment : Fragment(), TransactionParentRV.TransactionParentListener {
 
 
     lateinit var binding : FragmentTransactionsBinding
@@ -39,7 +44,7 @@ class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionLis
         binding.lifecycleOwner = viewLifecycleOwner
 
 
-        val adapter = TransactionListAdapter(this)
+        val adapter = TransactionParentRV(this)
         binding.transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.transactionsRecyclerView.setHasFixedSize(true)
         binding.transactionsRecyclerView.adapter = adapter
@@ -66,10 +71,15 @@ class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionLis
 
         viewModel.listRoomDatabase.observe(viewLifecycleOwner)
         {
-            viewModel.listSorted = it.sortedByDescending {
-                it.date
-            }
-            adapter.setData(viewModel.listSorted)
+            val data = it.groupBy { it.date }.map {
+            TransactionParentList(it.key, it.value.map {
+                TransactionChildList(it.transactionId,it.categoryOne,it.categoryTwo,it.transactionType,it.comments,it.amount,
+                    CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor)
+            }, it.value.filter { it.transactionType==TransactionType.EXPENSE }.map { it.amount }.sum() - it.value.filter { it.transactionType==TransactionType.INCOME }.map { it.amount }.sum() )
+        }.sortedByDescending {
+            it.date
+        }
+            adapter.setData(data)
         }
 
 
@@ -82,12 +92,8 @@ class TransactionsFragment : Fragment(), TransactionListAdapter.OnTransactionLis
         viewModel.updateTransactions()
     }
 
-    override fun onTransactionListLonClick(position: Int) {
-        val transactionId = viewModel.listSorted[position].transactionId
-        val transactionType = viewModel.listSorted[position].transactionType
-        view?.findNavController()?.navigate(TransactionsFragmentDirections.actionTransactionsFragmentToAddTransactionFragment(
-            transactionType, transactionId
-        ))
+    override fun onLongClickTransactionParent(position: Long, transactionType: TransactionType) {
+        view?.findNavController()?.navigate(TransactionsFragmentDirections.actionTransactionsFragmentToAddTransactionFragment(transactionType,position))
     }
 
 }
