@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -57,7 +58,13 @@ class TransactionListFragment : Fragment(), TransactionParentRV.TransactionParen
         {
             val data = it.groupBy { it.date }.map {
                 TransactionParentList(it.key, it.value.map {
-                    TransactionChildList(it.transactionId,it.categoryOne,it.categoryTwo,it.transactionType,it.comments,it.amount,CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor)
+                    TransactionChildList(it.transactionId,it.categoryOne,it.categoryTwo,when(it.transactionType)
+                    {
+                        TransactionType.TRANSFER -> Color.parseColor("#FFa4c639")
+                        TransactionType.INCOME -> Color.parseColor("#FF5d8aa8")
+                        TransactionType.EXPENSE -> Color.parseColor("#FF970203")
+                        else-> Color.parseColor("#FFa4c639")
+                    },it.comments,it.amount,CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor,it.transactionType)
                 }, it.value.filter { it.transactionType==TransactionType.EXPENSE }.map { it.amount }.sum() - it.value.filter { it.transactionType==TransactionType.INCOME }.map { it.amount }.sum())
             }.sortedByDescending {
                 it.date

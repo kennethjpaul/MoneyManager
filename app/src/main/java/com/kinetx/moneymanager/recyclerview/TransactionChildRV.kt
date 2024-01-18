@@ -58,27 +58,7 @@ class TransactionChildRV(val listener : TransactionChildListener): RecyclerView.
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.FLOOR
         holder.itemAmount.text = df.format(currentItem.amount).toString()
-
-        when(currentItem.transactionType)
-        {
-            TransactionType.TRANSFER ->
-            {
-                holder.itemType.setBackgroundColor(Color.parseColor("#FFa4c639"))
-            }
-            TransactionType.INCOME ->
-            {
-                holder.itemType.setBackgroundColor(Color.parseColor("#FF5d8aa8"))
-            }
-            TransactionType.EXPENSE ->
-            {
-                holder.itemType.setBackgroundColor(Color.parseColor("#FF970203"))
-            }
-            else->
-            {
-                holder.itemType.setBackgroundColor(Color.parseColor("#FFa4c639"))
-            }
-        }
-
+        holder.itemType.setBackgroundColor(currentItem.transactionColor)
         holder.itemIcon.setImageResource(currentItem.categoryImageInt)
         holder.itemIcon.setBackgroundColor(currentItem.categoryColor)
     }

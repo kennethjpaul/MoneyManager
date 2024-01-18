@@ -16,6 +16,8 @@ import java.text.DecimalFormat
 
 class TransactionParentRV(val listener: TransactionParentListener) : RecyclerView.Adapter<TransactionParentRV.MyViewHolder>(), TransactionChildRV.TransactionChildListener {
 
+    var viewPool = RecyclerView.RecycledViewPool()
+
     private var _list = emptyList<TransactionParentList>()
 
     interface TransactionParentListener {
@@ -51,6 +53,7 @@ class TransactionParentRV(val listener: TransactionParentListener) : RecyclerVie
         holder.itemRecycler.layoutManager = LinearLayoutManager(holder.itemView.context)
         holder.itemRecycler.setHasFixedSize(true)
         holder.itemRecycler.adapter = adapter
+        holder.itemRecycler.setRecycledViewPool(viewPool)
         adapter.setData(currentItem.transactionChildList)
 
         val df = DecimalFormat("#.##")

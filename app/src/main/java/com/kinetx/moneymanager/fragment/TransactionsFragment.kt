@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +22,8 @@ import com.kinetx.moneymanager.recyclerview.TransactionListAdapter
 import com.kinetx.moneymanager.recyclerview.TransactionParentRV
 import com.kinetx.moneymanager.viewmodel.TransactionsViewModel
 import com.kinetx.moneymanager.viewmodelfactory.TransactionsViewModelFactory
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 class TransactionsFragment : Fragment(), TransactionParentRV.TransactionParentListener {
@@ -73,8 +76,14 @@ class TransactionsFragment : Fragment(), TransactionParentRV.TransactionParentLi
         {
             val data = it.groupBy { it.date }.map {
             TransactionParentList(it.key, it.value.map {
-                TransactionChildList(it.transactionId,it.categoryOne,it.categoryTwo,it.transactionType,it.comments,it.amount,
-                    CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor)
+                TransactionChildList(it.transactionId,it.categoryOne,it.categoryTwo,when(it.transactionType)
+                {
+                    TransactionType.TRANSFER -> Color.parseColor("#FFa4c639")
+                    TransactionType.INCOME -> Color.parseColor("#FF5d8aa8")
+                    TransactionType.EXPENSE -> Color.parseColor("#FF970203")
+                    else-> Color.parseColor("#FFa4c639")
+                },it.comments,it.amount,
+                    CommonOperations.getResourceInt(application,it.categoryImageString),it.categoryColor,it.transactionType)
             }, it.value.filter { it.transactionType==TransactionType.EXPENSE }.map { it.amount }.sum() - it.value.filter { it.transactionType==TransactionType.INCOME }.map { it.amount }.sum() )
         }.sortedByDescending {
             it.date
