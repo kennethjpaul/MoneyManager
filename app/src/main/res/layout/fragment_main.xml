@@ -13,133 +13,129 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-        <TextView
-            android:id="@+id/main_add_expense_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@string/add_transactions"
-            android:textSize="20sp"
+        <com.kinetx.moneymanager.customview.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_width="300dp"
+            app:seekPercentage="@{mainViewModel.percentMonth}"
+            android:layout_height="300dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:seekBarColor="@color/teal_200"
+            app:seekTextValue="@{mainViewModel.balanceMonth}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/main_add_expense_card"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/main_add_transaction_card"
+            style="@style/material_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="40dp"
-            app:cardBackgroundColor="@color/falu_red"
-            app:layout_constraintTop_toBottomOf="@id/main_add_expense_text">
-            <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="4dp"
-                    android:src="@drawable/payment"/>
+            app:layout_constraintTop_toBottomOf="@+id/circularProgressBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint" android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:id="@+id/t11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/expense"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp" />
+                    android:id="@+id/main_add_expense_text"
+                    style="@style/material_card_title"
+                    android:text="@string/add_transactions"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_add_expense_card"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/falu_red"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/main_add_expense_text">
 
-        </androidx.cardview.widget.CardView>
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/main_add_income_card"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginEnd="30dp"
-            app:cardBackgroundColor="@color/indigo"
-            app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_card"
-            app:layout_constraintEnd_toStartOf="@+id/main_add_expense_card">
-            <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="4dp"
-                    android:src="@drawable/deposit"/>
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/payment" />
 
-                <TextView
-                    android:id="@+id/t10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/income"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                        <TextView
+                            android:id="@+id/t11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/expense"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
 
-        </androidx.cardview.widget.CardView>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/main_add_transfer_card"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            app:cardBackgroundColor="@color/warm_black"
-            android:layout_marginStart="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_card"
-            app:layout_constraintStart_toEndOf="@+id/main_add_expense_card">
-            <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="4dp"
-                    android:src="@drawable/moneytransfer"/>
-                <TextView
-                    android:id="@+id/t12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/transfer"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
+                </androidx.cardview.widget.CardView>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_add_income_card"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardBackgroundColor="@color/indigo"
+                    app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_card"
+                    app:layout_constraintEnd_toStartOf="@+id/main_add_expense_card">
 
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="80dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_add_expense_card" />
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/deposit" />
 
-        <TextView
-            android:id="@+id/main_this_month_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/this_month"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider" />
+                        <TextView
+                            android:id="@+id/t10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/income"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
+                </androidx.cardview.widget.CardView>
 
-        <com.kinetx.moneymanager.customview.DialView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/main_dial_view"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_this_month_text"
-            app:expenses="@{mainViewModel.expenseMonth}"
-            app:balance="@{mainViewModel.balanceMonth}"
-            app:currency="CHF"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_add_transfer_card"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="30dp"
+                    app:cardBackgroundColor="@color/warm_black"
+                    app:layout_constraintBottom_toBottomOf="@+id/main_add_expense_card"
+                    app:layout_constraintStart_toEndOf="@+id/main_add_expense_card">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat style="@style/card_linear_layout">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/moneytransfer" />
+
+                        <TextView
+                            android:id="@+id/t12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/transfer"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -32,6 +32,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val balanceMonth : LiveData<Float>
         get() = _balanceMonth
 
+    private val _percentMonth = MutableLiveData<Float>()
+    val percentMonth : LiveData<Float>
+        get() = _percentMonth
+
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
@@ -49,7 +53,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         _expenseMonth.value = 0.0f
         _balanceMonth.value = 0.0f
-
+        _percentMonth.value = 0.0f
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
 
@@ -77,8 +81,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         val a = it?.income!! - it.expense
         _expenseMonth.value = it.expense
-        _balanceMonth.value =  a
-
+        _balanceMonth.value =  df.format(a).toFloat()
+        _percentMonth.value = df.format(it.expense/it?.income*100).toFloat()
     }
 
 }
