@@ -82,7 +82,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val a = it?.income!! - it.expense
         _expenseMonth.value = it.expense
         _balanceMonth.value =  df.format(a).toFloat()
-        _percentMonth.value = df.format(it.expense/it?.income*100).toFloat()
+        val p = if (it.income ==0f) {
+            0f
+        } else {
+            it.expense/ it.income *100
+        }
+
+        _percentMonth.value = df.format(p).toFloat()
     }
 
 }
