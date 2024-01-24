@@ -19,6 +19,7 @@
             android:id="@+id/transactions_date_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="2dp"
             app:cardElevation="2dp"
@@ -31,6 +32,7 @@
                 <TextView
                     android:id="@+id/textView8"
                     style="@style/material_card_title"
+                    android:layout_height="wrap_content"
                     android:text="Date start"
                     app:layout_constraintEnd_toEndOf="@+id/transactions_date_start"
                     app:layout_constraintStart_toStartOf="@+id/transactions_date_start"
@@ -39,6 +41,7 @@
                 <TextView
                     android:id="@+id/textView10"
                     style="@style/material_card_title"
+                    android:layout_height="wrap_content"
                     android:text="Date end"
                     app:layout_constraintEnd_toEndOf="@+id/transactions_date_end"
                     app:layout_constraintStart_toStartOf="@+id/transactions_date_end"
@@ -48,8 +51,8 @@
                     android:id="@+id/transactions_date_start"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_marginEnd="40dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="40dp"
                     android:background="@color/falu_red"
                     app:day="@{transactionsViewModel.startDay}"
                     app:layout_constraintEnd_toStartOf="@+id/guideline3"
