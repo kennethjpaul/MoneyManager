@@ -15,70 +15,87 @@
         tools:context=".fragment.TransactionsFragment">
 
 
-        <com.kinetx.moneymanager.customview.DateView
-            android:id="@+id/transactions_date_start"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/air_force_blue"
-            app:day="@{transactionsViewModel.startDay}"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            app:month="@{transactionsViewModel.startMonth}"
-            app:year="@{transactionsViewModel.startYear}" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/transactions_date_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.kinetx.moneymanager.customview.DateView
-            android:id="@+id/transactions_date_end"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="40dp"
-            android:background="@color/air_force_blue"
-            app:day="@{transactionsViewModel.endDay}"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/transactions_date_start"
-            app:month="@{transactionsViewModel.endMonth}"
-            app:year="@{transactionsViewModel.endYear}" />
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    style="@style/material_card_title"
+                    android:text="Date start"
+                    app:layout_constraintEnd_toEndOf="@+id/transactions_date_start"
+                    app:layout_constraintStart_toStartOf="@+id/transactions_date_start"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    style="@style/material_card_title"
+                    android:text="Date end"
+                    app:layout_constraintEnd_toEndOf="@+id/transactions_date_end"
+                    app:layout_constraintStart_toStartOf="@+id/transactions_date_end"
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+                <com.kinetx.moneymanager.customview.DateView
+                    android:id="@+id/transactions_date_start"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/falu_red"
+                    app:day="@{transactionsViewModel.startDay}"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    app:month="@{transactionsViewModel.startMonth}"
+                    app:year="@{transactionsViewModel.startYear}" />
+
+                <com.kinetx.moneymanager.customview.DateView
+                    android:id="@+id/transactions_date_end"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@color/falu_red"
+                    app:day="@{transactionsViewModel.endDay}"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="@+id/transactions_date_start"
+                    app:month="@{transactionsViewModel.endMonth}"
+                    app:year="@{transactionsViewModel.endYear}" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/transactionsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/transactions_date_start" />
+            app:layout_constraintTop_toBottomOf="@+id/transactions_date_card" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Date start"
-            app:layout_constraintEnd_toEndOf="@+id/transactions_date_start"
-            app:layout_constraintStart_toStartOf="@+id/transactions_date_start"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date end"
-            app:layout_constraintEnd_toEndOf="@+id/transactions_date_end"
-            app:layout_constraintStart_toStartOf="@+id/transactions_date_end"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_percent="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
