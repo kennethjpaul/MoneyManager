@@ -1,31 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/mainFragment"
         android:icon="@drawable/home"
         android:title="Home" />
 
     <item
-        android:id="@+id/balancesFragment"
-        android:icon="@drawable/scale"
-        android:title="Account Balances" />
+        android:title="Transactions and Expenses">
+
+        <menu>
+            <item
+                android:id="@+id/transactionsFragment"
+                android:icon="@drawable/transactions"
+                android:title="Transactions" />
+            <item
+                android:id="@+id/summaryFragment"
+                android:icon="@drawable/summary"
+                android:title="Expenses"
+                />
+        </menu>
+
+    </item>
 
     <item
-        android:id="@+id/transactionsFragment"
-        android:icon="@drawable/transactions"
-        android:title="Transactions" />
-    <item
-        android:id="@+id/summaryFragment"
-        android:icon="@drawable/summary"
-        android:title="Summary"
-        />
-    <item
-        android:id="@+id/plotTransactionFragment"
-        android:icon="@drawable/graph"
-        android:title="Custom plots" />
+        android:title="Info">
+
+        <menu>
+
+            <item
+                android:id="@+id/balancesFragment"
+                android:icon="@drawable/scale"
+                android:title="Account Balances" />
+
+        </menu>
+
+    </item>
 
     <item
-        android:id="@+id/settingsFragment2"
-        android:icon="@drawable/settings"
-        android:title="Settings" />
+        android:title="Analysis">
+
+        <menu>
+            <item
+                android:id="@+id/plotTransactionFragment"
+                android:icon="@drawable/graph"
+                android:title="Custom plots" />
+
+        </menu>
+    </item>
+
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/settingsFragment2"
+                android:icon="@drawable/settings"
+                android:title="Settings" />
+        </menu>
+    </item>
+
+
+
+
+
 </menu>
