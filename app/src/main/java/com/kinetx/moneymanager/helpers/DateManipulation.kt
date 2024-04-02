@@ -222,4 +222,13 @@ object DateManipulation {
 
         return calendarDestination
     }
+
+    fun getDateArray(calendar: Calendar): String
+    {
+        val day : String = calendar.get(Calendar.DAY_OF_MONTH).toString()
+        val month: String = CommonOperations.monthArray[calendar.get(Calendar.MONTH)]
+        val year : String = calendar.get(Calendar.YEAR).toString()
+
+        return "$day $month $year"
+    }
 }

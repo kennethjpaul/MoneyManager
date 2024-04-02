@@ -23,6 +23,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val exp = MutableLiveData<Float>()
 
+    private val _startDate = MutableLiveData<String>()
+    val startDate : LiveData<String>
+        get() = _startDate
+
+    private val _endDate = MutableLiveData<String>()
+    val endDate : LiveData<String>
+        get() = _endDate
 
     private val _expenseMonth = MutableLiveData<Float>()
     val expenseMonth : LiveData<Float>
@@ -31,6 +38,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _balanceMonth = MutableLiveData<Float>()
     val balanceMonth : LiveData<Float>
         get() = _balanceMonth
+
+    private val _incomeMonth = MutableLiveData<Float>()
+    val incomeMonth : LiveData<Float>
+        get() = _incomeMonth
 
     private val _percentMonth = MutableLiveData<Float>()
     val percentMonth : LiveData<Float>
@@ -54,11 +65,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _expenseMonth.value = 0.0f
         _balanceMonth.value = 0.0f
         _percentMonth.value = 0.0f
+        _incomeMonth.value  = 0.0f
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
 
         updateIncomeExpenseQuery(myCalendar)
-
+        val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
+        val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
+        _startDate.value = DateManipulation.getDateArray(s)
+        _endDate.value = DateManipulation.getDateArray(e)
 
 
         _fragmentTitle.value = "Money Manager"
@@ -80,7 +95,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         df.roundingMode = RoundingMode.DOWN
 
         val a = it?.income!! - it.expense
-        _expenseMonth.value = it.expense
+        _incomeMonth.value = df.format(it.income).toFloat()
+        _expenseMonth.value = df.format(it.expense).toFloat()
         _balanceMonth.value =  df.format(a).toFloat()
         val p = if (it.income ==0f) {
             0f

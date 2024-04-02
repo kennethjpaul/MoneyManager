@@ -13,29 +13,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <com.kinetx.moneymanager.customview.CircularProgressBar
-            android:id="@+id/circularProgressBar"
-            android:layout_width="300dp"
-            app:seekPercentage="@{mainViewModel.percentMonth}"
-            android:layout_height="300dp"
-            android:layout_marginTop="32dp"
+
+        <View
+            android:id="@+id/main_top_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@color/indigo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:seekBarColor="@color/teal_200"
-            app:seekTextValue="@{mainViewModel.balanceMonth}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kinetx.moneymanager.customview.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            app:innerCircleColor="@color/indigo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_text_income"
+            app:seekBarColor="@color/white"
+            app:seekPercentage="@{mainViewModel.percentMonth}"
+            app:seekTextValue="@{mainViewModel.balanceMonth}" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/main_add_transaction_card"
             style="@style/material_card"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circularProgressBar">
+            app:layout_constraintTop_toBottomOf="@+id/main_top_view">
 
-            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint" android:layout_marginBottom="20dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                style="@style/material_card_constraint"
+                android:layout_marginBottom="20dp">
 
                 <TextView
                     android:id="@+id/main_add_expense_text"
@@ -137,5 +150,99 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/main_text_1"
+            style="@style/material_card_title"
+            android:textColor="@color/white"
+            android:layout_marginTop="32dp"
+            android:text="-"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/main_top_view" />
+
+        <TextView
+            android:id="@+id/main_text_start_date"
+            android:layout_marginEnd="24dp"
+            style="@style/material_card_title"
+            android:textColor="@color/white"
+            android:hint="25 May 2024"
+            android:text="@{mainViewModel.startDate}"
+            app:layout_constraintBottom_toBottomOf="@+id/main_text_1"
+            app:layout_constraintEnd_toStartOf="@+id/main_text_1"
+            app:layout_constraintTop_toTopOf="@+id/main_text_1" />
+
+        <TextView
+            android:id="@+id/main_text_end_date"
+            style="@style/material_card_title"
+            android:textColor="@color/white"
+            android:layout_marginStart="24dp"
+            android:hint="30 June 2024"
+            android:text="@{mainViewModel.endDate}"
+            app:layout_constraintBottom_toBottomOf="@+id/main_text_1"
+            app:layout_constraintStart_toEndOf="@+id/main_text_1"
+            app:layout_constraintTop_toTopOf="@+id/main_text_1" />
+
+        <TextView
+            android:id="@+id/main_text_2"
+            style="@style/material_card_subtitle"
+            android:text="@string/income"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/main_text_5"
+            app:layout_constraintStart_toStartOf="@+id/main_text_income"
+            app:layout_constraintTop_toBottomOf="@+id/main_text_1" />
+
+        <TextView
+            android:id="@+id/main_text_3"
+            style="@style/material_card_subtitle"
+            android:text="@string/expense"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@+id/main_text_6"
+            app:layout_constraintStart_toStartOf="@+id/main_text_expense"
+            app:layout_constraintTop_toBottomOf="@+id/main_text_1" />
+
+        <TextView
+            android:id="@+id/main_text_income"
+            style="@style/material_bold_title"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="4dp"
+            android:hint="@string/_999_00"
+            android:text="@{mainViewModel.incomeMonth.toString()}"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/main_text_5"
+            app:layout_constraintTop_toBottomOf="@+id/main_text_1" />
+
+        <TextView
+            android:id="@+id/main_text_expense"
+            style="@style/material_bold_title"
+            android:layout_marginStart="24dp"
+            android:hint="@string/_999_00"
+            android:text="@{mainViewModel.expenseMonth.toString()}"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/main_text_income"
+            app:layout_constraintStart_toEndOf="@+id/main_text_1"
+            app:layout_constraintTop_toTopOf="@+id/main_text_income" />
+
+        <TextView
+            android:id="@+id/main_text_5"
+            style="@style/material_bold_title"
+            android:layout_marginEnd="24dp"
+            android:text="CHF"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/main_text_income"
+            app:layout_constraintEnd_toStartOf="@+id/main_text_1"
+            app:layout_constraintTop_toTopOf="@+id/main_text_income" />
+
+        <TextView
+            android:id="@+id/main_text_6"
+            style="@style/material_bold_title"
+            android:layout_marginStart="4dp"
+            android:text="CHF"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/main_text_income"
+            app:layout_constraintStart_toEndOf="@+id/main_text_expense"
+            app:layout_constraintTop_toTopOf="@+id/main_text_income" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
