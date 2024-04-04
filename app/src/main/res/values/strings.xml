@@ -57,4 +57,6 @@
     <string name="transaction_info">Transaction Info</string>
     <string name="_999_00">999.00</string>
     <string name="example_date">26 Dec 2023</string>
+    <string name="_date_placeholder_1">25 May 2024</string>
+    <string name="_date_placeholder_2">30 June 2024</string>
 </resources>
