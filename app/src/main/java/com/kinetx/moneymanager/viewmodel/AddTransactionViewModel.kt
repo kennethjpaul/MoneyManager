@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.kinetx.moneymanager.dataclass.ImageButtonData
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.database.CategoryDatabase
@@ -26,6 +27,9 @@ import kotlinx.coroutines.launch
 
 class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val application: Application): ViewModel() {
 
+    private val sp = PreferenceManager.getDefaultSharedPreferences(application)
+    private val currency : String = sp.getString("currency","CHF").toString()
+
     private val monthArray = arrayOf(
         "Jan", "Feb",
         "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -35,6 +39,10 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     val transactionComment = MutableLiveData<String>()
 
     val transaction = MutableLiveData<TransactionDatabase>()
+
+    private val _selectedCurrency = MutableLiveData<String>()
+    val selectedCurrency : LiveData<String>
+        get() = _selectedCurrency
 
     private val _selectedDay = MutableLiveData<String>()
     val selectedDay : LiveData<String>
@@ -75,10 +83,6 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         get() = _buttonPositionTwoText
 
 
-    private val _currencySpinner = MutableLiveData<List<String>>()
-    val currencySpinner : LiveData<List<String>>
-        get() = _currencySpinner
-
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
@@ -100,7 +104,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         myCalendar.set(Calendar.SECOND,0)
         myCalendar.set(Calendar.MILLISECOND,0)
 
-        _currencySpinner.value = listOf("CHF","EUR","INR","USD")
+        _selectedCurrency.value = currency
 
         _categoryPositionOne.value = CategoryDatabase(
             -1,

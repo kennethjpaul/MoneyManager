@@ -33,6 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_text_income"
             app:seekBarColor="@color/white"
+            app:seekCurrencyValue="@{mainViewModel.selectedCurrency}"
             app:seekPercentage="@{mainViewModel.percentMonth}"
             app:seekTextValue="@{mainViewModel.balanceMonth}" />
 
@@ -231,7 +232,8 @@
             android:id="@+id/main_text_5"
             style="@style/material_bold_title"
             android:layout_marginEnd="24dp"
-            android:text="CHF"
+            android:text="@{mainViewModel.selectedCurrency}"
+            android:hint="@string/default_currency"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/main_text_income"
             app:layout_constraintEnd_toStartOf="@+id/main_text_1"
@@ -241,7 +243,8 @@
             android:id="@+id/main_text_6"
             style="@style/material_bold_title"
             android:layout_marginStart="4dp"
-            android:text="CHF"
+            android:text="@{mainViewModel.selectedCurrency}"
+            android:hint="@string/default_currency"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/main_text_income"
             app:layout_constraintStart_toEndOf="@+id/main_text_expense"

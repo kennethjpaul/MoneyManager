@@ -228,15 +228,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-                <Spinner
+                <TextView
                     android:id="@+id/add_transaction_currency_spinner"
-                    style="@android:style/Widget.TextView.SpinnerItem"
+                    style="@style/material_card_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/currencies"
+                    android:hint="@string/default_currency"
                     android:minWidth="100dp"
-                    android:entries="@{addTransactionViewModel.currencySpinner}"
+                    android:paddingStart="8dp"
                     android:minHeight="48dp"
+                    android:text="@{addTransactionViewModel.selectedCurrency}"
+                    android:textAlignment="textStart"
                     android:theme="@style/ThemeOverlay.Material3.Light"
                     app:layout_constraintBottom_toBottomOf="@+id/add_transaction_expense_amount"
                     app:layout_constraintEnd_toEndOf="parent"

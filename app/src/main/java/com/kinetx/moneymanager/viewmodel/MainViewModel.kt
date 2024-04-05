@@ -20,8 +20,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
+    private val currency : String = sp.getString("currency","CHF").toString()
 
     val exp = MutableLiveData<Float>()
+
+    private val _selectedCurrency = MutableLiveData<String>()
+    val selectedCurrency : LiveData<String>
+        get() = _selectedCurrency
 
     private val _startDate = MutableLiveData<String>()
     val startDate : LiveData<String>
@@ -68,6 +73,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _incomeMonth.value  = 0.0f
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
+        _selectedCurrency.value = currency
 
         updateIncomeExpenseQuery(myCalendar)
         val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)

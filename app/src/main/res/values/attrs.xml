@@ -23,6 +23,7 @@
     <declare-styleable name="CircularProgressBar">
         <attr name="seekPercentage" format="string"/>
         <attr name="seekTextValue" format="string"/>
+        <attr name="seekCurrencyValue" format="string"/>
         <attr name="seekBarColor" format="color"/>
         <attr name="innerCircleColor" format="color"/>
         <attr name="seekBarTextColor" format="color"/>

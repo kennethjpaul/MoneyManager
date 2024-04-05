@@ -27,6 +27,7 @@ class CircularProgressBar@JvmOverloads constructor(
     var radiusOuter : Float = 0.0f
     var percentage : Float = 0.0f
     var balanceValue : String = ""
+    var currencyValue : String = "CHF"
 
     private val paintInner = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -47,6 +48,12 @@ class CircularProgressBar@JvmOverloads constructor(
 
         context.withStyledAttributes(attrs, R.styleable.CircularProgressBar)
         {
+            currencyValue = try {
+                getString(R.styleable.CircularProgressBar_seekCurrencyValue).toString()
+            } catch (e:IllegalArgumentException) {
+                ""
+            }
+
             try
             {
                 paintInner.color = getString(R.styleable.CircularProgressBar_innerCircleColor).toString().toColorInt()
@@ -116,7 +123,7 @@ class CircularProgressBar@JvmOverloads constructor(
 
         paintText.textSize = textSizeValue
         val textVertical = (height/2).toFloat() + textSizeValue/2
-        canvas?.drawText("$balanceValue CHF",(width/2).toFloat(),textVertical,paintText)
+        canvas?.drawText("$balanceValue $currencyValue",(width/2).toFloat(),textVertical,paintText)
         paintText.textSize = textSizeText
         canvas?.drawText(balanceText,(width/2).toFloat(),textVertical-textSizeValue-textSizeText/2,paintText)
 
@@ -130,6 +137,12 @@ class CircularProgressBar@JvmOverloads constructor(
     fun setPercentageText(p: String)
     {
         percentage = p.toFloat()
+        invalidate()
+    }
+
+    fun setCurrencyText(p: String)
+    {
+        currencyValue = p
         invalidate()
     }
 
@@ -150,4 +163,10 @@ fun setPercentage(view: CircularProgressBar, text : LiveData<Float>)
 fun setSeekText(view: CircularProgressBar, text : LiveData<Float>)
 {
     view.setText(text.value.toString())
+}
+
+@BindingAdapter("seekCurrencyValue")
+fun setCurrencyText(view: CircularProgressBar, text : LiveData<String>)
+{
+    view.setCurrencyText(text.value.toString())
 }
