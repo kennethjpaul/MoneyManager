@@ -92,5 +92,6 @@ class MainFragment : Fragment() {
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
         viewModel.updateIncomeExpenseQuery(myCalendar)
+        viewModel.updateCurrency()
     }
 }

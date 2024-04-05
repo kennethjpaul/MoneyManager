@@ -20,7 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
-    private val currency : String = sp.getString("currency","CHF").toString()
+    private var currency : String = sp.getString("currency","CHF").toString()
 
     val exp = MutableLiveData<Float>()
 
@@ -111,6 +111,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         _percentMonth.value = df.format(p).toFloat()
+    }
+
+    fun updateCurrency() {
+       currency  = sp.getString("currency","CHF").toString()
+        _selectedCurrency.value = currency
     }
 
 }
