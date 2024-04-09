@@ -12,6 +12,17 @@
             app:title="End day of the month"
             app:useSimpleSummaryProvider="true" />
 
+        <SwitchPreference
+            app:title="Account for weekend"
+            app:key="weekendSwitch"/>
+        <ListPreference
+            app:defaultValue="-1"
+            app:key="weekendPref"
+            app:useSimpleSummaryProvider="true"
+            app:entries="@array/weekend_pref_entries"
+            android:enabled="false"
+            app:entryValues="@array/weekend_pref_values"/>
+
         <ListPreference
             app:defaultValue="CHF"
             app:entries="@array/currency_entries"

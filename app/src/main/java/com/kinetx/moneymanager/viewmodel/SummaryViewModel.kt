@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import android.util.Log
 import android.view.View
 import android.widget.RadioGroup
 import androidx.lifecycle.*
@@ -26,7 +27,9 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
 {
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
-    private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
+    private var startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
+    private var weekendEnabled : Boolean = sp.getBoolean("weekendSwitch",false);
+    private var weekendShift : Int = sp.getString("weekendPref","0")?.toInt() ?: 0
 
     private val monthArray = arrayOf(
         "Jan", "Feb",
@@ -187,10 +190,13 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
                 }
                 2 ->
                 {
+                    startOfMonth =  sp.getString("startDayOfMonth","1")!!.toInt()
+                    weekendEnabled = sp.getBoolean("weekendSwitch",false);
+                    weekendShift = sp.getString("weekendPref","0")?.toInt() ?: 0
                     val dateEndCalendar: Calendar =
-                        DateManipulation.getEndOfMonth(myCalendar, startOfMonth)
+                        DateManipulation.getEndOfMonth(myCalendar, startOfMonth, weekendEnabled, weekendShift)
                     val dateStartCalendar: Calendar =
-                        DateManipulation.getStartOfMonth(myCalendar, startOfMonth)
+                        DateManipulation.getStartOfMonth(myCalendar, startOfMonth,weekendEnabled, weekendShift)
 
                     _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
                     _categorySummaryQuery.postValue(repository.getCategorySummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
@@ -356,8 +362,8 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             }
             2 ->
             {
-                dateStart = DateManipulation.getStartOfMonth(myCalendar,startOfMonth).timeInMillis
-                dateEnd = DateManipulation.getEndOfMonth(myCalendar,startOfMonth).timeInMillis
+                dateStart = DateManipulation.getStartOfMonth(myCalendar,startOfMonth,weekendEnabled, weekendShift).timeInMillis
+                dateEnd = DateManipulation.getEndOfMonth(myCalendar,startOfMonth, weekendEnabled, weekendShift).timeInMillis
             }
             3->
             {

@@ -21,6 +21,7 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
     var myCalendarEnd: Calendar = Calendar.getInstance()
     var myCalendarStart : Calendar  = Calendar.getInstance()
 
+
     private val monthArray = arrayOf(
         "Jan", "Feb",
         "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -28,7 +29,8 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startDayofMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
-
+    private var weekendEnabled : Boolean = sp.getBoolean("weekendSwitch",false);
+    private var weekendShift : Int = sp.getString("weekendPref","0")?.toInt() ?: 0
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -104,7 +106,7 @@ class PlotTransactionViewModel(application: Application) : AndroidViewModel(appl
         _endYear.value = myCalendarEnd.get(Calendar.YEAR).toString()
 
 
-        myCalendarStart = DateManipulation.getStartOfMonth(myCalendarEnd,startDayofMonth)
+        myCalendarStart = DateManipulation.getStartOfMonth(myCalendarEnd,startDayofMonth,weekendEnabled, weekendShift)
 
         _startDay.value = myCalendarStart.get(Calendar.DAY_OF_MONTH).toString()
         _startMonth.value = monthArray[myCalendarStart.get(Calendar.MONTH)]

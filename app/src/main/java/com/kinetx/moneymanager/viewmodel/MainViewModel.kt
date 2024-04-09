@@ -21,6 +21,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
     private var currency : String = sp.getString("currency","CHF").toString()
+    private var weekendEnabled : Boolean = sp.getBoolean("weekendSwitch",false);
+    private var weekendShift : Int = sp.getString("weekendPref","0")?.toInt() ?: 0
 
     val exp = MutableLiveData<Float>()
 
@@ -76,8 +78,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _selectedCurrency.value = currency
 
         updateIncomeExpenseQuery(myCalendar)
-        val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
-        val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
+        val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth, weekendEnabled,weekendShift)
+        val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth, weekendEnabled, weekendShift)
         _startDate.value = DateManipulation.getDateArray(s)
         _endDate.value = DateManipulation.getDateArray(e)
 
@@ -88,8 +90,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun updateIncomeExpenseQuery(myCalendar: Calendar) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth)
-            val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth)
+            val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth,weekendEnabled, weekendShift)
+            val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth, weekendEnabled, weekendShift)
             _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(s.timeInMillis,e.timeInMillis))
         }
     }

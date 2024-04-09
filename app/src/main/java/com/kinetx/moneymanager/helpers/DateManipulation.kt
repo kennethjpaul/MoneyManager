@@ -2,7 +2,6 @@ package com.kinetx.moneymanager.helpers
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
 import kotlin.math.min
 
 object DateManipulation {
@@ -71,9 +70,9 @@ object DateManipulation {
         return endOfWeekCalendar
     }
 
-    fun getStartOfMonth(myCalendar: Calendar, startOfMonth : Int) : Calendar
+    fun getStartOfMonth(myCalendar: Calendar, startOfMonth : Int, weekendEnabled: Boolean, weekendShift : Int) : Calendar
     {
-        val startMonthCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
+        var startMonthCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
 
         val day  = myCalendar.get(Calendar.DAY_OF_MONTH)
         var month = myCalendar.get(Calendar.MONTH)
@@ -99,35 +98,92 @@ object DateManipulation {
 
         startMonthCalendar.set(Calendar.DAY_OF_MONTH,min(maxDays,startOfMonth))
 
+        startMonthCalendar = checkWeekend(startMonthCalendar,weekendEnabled,weekendShift)
+
+
         return startMonthCalendar
 
     }
 
 
-    fun getEndOfMonth(myCalendar: Calendar, startOfMonth : Int) : Calendar
+    fun isWeekend(myCalendar: Calendar, weekendList :List<Int>) : Boolean
     {
+        val curWeekDay = myCalendar.get(Calendar.DAY_OF_WEEK)
 
-        val endMonthCalendar : Calendar =  GregorianCalendar(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH))
-        val day  = myCalendar.get(Calendar.DAY_OF_MONTH)
-        var month = myCalendar.get(Calendar.MONTH)
-        var year = myCalendar.get(Calendar.YEAR)
-
-        if (day>=startOfMonth && month == 11)
+        if (curWeekDay in weekendList)
         {
-            month =0
-            year +=1
-        }
-        else if (day >=startOfMonth && month < 11)
-        {
-            month +=1
+            return true
         }
 
-        endMonthCalendar.set(Calendar.MONTH,month)
-        endMonthCalendar.set(Calendar.YEAR,year)
+        return false
+    }
+
+
+
+    private fun checkWeekend(myCalendar: Calendar, weekendEnabled: Boolean, weekendShift: Int) : Calendar
+    {
+        var newCalendar = myCalendar
+
+        if (weekendEnabled)
+        {
+            val weekendList = listOf(Calendar.SATURDAY, Calendar.SUNDAY)
+            // Simplified list subtraction
+            val weekDayList = listOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY) - weekendList
+
+            val curWeekDay = myCalendar.get(Calendar.DAY_OF_WEEK)
+
+            if (curWeekDay in weekendList) {
+                val shift: Int
+                val targetDay = when (weekendShift) {
+                    1 -> weekDayList.firstOrNull { it > curWeekDay } ?: weekDayList.first()
+                    -1 -> weekDayList.lastOrNull { it < curWeekDay } ?: weekDayList.last()
+                    else -> null
+                }
+
+                shift = when (weekendShift) {
+                    1 -> if (targetDay != null) (targetDay - curWeekDay).let { if (it < 0) it + 7 else it } else 0
+                    -1 -> if (targetDay != null) (curWeekDay - targetDay).let { if (it < 0) it + 7 else it } else 0
+                    else -> 0
+                }
+
+                newCalendar = changeDayByN(myCalendar,shift,weekendShift)
+
+            }
+
+        }
+
+        return newCalendar
+    }
+
+
+    fun getEndOfMonth(myCalendar: Calendar, startOfMonth : Int, weekendEnabled: Boolean, weekendShift : Int) : Calendar
+    {
+        val endMonthCalendar = myCalendar.clone() as Calendar
+
+        val day = myCalendar[Calendar.DAY_OF_MONTH]
+        var month = myCalendar[Calendar.MONTH]
+        var year = myCalendar[Calendar.YEAR]
+
+        if (day >= startOfMonth) {
+            if (month == Calendar.DECEMBER) {
+                month = Calendar.JANUARY
+                year++
+            } else {
+                month++
+            }
+        }
+
+        // Set the adjusted month and year
+        endMonthCalendar[Calendar.YEAR] = year
+        endMonthCalendar[Calendar.MONTH] = month
+
         val maxDays = endMonthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        endMonthCalendar.set(Calendar.DAY_OF_MONTH,min(maxDays,startOfMonth-1))
+        endMonthCalendar[Calendar.DAY_OF_MONTH] = min(maxDays, startOfMonth)
 
-        return endMonthCalendar
+        val adjustedCalendar = checkWeekend(endMonthCalendar, weekendEnabled, weekendShift)
+        adjustedCalendar.add(Calendar.DAY_OF_MONTH, -1)
+
+        return adjustedCalendar
 
     }
 
@@ -198,6 +254,9 @@ object DateManipulation {
         myCalendar.set(Calendar.DAY_OF_MONTH,1)
         myCalendar.set(Calendar.MONTH,month)
         myCalendar.set(Calendar.YEAR,year)
+
+
+
 
         return myCalendar
     }
