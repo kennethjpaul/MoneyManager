@@ -197,7 +197,6 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
                         DateManipulation.getEndOfMonth(myCalendar, startOfMonth, weekendEnabled, weekendShift)
                     val dateStartCalendar: Calendar =
                         DateManipulation.getStartOfMonth(myCalendar, startOfMonth,weekendEnabled, weekendShift)
-
                     _incomeExpenseQuery.postValue(repository.getIncomeExpenseSummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
                     _categorySummaryQuery.postValue(repository.getCategorySummary(dateStartCalendar.timeInMillis,dateEndCalendar.timeInMillis))
                 }
@@ -239,7 +238,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             {
                 _selectedType.value = 0
                 _isIncomeBalanceVisible.value = View.GONE
-                myCalendar = DateManipulation.copyDayMonthYear(myCalendar,curCalendar)
+                myCalendar = curCalendar.clone() as Calendar
                 updateCustomDateView(myCalendar)
                 updateTransactions(myCalendar,0)
             }
@@ -247,7 +246,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             {
                 _selectedType.value = 1
                 _isIncomeBalanceVisible.value = View.GONE
-                myCalendar = DateManipulation.copyDayMonthYear(myCalendar,curCalendar)
+                myCalendar = curCalendar.clone() as Calendar
                 updateCustomDateView(myCalendar)
                 updateTransactions(myCalendar,1)
             }
@@ -255,7 +254,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             {
                 _selectedType.value = 2
                 _isIncomeBalanceVisible.value = View.VISIBLE
-                myCalendar = DateManipulation.copyDayMonthYear(myCalendar,curCalendar)
+                myCalendar = curCalendar.clone() as Calendar
 
                 if(myCalendar.get(Calendar.DAY_OF_MONTH)>=startOfMonth)
                 {
@@ -270,7 +269,7 @@ class SummaryViewModel (application: Application): AndroidViewModel(application)
             {
                 _selectedType.value = 3
                 _isIncomeBalanceVisible.value = View.VISIBLE
-                myCalendar = DateManipulation.copyDayMonthYear(myCalendar,curCalendar)
+                myCalendar = curCalendar.clone() as Calendar
                 updateCustomDateView(myCalendar)
                 updateTransactions(myCalendar,3)
             }
