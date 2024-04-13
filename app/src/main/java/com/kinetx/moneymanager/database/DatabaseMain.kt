@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CategoryDatabase::class,TransactionDatabase::class], version = 6, exportSchema = false)
+@Database(entities = [CategoryDatabase::class,TransactionDatabase::class], version = 7, exportSchema = false)
 abstract class DatabaseMain : RoomDatabase(){
 
     abstract val databaseDao : DatabaseDao
@@ -19,6 +19,14 @@ abstract class DatabaseMain : RoomDatabase(){
         {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE category_table ADD COLUMN category_image_string TEXT NOT NULL DEFAULT ''")
+            }
+
+        }
+
+        private val MIGRATION_6_7 = object :Migration(6,7)
+        {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE category_table ADD COLUMN category_budget FLOAT NOT NULL DEFAULT 0")
             }
 
         }
@@ -38,7 +46,7 @@ abstract class DatabaseMain : RoomDatabase(){
                         DatabaseMain::class.java,
                         "main_database"
                     )
-                        .addMigrations(MIGRATION_5_6)
+                        .addMigrations(MIGRATION_5_6,MIGRATION_6_7)
                         .createFromAsset("database/main.db")
                         .build()
 

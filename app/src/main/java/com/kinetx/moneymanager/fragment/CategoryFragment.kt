@@ -2,6 +2,7 @@ package com.kinetx.moneymanager.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,12 @@ class CategoryFragment : Fragment() {
 
             viewModel.fragmentTitle.observe(viewLifecycleOwner){
                 (activity as AppCompatActivity).supportActionBar?.title =it
+            }
+
+            viewModel.categoryDatabase.observe(viewLifecycleOwner)
+            {
+                Log.i("III","Observe function")
+                viewModel.updateCategoryEntry(it)
             }
 
             viewModel.iconImageSource.observe(viewLifecycleOwner){

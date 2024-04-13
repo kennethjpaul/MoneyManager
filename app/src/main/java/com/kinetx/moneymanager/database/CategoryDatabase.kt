@@ -25,5 +25,8 @@ data class CategoryDatabase(
     var categoryImageString : String = "help",
 
     @ColumnInfo(name = "category_color")
-    var categoryColor : Int = 0
+    var categoryColor : Int = 0,
+
+    @ColumnInfo(name = "category_budget")
+    var categoryBudget : Float = 0F
 )

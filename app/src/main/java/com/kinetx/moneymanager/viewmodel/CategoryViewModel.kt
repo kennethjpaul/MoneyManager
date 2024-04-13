@@ -13,6 +13,7 @@ import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.CategoryFragmentArgs
+import com.kinetx.moneymanager.helpers.CommonOperations
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -21,6 +22,8 @@ import kotlinx.coroutines.launch
 class CategoryViewModel (val argList : CategoryFragmentArgs, application: Application) : AndroidViewModel(application) {
 
 
+
+    private var transactionCall : Boolean = false
 
     private val _fragmentTitle = MutableLiveData<String>()
     val fragmentTitle : LiveData<String>
@@ -32,6 +35,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     val categoryName = MutableLiveData<String>()
     val accountBalance = MutableLiveData<String>()
+    val categoryBudget = MutableLiveData<String>()
+
+
+
 
     private val _categoryHint = MutableLiveData<String>()
     val categoryHint : LiveData<String>
@@ -40,6 +47,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     private val _accountBalanceVisible = MutableLiveData<Int>()
     val accountBalanceVisible : LiveData<Int>
         get() = _accountBalanceVisible
+
+    private val _categoryBudgetVisible = MutableLiveData<Int>()
+    val categoryBudgetVisible : LiveData<Int>
+        get() = _categoryBudgetVisible
 
     private val _initialBalanceTransactionId = MutableLiveData<Long>()
     val initialBalanceTransactionId : LiveData<Long>
@@ -75,6 +86,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     private var currentCategory = CategoryDatabase()
 
+    private var _categoryDatabase = MutableLiveData<CategoryDatabase>()
+    val categoryDatabase : LiveData<CategoryDatabase>
+        get() = _categoryDatabase
+
     private val repository : DatabaseRepository
 
 
@@ -92,6 +107,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _addVisible.value = View.GONE
             _editVisible.value = View.VISIBLE
 
+            viewModelScope.launch(Dispatchers.IO)
+            {
+                _categoryDatabase.postValue(repository.getCategory(argList.itemId))
+            }
             currentCategory.categoryId = argList.itemId
             currentCategory.categoryName = argList.itemName
             currentCategory.categoryType = argList.categoryType
@@ -139,18 +158,21 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 _categoryHint.value = "Income name"
                 _fragmentTitle.value = "$titleString Income Category"
                 _accountBalanceVisible.value = View.GONE
+                _categoryBudgetVisible.value = View.GONE
             }
             CategoryType.EXPENSE->
             {
                 _categoryHint.value = "Expense name"
                 _fragmentTitle.value = "$titleString Expense Category"
                 _accountBalanceVisible.value = View.GONE
+                _categoryBudgetVisible.value = View.VISIBLE
             }
             CategoryType.ACCOUNT->
             {
                 _categoryHint.value = "Account name"
                 _fragmentTitle.value = "$titleString Account"
                 _accountBalanceVisible.value = View.VISIBLE
+                _categoryBudgetVisible.value = View.GONE
 
                 if (argList.isEdit)
                 {
@@ -210,7 +232,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             return false
         }
 
-        val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
+        val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!,CommonOperations.convertToFloat(categoryBudget.value!!))
         insertCategoryDao(category)
 
         return true
@@ -259,7 +281,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             Toast.makeText(getApplication(), "An account or category with the same name exists", Toast.LENGTH_SHORT).show()
             return false
         }
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!,CommonOperations.convertToFloat(categoryBudget.value!!))
+
         updateCategoryDao(category)
 
         if (argList.categoryType==CategoryType.ACCOUNT)
@@ -303,7 +326,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
 
     fun deleteCategory() {
 
-        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!)
+        val category = CategoryDatabase(_categoryId.value!!,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!,CommonOperations.convertToFloat(categoryBudget.value!!))
         deleteCategoryDao(category)
     }
 
@@ -325,6 +348,21 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             _initialBalanceTransactionId.value = 0
             accountBalance.value = ""
         }
+    }
+
+    fun updateCategoryEntry(it: CategoryDatabase?) {
+        if (!transactionCall) {
+            if (it != null) {
+                _categoryId.value = it.categoryId
+                categoryName.value = it.categoryName
+                _iconImageSource.value = it.categoryImage
+                _iconImageString.value = it.categoryImageString
+                _colorColorCode.value = it.categoryColor
+                categoryBudget.value = it.categoryBudget.toString()
+                transactionCall = true
+            }
+        }
+
     }
 
 
