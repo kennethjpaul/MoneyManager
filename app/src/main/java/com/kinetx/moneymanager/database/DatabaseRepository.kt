@@ -89,7 +89,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
        return databaseDao.getTransactionsAllAccountsAllCategories(transactionType, dateStart, dateEnd)
     }
 
-    fun getTransactionsAllAccountWithCategory(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
+    suspend fun getTransactionsAllAccountWithCategory(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
     {
         return databaseDao.getTransactionsAllAccountWithCategory(transactionType,categoryId,dateStart,dateEnd)
     }

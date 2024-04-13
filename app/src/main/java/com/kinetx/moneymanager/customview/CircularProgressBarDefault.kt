@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import androidx.core.content.withStyledAttributes
@@ -117,7 +118,7 @@ class CircularProgressBarDefault@JvmOverloads constructor(
 }
 
 @BindingAdapter("seekPercentage")
-fun setPercentage(view: CircularProgressBar, text : LiveData<String>)
+fun setPercentage(view: CircularProgressBarDefault, text : LiveData<String>)
 {
     view.setPercentageText(text.value.toString())
 }

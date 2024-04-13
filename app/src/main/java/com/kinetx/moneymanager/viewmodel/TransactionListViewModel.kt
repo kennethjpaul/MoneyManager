@@ -43,10 +43,10 @@ class TransactionListViewModel (argList: TransactionListFragmentArgs, applicatio
             listTransformed = repository.getTransactionsAllAccountsAllCategories(argList.transactionType,argList.dateStart,argList.dateEnd)
 
         }
-        else if (argList.accountId==-1L)
-        {
-           listTransformed = repository.getTransactionsAllAccountWithCategory(argList.transactionType,argList.categoryId,argList.dateStart,argList.dateEnd)
-        }
+//        else if (argList.accountId==-1L)
+//        {
+//           listTransformed = repository.getTransactionsAllAccountWithCategory(argList.transactionType,argList.categoryId,argList.dateStart,argList.dateEnd)
+//        }
         else if (argList.categoryId==-1L)
         {
            listTransformed = repository.getTransactionsWithAccountAllCategory(argList.transactionType,argList.accountId,argList.dateStart,argList.dateEnd)

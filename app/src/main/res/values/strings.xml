@@ -71,4 +71,5 @@
     <string name="by_day">By Day</string>
     <string name="remaining">Remaining</string>
     <string name="analysis">Analysis</string>
+    <string name="per_day">Per day</string>
 </resources>
