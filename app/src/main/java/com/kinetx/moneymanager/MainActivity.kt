@@ -16,13 +16,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout : DrawerLayout
     private lateinit var appBarConfiguration : AppBarConfiguration
 
+    private val setOfFragments = setOf(
+        R.id.mainFragment,
+        R.id.plotTransactionFragment,
+        R.id.balancesFragment,
+        R.id.transactionsFragment,
+        R.id.summaryFragment,
+        R.id.monthlyTransactionFragment,
+        R.id.monthlyBudgetFragment,
+        R.id.expenseAnalysisFragment,
+        R.id.monthlyOverviewFragment)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.myNavHostFragment)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment,R.id.plotTransactionFragment,R.id.balancesFragment, R.id.transactionsFragment, R.id.summaryFragment, R.id.monthlyTransactionFragment, R.id.monthlyBudgetFragment, R.id.expenseAnalysisFragment),drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOfFragments,drawerLayout)
         setupActionBarWithNavController(navController,appBarConfiguration)
         NavigationUI.setupWithNavController(binding.navDrawer,navController)
 

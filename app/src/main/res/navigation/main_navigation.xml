@@ -155,4 +155,8 @@
         android:id="@+id/expenseAnalysisFragment"
         android:name="com.kinetx.moneymanager.fragment.ExpenseAnalysisFragment"
         android:label="Expense Analysis" />
+    <fragment
+        android:id="@+id/monthlyOverviewFragment"
+        android:name="com.kinetx.moneymanager.fragment.MonthlyOverviewFragment"
+        android:label="Monthly Overview" />
 </navigation>

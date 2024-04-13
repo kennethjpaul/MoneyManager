@@ -104,7 +104,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionsWithAccountWithCategory(transactionType,accountId,categoryId,dateStart,dateEnd)
     }
 
-    fun getAccountSummary() : LiveData<List<CategoryListData>>
+    suspend fun getAccountSummary() : List<CategoryListData>
     {
         return databaseDao.getAccountSummary()
     }

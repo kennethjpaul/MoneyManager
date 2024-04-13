@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.CategoryListData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BalancesViewModel (application: Application): AndroidViewModel(application)
 {
@@ -16,7 +19,9 @@ class BalancesViewModel (application: Application): AndroidViewModel(application
         get() = _fragmentTitle
 
 
-    var list : LiveData<List<CategoryListData>>
+    private val _list = MutableLiveData<List<CategoryListData>>()
+    val list : LiveData<List<CategoryListData>>
+        get() = _list
 
     private val repository : DatabaseRepository
 
@@ -26,7 +31,11 @@ class BalancesViewModel (application: Application): AndroidViewModel(application
         _fragmentTitle.value = "Current Balance"
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
-        list = repository.getAccountSummary()
+
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            _list.postValue(repository.getAccountSummary())
+        }
 
     }
 

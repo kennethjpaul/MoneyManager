@@ -22,6 +22,10 @@
                 android:id="@+id/expenseAnalysisFragment"
                 android:icon="@drawable/moneytransfer"
                 android:title="@string/expense_analysis" />
+            <item
+                android:id="@+id/monthlyOverviewFragment"
+                android:icon="@drawable/summary"
+                android:title="@string/overview" />
         </menu>
 
     </item>

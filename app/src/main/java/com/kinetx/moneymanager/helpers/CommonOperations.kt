@@ -1,6 +1,8 @@
 package com.kinetx.moneymanager.helpers
 
 import android.app.Application
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 object CommonOperations {
     fun getResourceInt(application: Application, fileName : String) : Int
@@ -31,5 +33,11 @@ object CommonOperations {
         } else {
             s.toFloat()
         }
+    }
+
+    fun roundNumber(num:Float,decimals:Int) : Float
+    {
+        val scaleFactor = 10.0.pow(decimals).toInt()
+        return (num * scaleFactor).roundToInt().toFloat()/scaleFactor
     }
 }
