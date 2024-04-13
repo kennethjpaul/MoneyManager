@@ -29,6 +29,10 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     var myCalendarStart : Calendar = Calendar.getInstance()
     var myCalendarEnd : Calendar = Calendar.getInstance()
 
+    private val _dateToday = MutableLiveData<String>()
+    val dateToday : LiveData<String>
+        get() = _dateToday
+
     private var categorySelected : CategoryDatabase = CategoryDatabase()
 
     val readAllExpenseCategory : LiveData<List<CategoryDatabase>>
@@ -114,6 +118,7 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
         myCalendarToday = DateManipulation.resetToMidnight(myCalendarToday)
         myCalendarStart = DateManipulation.getStartOfMonth(myCalendarToday,startOfMonth, weekendEnabled,weekendShift)
         myCalendarEnd = DateManipulation.getEndOfMonth(myCalendarToday,startOfMonth, weekendEnabled,weekendShift)
+        _dateToday.value = DateManipulation.getDateArray(myCalendarToday)
         readAllExpenseCategory = repository.readAllExpenseCategory
         categorySpinnerSelectedPosition.value = 0
         _percentMonth.value = "0"
@@ -196,9 +201,9 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
 
 
             val remainingDaysMonth =
-                ((myCalendarEnd.timeInMillis - myCalendarToday.timeInMillis) / (24 * 60 * 60 * 100)).toInt() + 1
+                ((myCalendarEnd.timeInMillis - myCalendarToday.timeInMillis) / MILLISECONDS_IN_DAY).toInt() + 1
             val remainingDaysWeek =
-                ((endOfWeek.timeInMillis - myCalendarToday.timeInMillis) / (24 * 60 * 60 * 100)).toInt() + 1
+                ((endOfWeek.timeInMillis - myCalendarToday.timeInMillis) / MILLISECONDS_IN_DAY).toInt() + 1
 
             val tmp1 = budgetMonth - totalMonth
             val tmp2 = budgetWeek - totalWeek

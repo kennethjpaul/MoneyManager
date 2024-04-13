@@ -38,7 +38,7 @@
             style="@style/material_card_title"
             android:layout_marginTop="24dp"
             android:textColor="@color/white"
-            android:text="@string/_date_placeholder_1"
+            android:text="@{expenseAnalysisVM.dateToday}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expense_analysis_spinner" />
