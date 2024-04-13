@@ -65,4 +65,10 @@
     <string name="hyphen">-</string>
     <string name="expense_analysis">Expense Analysis</string>
     <string name="transactions">Transactions</string>
+    <string name="spinner_to_select_the_expense_category">Spinner to select the expense category</string>
+    <string name="monthly_analysis">Monthly Analysis</string>
+    <string name="by_week">By Week</string>
+    <string name="by_day">By Day</string>
+    <string name="remaining">Remaining</string>
+    <string name="analysis">Analysis</string>
 </resources>

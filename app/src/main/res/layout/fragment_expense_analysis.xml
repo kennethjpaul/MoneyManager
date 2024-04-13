@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -7,17 +8,271 @@
             name="expenseAnalysisVM"
             type="com.kinetx.moneymanager.viewmodel.ExpenseAnalysisVM" />
     </data>
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".fragment.ExpenseAnalysisFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
 
-    </FrameLayout>
+        <Spinner
+            android:id="@+id/expense_analysis_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:minHeight="48dp"
+            android:contentDescription="@string/spinner_to_select_the_expense_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/expense_analysis_date"
+            style="@style/material_card_title"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/white"
+            android:text="@string/_date_placeholder_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_spinner" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/expense_analysis_card_1"
+            style="@style/material_card"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_date">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/expense_analysis_month_title"
+                    style="@style/material_card_title"
+                    android:text="@string/monthly_analysis"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/expense_analysis_month_expense"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/expense"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_month_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_month_title" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_month_expense_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_month_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_month_expense" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_month_remaining"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/remaining"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_month_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_month_expense_value" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_month_remaining_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_month_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_month_remaining" />
+
+                <com.kinetx.moneymanager.customview.CircularProgressBarDefault
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:innerCircleColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/expense_analysis_month_expense"
+                    app:seekBarColor="@color/warm_black"
+                    app:seekBarTextColor="@color/black"
+                    app:seekPercentage="60" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/expense_analysis_card_2"
+            style="@style/material_card"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_card_1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/expense_analysis_week_title"
+                    style="@style/material_card_title"
+                    android:text="@string/by_week"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/expense_analysis_week_expense"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/expense"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_week_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_week_title" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_week_expense_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_week_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_week_expense" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_week_remaining"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/remaining"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_week_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_week_expense_value" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_week_remaining_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_week_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_week_remaining" />
+
+                <com.kinetx.moneymanager.customview.CircularProgressBarDefault
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:innerCircleColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/expense_analysis_week_expense"
+                    app:seekBarColor="@color/warm_black"
+                    app:seekBarTextColor="@color/black"
+                    app:seekPercentage="60" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/expense_analysis_card_3"
+            style="@style/material_card"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_card_2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/expense_analysis_day_title"
+                    style="@style/material_card_title"
+                    android:text="@string/by_day"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/expense_analysis_day_expense"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/expense"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_day_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_day_title" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_day_expense_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_day_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_day_expense" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_day_remaining"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/remaining"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_day_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_day_expense_value" />
+
+                <TextView
+                    android:id="@+id/expense_analysis_day_remaining_value"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/_999_00"
+                    app:layout_constraintStart_toStartOf="@+id/expense_analysis_day_title"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_day_remaining" />
+
+                <com.kinetx.moneymanager.customview.CircularProgressBarDefault
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:innerCircleColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/expense_analysis_day_expense"
+                    app:seekBarColor="@color/warm_black"
+                    app:seekBarTextColor="@color/black"
+                    app:seekPercentage="60" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/expense_analysis_card_4"
+            style="@style/material_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_card_3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <TextView
+                    android:id="@+id/expense_analysis_analysis_title"
+                    style="@style/material_card_title"
+                    android:text="@string/analysis"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/material_card_subtitle"
+                    android:text="Based on your spending you should be able to meet your targeted budget"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/expense_analysis_analysis_title" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_card_4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
