@@ -31,7 +31,7 @@
     </item>
 
     <item
-        android:title="Transactions and Expenses">
+        android:title="History">
 
         <menu>
             <item
@@ -43,20 +43,6 @@
                 android:icon="@drawable/summary"
                 android:title="Expenses"
                 />
-        </menu>
-
-    </item>
-
-    <item
-        android:title="Info">
-
-        <menu>
-
-            <item
-                android:id="@+id/balancesFragment"
-                android:icon="@drawable/scale"
-                android:title="Account Balances" />
-
         </menu>
 
     </item>
@@ -74,14 +60,33 @@
     </item>
 
     <item
-        android:title="">
+        android:title="Info">
+
         <menu>
+
+            <item
+                android:id="@+id/balancesFragment"
+                android:icon="@drawable/scale"
+                android:title="@string/accounts" />
+
             <item
                 android:id="@+id/settingsFragment2"
                 android:icon="@drawable/settings"
-                android:title="Settings" />
+                android:title="@string/settings" />
+
         </menu>
+
     </item>
+
+<!--    <item-->
+<!--        android:title="">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/settingsFragment2"-->
+<!--                android:icon="@drawable/settings"-->
+<!--                android:title="Settings" />-->
+<!--        </menu>-->
+<!--    </item>-->
 
 
 
