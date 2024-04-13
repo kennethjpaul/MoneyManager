@@ -76,7 +76,9 @@ class MonthlyBudgetViewModel(application: Application):AndroidViewModel(applicat
 
     fun updateRecyclerView(it: List<CategoryQueryData>?) {
 
-        val sortedList = it?.sortedByDescending{ it.amount }
+        val sortedList = it?.sortedWith(compareByDescending<CategoryQueryData> {it.budget}.thenByDescending { it.amount })
+
+//        it.sortedWith(compareBy<CategoryQueryData> {it.budget}.thenBy { it.amount })
 
         _categorySummary.value = sortedList?.map {
             var t = 0

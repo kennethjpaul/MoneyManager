@@ -67,6 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:progressBackgroundTint="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/category_budget_budget"
                 app:layout_constraintStart_toStartOf="@+id/category_budget_category_name"
                 app:layout_constraintTop_toBottomOf="@+id/category_budget_category_name" />
