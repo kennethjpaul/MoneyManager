@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMonthlyBudgetBinding
+import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.recyclerview.CategoryBudgetRV
 import com.kinetx.moneymanager.viewmodel.MonthlyBudgetViewModel
 import com.kinetx.moneymanager.viewmodelfactory.MonthlyBudgetViewModelFactory
 
 
-class MonthlyBudgetFragment : Fragment() {
+class MonthlyBudgetFragment : Fragment(), CategoryBudgetRV.OnSelectCategoryBudgetListener {
 
     lateinit var binding : FragmentMonthlyBudgetBinding
     lateinit var viewModel: MonthlyBudgetViewModel
@@ -33,8 +37,30 @@ class MonthlyBudgetFragment : Fragment() {
         binding.monthlyBudgetViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        val adapter = CategoryBudgetRV(this)
+        binding.monthlyBudgetRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.monthlyBudgetRecyclerView.setHasFixedSize(true)
+        binding.monthlyBudgetRecyclerView.adapter = adapter
+
+
+        viewModel.categorySummaryQuery.observe(viewLifecycleOwner)
+        {
+            viewModel.updateRecyclerView(it)
+        }
+
+        viewModel.categorySummary.observe(viewLifecycleOwner)
+        {
+            adapter.setData(it)
+        }
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onSelectCategoryBudgetClick(position: Int) {
+        val categoryId  = viewModel.categorySummary.value?.get(position)?.categoryId!!
+        val dateStart = viewModel.myCalendarStart
+        val dateEnd= viewModel.myCalendarEnd
+        view?.findNavController()?.navigate(MonthlyBudgetFragmentDirections.actionMonthlyBudgetFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,categoryId,dateStart.timeInMillis,dateEnd.timeInMillis))
     }
 
 
