@@ -7,6 +7,18 @@
         android:title="Home" />
 
     <item
+        android:title="This month">
+
+        <menu>
+            <item
+                android:id="@+id/monthlyTransactionFragment"
+                android:icon="@drawable/transactions"
+                android:title="Transactions" />
+        </menu>
+
+    </item>
+
+    <item
         android:title="Transactions and Expenses">
 
         <menu>

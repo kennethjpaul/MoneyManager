@@ -135,4 +135,8 @@
             android:id="@+id/action_transactionsFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/monthlyTransactionFragment"
+        android:name="com.kinetx.moneymanager.fragment.MonthlyTransactionFragment"
+        android:label="Monthly Transactions" />
 </navigation>

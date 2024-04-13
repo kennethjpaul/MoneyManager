@@ -89,13 +89,6 @@
                     app:layout_constraintTop_toTopOf="@+id/categoryIconButton"
                     tools:src="@tools:sample/avatars" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5" />
-
                 <EditText
                     android:id="@+id/category_initial_balance"
                     style="@style/material_card_edit_subtitle"
