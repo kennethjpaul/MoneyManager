@@ -29,6 +29,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
     val fragmentTitle : LiveData<String>
         get() = _fragmentTitle
 
+    private val _categoryNameString = MutableLiveData<String>()
+    val categoryNameString : LiveData<String>
+        get() = _categoryNameString
+
     private val _categoryId = MutableLiveData<Long>()
     val categoryId : LiveData<Long>
         get() = _categoryId
@@ -159,6 +163,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 _fragmentTitle.value = "$titleString Income Category"
                 _accountBalanceVisible.value = View.GONE
                 _categoryBudgetVisible.value = View.GONE
+                _categoryNameString.value = "Category name"
             }
             CategoryType.EXPENSE->
             {
@@ -166,6 +171,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 _fragmentTitle.value = "$titleString Expense Category"
                 _accountBalanceVisible.value = View.GONE
                 _categoryBudgetVisible.value = View.VISIBLE
+                _categoryNameString.value = "Category name"
             }
             CategoryType.ACCOUNT->
             {
@@ -173,6 +179,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
                 _fragmentTitle.value = "$titleString Account"
                 _accountBalanceVisible.value = View.VISIBLE
                 _categoryBudgetVisible.value = View.GONE
+                _categoryNameString.value = "Account name"
 
                 if (argList.isEdit)
                 {

@@ -15,134 +15,176 @@
         tools:context=".fragment.CategoryFragment">
 
 
-        <EditText
-            android:id="@+id/categoryNameEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:autofillHints="Fill the name of category"
-            android:ems="10"
-            android:hint="@{categoryViewModel.categoryHint}"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="@={categoryViewModel.categoryName}"
-            android:textColorHint="#757575"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView2"
+            style="@style/material_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/categoryIconText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="60dp"
-            android:text="@string/icon"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/category_budget" />
+            <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
+
+                <EditText
+                    android:id="@+id/categoryNameEditText"
+                    style="@style/material_card_edit_subtitle"
+                    android:layout_marginTop="40dp"
+                    android:autofillHints="Fill the name of category"
+                    android:ems="10"
+                    android:hint="@{categoryViewModel.categoryHint}"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:text="@={categoryViewModel.categoryName}"
+                    android:textColorHint="#757575"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/categoryIconText"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/icon"
+                    app:layout_constraintBottom_toTopOf="@+id/categoryIconButton"
+                    app:layout_constraintEnd_toEndOf="@+id/categoryIconButton"
+                    app:layout_constraintStart_toStartOf="@+id/categoryIconButton" />
 
 
-        <TextView
-            android:id="@+id/categoryColorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/color"
-            android:layout_marginStart="60dp"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/categoryIconText" />
+                <TextView
+                    android:id="@+id/categoryColorText"
+                    style="@style/material_card_subtitle"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/color"
+                    app:layout_constraintEnd_toEndOf="@+id/categoryColorButton"
+                    app:layout_constraintStart_toStartOf="@+id/categoryColorButton"
+                    app:layout_constraintTop_toTopOf="@+id/categoryIconText" />
 
-        <ImageButton
-            android:id="@+id/categoryIconButton"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/categoryIconText"
-            app:layout_constraintStart_toStartOf="@+id/categoryIconText"
-            app:layout_constraintTop_toBottomOf="@+id/categoryIconText"
-            android:background="@color/black"
-            tools:src="@tools:sample/avatars"
-            android:scaleType="fitXY"
-            android:padding="0dp"
-            android:contentDescription="@string/selecting_the_icon" />
+                <ImageButton
+                    android:id="@+id/categoryIconButton"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="48dp"
+                    android:background="@color/black"
+                    android:contentDescription="@string/selecting_the_icon"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toStartOf="@+id/categoryColorButton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/category_budget"
+                    tools:src="@tools:sample/avatars" />
 
-        <ImageButton
-            android:id="@+id/categoryColorButton"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/categoryColorText"
-            app:layout_constraintStart_toStartOf="@+id/categoryColorText"
-            app:layout_constraintTop_toBottomOf="@+id/categoryColorText"
-            tools:src="@tools:sample/avatars"
-            android:contentDescription="@string/selecting_the_color" />
+                <ImageButton
+                    android:id="@+id/categoryColorButton"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:contentDescription="@string/selecting_the_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/categoryIconButton"
+                    app:layout_constraintTop_toTopOf="@+id/categoryIconButton"
+                    tools:src="@tools:sample/avatars" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <EditText
+                    android:id="@+id/category_initial_balance"
+                    style="@style/material_card_edit_subtitle"
+                    android:layout_marginTop="32dp"
+                    android:ems="10"
+                    android:hint="@string/_0_0"
+                    android:inputType="numberDecimal"
+                    android:text="@={categoryViewModel.accountBalance}"
+                    android:visibility="@{categoryViewModel.accountBalanceVisible}"
+                    app:layout_constraintStart_toStartOf="@+id/categoryNameEditText"
+                    app:layout_constraintTop_toBottomOf="@+id/categoryNameEditText" />
+
+                <EditText
+                    android:id="@+id/category_budget"
+                    style="@style/material_card_edit_subtitle"
+                    android:layout_marginTop="32dp"
+                    android:ems="10"
+                    android:hint="@string/_0_0"
+                    android:inputType="numberDecimal"
+                    android:text="@={categoryViewModel.categoryBudget}"
+                    android:visibility="@{categoryViewModel.categoryBudgetVisible}"
+                    app:layout_constraintStart_toStartOf="@+id/categoryNameEditText"
+                    app:layout_constraintTop_toBottomOf="@+id/category_initial_balance" />
+
+                <TextView
+                    android:id="@+id/category_text_name"
+                    style="@style/material_card_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{categoryViewModel.categoryNameString}"
+                    app:layout_constraintBottom_toTopOf="@+id/categoryNameEditText"
+                    app:layout_constraintStart_toStartOf="@+id/categoryNameEditText" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/initial_balance"
+                    android:visibility="@{categoryViewModel.accountBalanceVisible}"
+                    app:layout_constraintBottom_toTopOf="@+id/category_initial_balance"
+                    app:layout_constraintStart_toStartOf="@+id/category_initial_balance" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    style="@style/material_card_subtitle"
+                    android:text="@string/budget"
+                    app:layout_constraintBottom_toTopOf="@+id/category_budget"
+                    android:visibility="@{categoryViewModel.categoryBudgetVisible}"
+                    app:layout_constraintStart_toStartOf="@+id/category_budget" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
         <Button
             android:id="@+id/category_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{categoryViewModel.addVisible}"
             android:layout_marginStart="160dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:text="@string/create"
+            android:visibility="@{categoryViewModel.addVisible}"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoryIconButton" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5"/>
 
         <Button
             android:id="@+id/category_update_button"
-            android:visibility="@{categoryViewModel.editVisible}"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/update"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="60dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/category_delete_button" />
+            android:text="@string/update"
+            android:visibility="@{categoryViewModel.editVisible}"
+            app:layout_constraintEnd_toStartOf="@+id/category_delete_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView2" />
 
         <Button
             android:id="@+id/category_delete_button"
-            android:visibility="@{categoryViewModel.editVisible}"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="60dp"
-            android:text="@string/delete"
             android:backgroundTint="@color/red"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/categoryColorButton" />
-
-        <EditText
-            android:id="@+id/category_initial_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="@string/initial_balance"
-            android:inputType="numberDecimal"
-            android:text="@={categoryViewModel.accountBalance}"
-            android:visibility="@{categoryViewModel.accountBalanceVisible}"
-            app:layout_constraintStart_toStartOf="@+id/categoryNameEditText"
-            app:layout_constraintTop_toBottomOf="@+id/categoryNameEditText" />
-
-        <EditText
-            android:id="@+id/category_budget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="@string/budget"
-            android:inputType="numberDecimal"
-            android:text="@={categoryViewModel.categoryBudget}"
-            android:visibility="@{categoryViewModel.categoryBudgetVisible}"
-            app:layout_constraintStart_toStartOf="@+id/categoryNameEditText"
-            app:layout_constraintTop_toBottomOf="@+id/category_initial_balance" />
+            android:text="@string/delete"
+            android:visibility="@{categoryViewModel.editVisible}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/category_update_button"
+            app:layout_constraintTop_toTopOf="@+id/category_update_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
