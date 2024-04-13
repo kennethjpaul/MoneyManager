@@ -14,6 +14,10 @@
                 android:id="@+id/monthlyTransactionFragment"
                 android:icon="@drawable/transactions"
                 android:title="Transactions" />
+            <item
+                android:id="@+id/monthlyBudgetFragment"
+                android:icon="@drawable/scale"
+                android:title="@string/budget" />
         </menu>
 
     </item>

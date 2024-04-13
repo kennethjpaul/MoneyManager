@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.myNavHostFragment)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment,R.id.plotTransactionFragment,R.id.balancesFragment, R.id.transactionsFragment, R.id.summaryFragment, R.id.monthlyTransactionFragment),drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment,R.id.plotTransactionFragment,R.id.balancesFragment, R.id.transactionsFragment, R.id.summaryFragment, R.id.monthlyTransactionFragment, R.id.monthlyBudgetFragment),drawerLayout)
         setupActionBarWithNavController(navController,appBarConfiguration)
         NavigationUI.setupWithNavController(binding.navDrawer,navController)
 
