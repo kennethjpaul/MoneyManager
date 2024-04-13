@@ -70,11 +70,7 @@ class TransactionListFragment : Fragment(), TransactionParentRV.TransactionParen
                 it.date
             }
             adapter.setData(data)
-        }
-
-       viewModel.listTransactionAmount.observe(viewLifecycleOwner)
-        {
-            viewModel.setTotal()
+            viewModel.updateTotal(it)
         }
 
         viewModel.fragmentTitle.observe(viewLifecycleOwner)

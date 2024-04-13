@@ -84,7 +84,7 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionInitialBalance(categoryId)
     }
 
-    fun getTransactionsAllAccountsAllCategories(transactionType :TransactionType, dateStart :Long, dateEnd: Long) : LiveData<List<TransactionListClass>>
+    suspend fun getTransactionsAllAccountsAllCategories(transactionType :TransactionType, dateStart :Long, dateEnd: Long) : List<TransactionListClass>
     {
        return databaseDao.getTransactionsAllAccountsAllCategories(transactionType, dateStart, dateEnd)
     }
@@ -94,12 +94,12 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionsAllAccountWithCategory(transactionType,categoryId,dateStart,dateEnd)
     }
 
-    fun getTransactionsWithAccountAllCategory(transactionType: TransactionType, accountId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
+    suspend fun getTransactionsWithAccountAllCategory(transactionType: TransactionType, accountId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
     {
         return databaseDao.getTransactionsWithAccountAllCategory(transactionType,accountId,dateStart,dateEnd)
     }
 
-    fun getTransactionsWithAccountWithCategory(transactionType: TransactionType, accountId: Long, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
+    suspend fun getTransactionsWithAccountWithCategory(transactionType: TransactionType, accountId: Long, categoryId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
     {
         return databaseDao.getTransactionsWithAccountWithCategory(transactionType,accountId,categoryId,dateStart,dateEnd)
     }

@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
-import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.fragment.TransactionListFragmentArgs
 import kotlinx.coroutines.*
@@ -13,15 +12,11 @@ import java.text.DecimalFormat
 
 class TransactionListViewModel (argList: TransactionListFragmentArgs, application: Application) : AndroidViewModel(application)
 {
-    fun setTotal() {
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.DOWN
-        _totalTransactionAmount.value = df.format(listTransactionAmount.value?.sum()).toString()
-    }
 
+    private val _listTransformed = MutableLiveData<List<TransactionListClass>>()
+    val listTransformed : LiveData<List<TransactionListClass>>
+        get() = _listTransformed
 
-    var listTransactionAmount : LiveData<List<Float>>
-    var listTransformed : LiveData<List<TransactionListClass>>
 
     private val _totalTransactionAmount = MutableLiveData<String>()
     val totalTransactionAmount : LiveData<String>
@@ -38,41 +33,46 @@ class TransactionListViewModel (argList: TransactionListFragmentArgs, applicatio
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
 
-        if (argList.accountId==-1L && argList.categoryId==-1L)
-        {
-            listTransformed = repository.getTransactionsAllAccountsAllCategories(argList.transactionType,argList.dateStart,argList.dateEnd)
-
-        }
-//        else if (argList.accountId==-1L)
-//        {
-//           listTransformed = repository.getTransactionsAllAccountWithCategory(argList.transactionType,argList.categoryId,argList.dateStart,argList.dateEnd)
-//        }
-        else if (argList.categoryId==-1L)
-        {
-           listTransformed = repository.getTransactionsWithAccountAllCategory(argList.transactionType,argList.accountId,argList.dateStart,argList.dateEnd)
-        }
-        else
-        {
-           listTransformed = repository.getTransactionsWithAccountWithCategory(argList.transactionType,argList.accountId,argList.categoryId,argList.dateStart,argList.dateEnd)
-        }
+        updateTransactions(argList)
 
 
-        listTransformed = Transformations.map(listTransformed){
-            it.sortedBy {
-                it.date
-            }
-        }
-
-        listTransactionAmount = Transformations.map(listTransformed)
-        {
-                list ->
-            list.map {
-                it.amount
-            }
-        }
 
         _fragmentTitle.value = "Transactions"
 
+    }
+
+    private fun updateTransactions(argList: TransactionListFragmentArgs) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            if (argList.accountId==-1L && argList.categoryId==-1L)
+            {
+                _listTransformed.postValue(repository.getTransactionsAllAccountsAllCategories(argList.transactionType,argList.dateStart,argList.dateEnd))
+
+            }
+            else if (argList.accountId==-1L)
+            {
+                _listTransformed.postValue(repository.getTransactionsAllAccountWithCategory(argList.transactionType,argList.categoryId,argList.dateStart,argList.dateEnd))
+            }
+            else if (argList.categoryId==-1L)
+            {
+                _listTransformed.postValue(repository.getTransactionsWithAccountAllCategory(argList.transactionType,argList.accountId,argList.dateStart,argList.dateEnd))
+            }
+            else
+            {
+                _listTransformed.postValue(repository.getTransactionsWithAccountWithCategory(argList.transactionType,argList.accountId,argList.categoryId,argList.dateStart,argList.dateEnd))
+            }
+
+        }
+    }
+
+    fun updateTotal(it: List<TransactionListClass>?) {
+            if (it!=null)
+            {
+
+                val df = DecimalFormat("#.##")
+                df.roundingMode = RoundingMode.DOWN
+                _totalTransactionAmount.value = df.format(it.map { it.amount }.sum())
+            }
     }
 
 
