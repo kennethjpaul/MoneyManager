@@ -67,7 +67,7 @@ class MonthlyBudgetViewModel(application: Application):AndroidViewModel(applicat
         databaseQuery()
     }
 
-    private fun databaseQuery() {
+    fun databaseQuery() {
         viewModelScope.launch(Dispatchers.IO)
         {
             _categorySummaryQuery.postValue(repository.getCategorySummary(myCalendarStart.timeInMillis,myCalendarEnd.timeInMillis))

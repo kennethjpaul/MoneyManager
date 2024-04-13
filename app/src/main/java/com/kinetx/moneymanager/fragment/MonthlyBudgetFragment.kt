@@ -1,6 +1,7 @@
 package com.kinetx.moneymanager.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -63,5 +64,8 @@ class MonthlyBudgetFragment : Fragment(), CategoryBudgetRV.OnSelectCategoryBudge
         view?.findNavController()?.navigate(MonthlyBudgetFragmentDirections.actionMonthlyBudgetFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,categoryId,dateStart.timeInMillis,dateEnd.timeInMillis))
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.databaseQuery()
+    }
 }
