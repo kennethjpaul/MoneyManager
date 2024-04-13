@@ -13,11 +13,15 @@
             <item
                 android:id="@+id/monthlyTransactionFragment"
                 android:icon="@drawable/transactions"
-                android:title="Transactions" />
+                android:title="@string/transactions" />
             <item
                 android:id="@+id/monthlyBudgetFragment"
                 android:icon="@drawable/scale"
                 android:title="@string/budget" />
+            <item
+                android:id="@+id/expenseAnalysisFragment"
+                android:icon="@drawable/moneytransfer"
+                android:title="@string/expense_analysis" />
         </menu>
 
     </item>

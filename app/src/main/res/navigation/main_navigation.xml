@@ -151,4 +151,8 @@
             android:id="@+id/action_monthlyBudgetFragment_to_transactionListFragment"
             app:destination="@id/transactionListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/expenseAnalysisFragment"
+        android:name="com.kinetx.moneymanager.fragment.ExpenseAnalysisFragment"
+        android:label="Expense Analysis" />
 </navigation>

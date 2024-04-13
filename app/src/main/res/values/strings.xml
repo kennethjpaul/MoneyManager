@@ -63,4 +63,6 @@
     <string name="budget">Budget</string>
     <string name="_0_0">0.0</string>
     <string name="hyphen">-</string>
+    <string name="expense_analysis">Expense Analysis</string>
+    <string name="transactions">Transactions</string>
 </resources>
