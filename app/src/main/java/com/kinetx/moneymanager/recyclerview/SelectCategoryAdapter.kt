@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.dataclass.SelectCategoryData
 
-class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
+class SelectCategoryAdapter(val listener: OnSelectCategoryListener, val identifier: String) : RecyclerView.Adapter<SelectCategoryAdapter.MyViewHolder>()
 {
 
     private var _catergoryList = emptyList<SelectCategoryData>()
@@ -49,7 +49,7 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerVi
         override fun onClick(v: View?) {
             val position = adapterPosition
             if (position!=RecyclerView.NO_POSITION) {
-                listener.onSelectCategoryClick(position)
+                listener.onSelectCategoryClick(position,identifier)
             }
         }
 
@@ -66,7 +66,7 @@ class SelectCategoryAdapter(val listener: OnSelectCategoryListener) : RecyclerVi
 
     interface OnSelectCategoryListener
     {
-        fun onSelectCategoryClick(position: Int)
+        fun onSelectCategoryClick(position: Int, identifier: String)
         fun onSelectCategoryLongClick(position: Int)
     }
 

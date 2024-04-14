@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         R.id.monthlyTransactionFragment,
         R.id.monthlyBudgetFragment,
         R.id.expenseAnalysisFragment,
-        R.id.monthlyOverviewFragment)
+        R.id.monthlyOverviewFragment,
+        R.id.categorySummaryFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -163,4 +163,12 @@
         android:id="@+id/monthlyOverviewFragment"
         android:name="com.kinetx.moneymanager.fragment.MonthlyOverviewFragment"
         android:label="Monthly Overview" />
+    <fragment
+        android:id="@+id/categorySummaryFragment"
+        android:name="com.kinetx.moneymanager.fragment.CategorySummaryFragment"
+        android:label="Categories" >
+        <action
+            android:id="@+id/action_categorySummaryFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
 </navigation>

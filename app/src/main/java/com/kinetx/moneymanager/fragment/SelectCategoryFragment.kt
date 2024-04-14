@@ -50,7 +50,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         viewModel = ViewModelProvider(this, viewModelFactory).get(SelectCategoryViewModel::class.java)
 
 
-        val adapter = SelectCategoryAdapter(this)
+        val adapter = SelectCategoryAdapter(this, "n")
         binding.selectCategoryRecyclerview.layoutManager = GridLayoutManager(context,4)
         binding.selectCategoryRecyclerview.setHasFixedSize(true)
         binding.selectCategoryRecyclerview.adapter = adapter
@@ -97,7 +97,7 @@ class SelectCategoryFragment : Fragment(), SelectCategoryAdapter.OnSelectCategor
         return binding.root
     }
 
-    override fun onSelectCategoryClick(position: Int) {
+    override fun onSelectCategoryClick(position: Int, identifier: String) {
 
         val item = viewModel.readAllCategories.value?.get(position)
         val itemId : Long = item?.categoryId!!
