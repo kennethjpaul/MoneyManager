@@ -61,7 +61,6 @@ class MonthlyBudgetFragment : Fragment(), CategoryBudgetRV.OnSelectCategoryBudge
         val categoryId  = viewModel.categorySummary.value?.get(position)?.categoryId!!
         val dateStart = viewModel.myCalendarStart
         val dateEnd= viewModel.myCalendarEnd
-        Log.i("III","${dateStart.timeInMillis} to ${dateEnd.timeInMillis} for ${categoryId}")
         view?.findNavController()?.navigate(MonthlyBudgetFragmentDirections.actionMonthlyBudgetFragmentToTransactionListFragment(TransactionType.EXPENSE,-1,categoryId,dateStart.timeInMillis,dateEnd.timeInMillis))
     }
 

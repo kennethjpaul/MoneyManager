@@ -113,7 +113,11 @@
     <fragment
         android:id="@+id/balancesFragment"
         android:name="com.kinetx.moneymanager.fragment.BalancesFragment"
-        android:label="BalancesFragment" />
+        android:label="BalancesFragment" >
+        <action
+            android:id="@+id/action_balancesFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/summaryFragment"
         android:name="com.kinetx.moneymanager.fragment.SummaryFragment"

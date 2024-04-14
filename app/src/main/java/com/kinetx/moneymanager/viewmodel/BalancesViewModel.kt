@@ -28,10 +28,16 @@ class BalancesViewModel (application: Application): AndroidViewModel(application
 
     init
     {
-        _fragmentTitle.value = "Current Balance"
+        _fragmentTitle.value = "Accounts"
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
 
+        updatePage()
+
+
+    }
+
+    fun updatePage() {
         viewModelScope.launch(Dispatchers.IO)
         {
             _list.postValue(repository.getAccountSummary())

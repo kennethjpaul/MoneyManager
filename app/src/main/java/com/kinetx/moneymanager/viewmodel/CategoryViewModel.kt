@@ -106,6 +106,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         categoryNamesDb = repository.readAllCategoryNames
 
         var titleString = "Create"
+        categoryBudget.value = "0"
         if (argList.isEdit)
         {
             _addVisible.value = View.GONE
@@ -239,6 +240,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             return false
         }
 
+        Log.i("III","${categoryName.value} ${argList.categoryType} ${_iconImageSource.value} ${currentCategory.categoryImageString} ${_colorColorCode.value} ${categoryBudget.value}")
         val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!,CommonOperations.convertToFloat(categoryBudget.value!!))
         insertCategoryDao(category)
 
