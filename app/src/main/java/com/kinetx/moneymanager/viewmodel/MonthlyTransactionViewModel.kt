@@ -55,7 +55,7 @@ class MonthlyTransactionViewModel(application: Application): AndroidViewModel(ap
         updateTransactions()
     }
 
-    private fun updateTransactions() {
+    fun updateTransactions() {
         viewModelScope.launch(Dispatchers.IO)
         {
             listRoomDatabase.postValue(

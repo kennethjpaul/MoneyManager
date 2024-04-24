@@ -68,6 +68,11 @@ class MonthlyTransactionFragment : Fragment(), TransactionParentRV.TransactionPa
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.updateTransactions()
+    }
+
     override fun onLongClickTransactionParent(position: Long, transactionType: TransactionType) {
         view?.findNavController()?.navigate(MonthlyTransactionFragmentDirections.actionMonthlyTransactionFragmentToAddTransactionFragment(transactionType,position))
     }
