@@ -141,7 +141,7 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     private fun updateAnalysis(categoryId: Long?, dateStart: Long, dateEnd: Long) {
         viewModelScope.launch(Dispatchers.IO)
         {
-            _transactionList.postValue(repository.getTransactionsAllAccountWithCategory(TransactionType.EXPENSE,categoryId!!,dateStart,dateEnd))
+            _transactionList.postValue(repository.getTransactionsAllAccountWithCategoryList(TransactionType.EXPENSE,categoryId!!,dateStart,dateEnd))
         }
     }
 

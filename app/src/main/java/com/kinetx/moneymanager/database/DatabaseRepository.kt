@@ -6,6 +6,7 @@ import com.kinetx.moneymanager.dataclass.CategoryQueryData
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
 import com.kinetx.moneymanager.dataclass.TransactionListClass
 import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.fragment.TransactionListFragmentArgs
 
 class DatabaseRepository (private val databaseDao: DatabaseDao) {
 
@@ -84,22 +85,27 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
         return databaseDao.getTransactionInitialBalance(categoryId)
     }
 
-    suspend fun getTransactionsAllAccountsAllCategories(transactionType :TransactionType, dateStart :Long, dateEnd: Long) : List<TransactionListClass>
+    fun getTransactionsAllAccountsAllCategories(transactionType :TransactionType, dateStart :Long, dateEnd: Long) : LiveData<List<TransactionListClass>>
     {
        return databaseDao.getTransactionsAllAccountsAllCategories(transactionType, dateStart, dateEnd)
     }
 
-    suspend fun getTransactionsAllAccountWithCategory(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
+    fun getTransactionsAllAccountWithCategory(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
     {
         return databaseDao.getTransactionsAllAccountWithCategory(transactionType,categoryId,dateStart,dateEnd)
     }
 
-    suspend fun getTransactionsWithAccountAllCategory(transactionType: TransactionType, accountId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
+    suspend fun getTransactionsAllAccountWithCategoryList(transactionType: TransactionType, categoryId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
+    {
+        return databaseDao.getTransactionsAllAccountWithCategoryList(transactionType,categoryId,dateStart,dateEnd)
+    }
+
+    fun getTransactionsWithAccountAllCategory(transactionType: TransactionType, accountId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
     {
         return databaseDao.getTransactionsWithAccountAllCategory(transactionType,accountId,dateStart,dateEnd)
     }
 
-    suspend fun getTransactionsWithAccountWithCategory(transactionType: TransactionType, accountId: Long, categoryId: Long, dateStart: Long, dateEnd : Long) : List<TransactionListClass>
+    fun getTransactionsWithAccountWithCategory(transactionType: TransactionType, accountId: Long, categoryId: Long, dateStart: Long, dateEnd : Long) : LiveData<List<TransactionListClass>>
     {
         return databaseDao.getTransactionsWithAccountWithCategory(transactionType,accountId,categoryId,dateStart,dateEnd)
     }
@@ -117,5 +123,25 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     fun getIncomeExpenseSummary(dateStart: Long, dateEnd: Long) : IncomeExpenseData
     {
         return databaseDao.getIncomeExpenseSummary(dateStart,dateEnd)
+    }
+
+    fun getTransactionsLogic(argList: TransactionListFragmentArgs): LiveData<List<TransactionListClass>> {
+        if (argList.accountId==-1L && argList.categoryId==-1L)
+        {
+            return databaseDao.getTransactionsAllAccountsAllCategories(argList.transactionType,argList.dateStart,argList.dateEnd)
+
+        }
+        else if (argList.accountId==-1L)
+        {
+            return databaseDao.getTransactionsAllAccountWithCategory(argList.transactionType,argList.categoryId,argList.dateStart,argList.dateEnd)
+        }
+        else if (argList.categoryId==-1L)
+        {
+            return databaseDao.getTransactionsWithAccountAllCategory(argList.transactionType,argList.accountId,argList.dateStart,argList.dateEnd)
+        }
+        else
+        {
+            return databaseDao.getTransactionsWithAccountWithCategory(argList.transactionType,argList.accountId,argList.categoryId,argList.dateStart,argList.dateEnd)
+        }
     }
 }
