@@ -1,13 +1,15 @@
 package com.kinetx.moneymanager.viewmodel
 
 import android.app.Application
+import android.graphics.Color
 import android.icu.util.Calendar
-import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
+import com.github.mikephil.charting.data.*
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
@@ -22,7 +24,7 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
 
     private val sp = PreferenceManager.getDefaultSharedPreferences(getApplication())
     private val startOfMonth : Int = sp.getString("startDayOfMonth","1")!!.toInt()
-    private var weekendEnabled : Boolean = sp.getBoolean("weekendSwitch",false);
+    private var weekendEnabled : Boolean = sp.getBoolean("weekendSwitch",false)
     private var weekendShift : Int = sp.getString("weekendPref","0")?.toInt() ?: 0
 
     var myCalendarToday: Calendar = Calendar.getInstance()
@@ -32,6 +34,11 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     private val _dateToday = MutableLiveData<String>()
     val dateToday : LiveData<String>
         get() = _dateToday
+
+    private val _chartCardVisibility = MutableLiveData<Int>()
+    val chartCardVisibility : LiveData<Int>
+        get() = _chartCardVisibility
+
 
     private var categorySelected : CategoryDatabase = CategoryDatabase()
 
@@ -89,11 +96,6 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     val budgetDayDay : LiveData<String>
         get() = _budgetDayDay
 
-
-
-
-
-
     private val _categoryList = MutableLiveData<List<CategoryDatabase>>()
     val categoryList : LiveData<List<CategoryDatabase>>
         get() = _categoryList
@@ -106,6 +108,9 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     val transactionList : LiveData<List<TransactionListClass>>
         get() = _transactionList
 
+    private val _chartData = MutableLiveData<CombinedData>()
+    val chartData : LiveData<CombinedData>
+        get() = _chartData
     val categorySpinnerSelectedPosition = MutableLiveData<Int>()
 
     private val repository : DatabaseRepository
@@ -124,9 +129,78 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
         _percentMonth.value = "0"
         _percentWeek.value = "0"
         _percentDay.value = "0"
+        _chartCardVisibility.value = View.GONE
+
     }
 
+    private fun updateChart(transactions: List<TransactionListClass>) {
+        viewModelScope.launch(Dispatchers.IO)
+        {
 
+            val combinedData = CombinedData()
+            val barArray: ArrayList<BarEntry> = ArrayList()
+            val lineArray: ArrayList<Entry> = ArrayList()
+            val budgetArray: ArrayList<Entry> = ArrayList()
+
+            val transactionListGrouped = transactions.groupBy { it.date }.mapValues { (_, value) ->
+                value.sumOf { it.amount.toDouble() }.toFloat()
+            }
+
+
+            var sum = 0f
+            var daysTillNow = 0L
+            val numOfDaysMonth = (myCalendarEnd.timeInMillis - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)
+
+            for (i in 0..numOfDaysMonth)
+            {
+                barArray.add(BarEntry(i.toFloat(), 0f))
+
+                if (categorySelected.categoryBudget != 0f) {
+                    budgetArray.add(
+                        Entry(
+                            i.toFloat(),
+                            categorySelected.categoryBudget / numOfDaysMonth
+                        )
+                    )
+                }
+            }
+
+
+
+            transactionListGrouped.entries.forEachIndexed { index, transaction ->
+                daysTillNow = (transaction.key - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)
+                barArray[daysTillNow.toInt()] = BarEntry(daysTillNow.toFloat(), transaction.value)
+                sum += transaction.value
+                lineArray.add(Entry(index.toFloat(), sum / (daysTillNow + 1)))
+                if (categorySelected.categoryBudget != 0f) {
+                    budgetArray[daysTillNow.toInt()] = Entry(daysTillNow.toFloat(), categorySelected.categoryBudget / numOfDaysMonth)
+                }
+            }
+
+
+            val barDataset  = BarDataSet(barArray,"Expenses")
+            barDataset.setDrawValues(false)
+            barDataset.isHighlightEnabled = false
+            val barData  = BarData(barDataset)
+
+            val lineDataset = LineDataSet(lineArray,"Cum. Avg")
+            lineDataset.color = Color.RED
+            lineDataset.setDrawValues(false)
+            lineDataset.setDrawHighlightIndicators(false)
+
+            val budgetDataset = LineDataSet(budgetArray,"Budget")
+            budgetDataset.color = Color.BLACK
+            budgetDataset.setDrawValues(false)
+            budgetDataset.setDrawCircles(false)
+            budgetDataset.setDrawHighlightIndicators(false)
+            val lineData  = LineData(lineDataset,budgetDataset)
+
+            combinedData.setData(barData)
+            combinedData.setData(lineData)
+
+            _chartData.postValue(combinedData)
+        }
+    }
 
 
     fun updateSpinner(it: List<CategoryDatabase>?) {
@@ -173,7 +247,20 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
 
     fun updateData(transactions: List<TransactionListClass>?) {
 
+
         transactions ?: return
+
+        if (transactions.isEmpty())
+        {
+            _chartCardVisibility.value = View.GONE
+        }
+        else
+        {
+            _chartCardVisibility.value = View.VISIBLE
+        }
+//        _chartCardVisibility.value = View.VISIBLE
+
+        updateChart(transactions)
 
         val startOfWeek = DateManipulation.getStartOfWeek(myCalendarToday)
         val endOfWeek = DateManipulation.getEndOfWeek(myCalendarToday)

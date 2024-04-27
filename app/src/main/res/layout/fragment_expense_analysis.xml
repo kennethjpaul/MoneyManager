@@ -44,6 +44,32 @@
             app:layout_constraintTop_toBottomOf="@+id/expense_analysis_spinner" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/expense_analysis_card_0"
+            style="@style/material_card"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="@{expenseAnalysisVM.chartCardVisibility}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_date">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/material_card_constraint">
+
+            <com.github.mikephil.charting.charts.CombinedChart
+                android:id="@+id/expense_analysis_combined_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/expense_analysis_card_1"
             style="@style/material_card"
             android:layout_height="200dp"
@@ -52,7 +78,7 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_date">
+            app:layout_constraintTop_toBottomOf="@+id/expense_analysis_card_0">
 
             <androidx.constraintlayout.widget.ConstraintLayout style="@style/material_card_constraint">
 

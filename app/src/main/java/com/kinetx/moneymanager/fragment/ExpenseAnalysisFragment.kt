@@ -1,5 +1,6 @@
 package com.kinetx.moneymanager.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import android.widget.Adapter
 import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentExpenseAnalysisBinding
 import com.kinetx.moneymanager.viewmodel.ExpenseAnalysisVM
@@ -36,8 +39,12 @@ class ExpenseAnalysisFragment : Fragment() {
         binding.expenseAnalysisVM = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-
-
+        binding.expenseAnalysisCombinedChart.description.isEnabled = false;
+        binding.expenseAnalysisCombinedChart.setBackgroundColor(Color.WHITE);
+        binding.expenseAnalysisCombinedChart.setDrawGridBackground(false);
+        binding.expenseAnalysisCombinedChart.setDrawBarShadow(false);
+        binding.expenseAnalysisCombinedChart.isHighlightFullBarEnabled = false;
+        binding.expenseAnalysisCombinedChart.isScaleYEnabled = false
 
         viewModel.readAllExpenseCategory.observe(viewLifecycleOwner)
         {
@@ -69,6 +76,13 @@ class ExpenseAnalysisFragment : Fragment() {
         {
             viewModel.updateData(it)
 
+        }
+
+        viewModel.chartData.observe(viewLifecycleOwner)
+        {
+            binding.expenseAnalysisCombinedChart.data = it
+            binding.expenseAnalysisCombinedChart.invalidate()
+            Log.i("III","Here")
         }
 
         // Inflate the layout for this fragment
