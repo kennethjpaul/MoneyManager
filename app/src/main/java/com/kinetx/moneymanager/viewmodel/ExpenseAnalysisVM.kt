@@ -136,44 +136,36 @@ class ExpenseAnalysisVM(application: Application): AndroidViewModel(application)
     private fun updateChart(transactions: List<TransactionListClass>) {
         viewModelScope.launch(Dispatchers.IO)
         {
-
+            val numOfDaysMonth = ((myCalendarEnd.timeInMillis - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)).toInt()
             val combinedData = CombinedData()
             val barArray: ArrayList<BarEntry> = ArrayList()
             val lineArray: ArrayList<Entry> = ArrayList()
             val budgetArray: ArrayList<Entry> = ArrayList()
+            val expenseArray = FloatArray(numOfDaysMonth)
 
             val transactionListGrouped = transactions.groupBy { it.date }.mapValues { (_, value) ->
                 value.sumOf { it.amount.toDouble() }.toFloat()
             }
 
 
-            var sum = 0f
             var daysTillNow = 0L
-            val numOfDaysMonth = (myCalendarEnd.timeInMillis - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)
-
-            for (i in 0..numOfDaysMonth)
-            {
-                barArray.add(BarEntry(i.toFloat(), 0f))
-
-                if (categorySelected.categoryBudget != 0f) {
-                    budgetArray.add(
-                        Entry(
-                            i.toFloat(),
-                            categorySelected.categoryBudget / numOfDaysMonth
-                        )
-                    )
-                }
-            }
-
-
+            val curDay  = (myCalendarToday.timeInMillis - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)
 
             transactionListGrouped.entries.forEachIndexed { index, transaction ->
                 daysTillNow = (transaction.key - myCalendarStart.timeInMillis) / (24 * 60 * 60 * 1000)
-                barArray[daysTillNow.toInt()] = BarEntry(daysTillNow.toFloat(), transaction.value)
-                sum += transaction.value
-                lineArray.add(Entry(index.toFloat(), sum / (daysTillNow + 1)))
+                expenseArray[daysTillNow.toInt()] = transaction.value
+            }
+
+            var sum = 0f
+            expenseArray.forEachIndexed {index, value ->
+                barArray.add(BarEntry(index.toFloat(), value))
+                sum += value
+                if (index<=curDay)
+                {
+                    lineArray.add(Entry(index.toFloat(), sum / (index + 1)))
+                }
                 if (categorySelected.categoryBudget != 0f) {
-                    budgetArray[daysTillNow.toInt()] = Entry(daysTillNow.toFloat(), categorySelected.categoryBudget / numOfDaysMonth)
+                    budgetArray.add(Entry(index.toFloat(), categorySelected.categoryBudget / numOfDaysMonth))
                 }
             }
 
