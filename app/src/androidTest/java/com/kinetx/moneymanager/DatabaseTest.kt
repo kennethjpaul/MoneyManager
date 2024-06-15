@@ -8,6 +8,10 @@ import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseDao
 import com.kinetx.moneymanager.database.DatabaseMain
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -42,15 +46,18 @@ class DatabaseTest {
 
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     @Test
     @Throws(Exception::class)
     fun insertAndGetCategory()
     {
         val category = CategoryDatabase()
-        databaseDao.insertCategory(category)
-
-        val latestCategory  = databaseDao.getLatestCategory()
-        assertEquals(latestCategory?.categoryImage,0)
+        GlobalScope.launch(Dispatchers.IO)
+        {
+            databaseDao.insertCategory(category)
+            val latestCategory  = databaseDao.getLatestCategory()
+            assertEquals(latestCategory?.categoryImage,0)
+        }
 
     }
 }
