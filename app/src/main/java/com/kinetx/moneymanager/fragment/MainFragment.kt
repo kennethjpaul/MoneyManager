@@ -79,7 +79,10 @@ class MainFragment : Fragment() {
             viewModel.updateIncomeExpense(it)
         }
 
-
+        viewModel.readAllAccounts.observe(viewLifecycleOwner)
+        {
+            viewModel.databaseQueries(it)
+        }
 
 
 

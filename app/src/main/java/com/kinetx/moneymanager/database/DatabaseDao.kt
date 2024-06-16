@@ -97,4 +97,22 @@ interface DatabaseDao {
 
 
 
+    @Query("SELECT * FROM balance_table WHERE account_id=:accountId ORDER BY month_end DESC LIMIT 1")
+    suspend fun getLatestBalanceWithAccount(accountId: Long) : BalanceDatabase
+
+    @Insert
+    suspend fun insertBalanceWithAccount(balanceDatabase: BalanceDatabase)
+
+    @Query("SELECT * FROM transaction_table WHERE transaction_type!='BALANCE' AND (category_one=:accountId OR category_two=:accountId) ORDER BY date LIMIT 1")
+    suspend fun getFirstTransactionWithAccount(accountId: Long) : TransactionDatabase?
+
+
+    @Query("SELECT * FROM transaction_table WHERE date<=:dateEnd AND date>=:dateStart AND (category_one=:accountId OR category_two=:accountId)")
+    suspend fun getTransactionsWithAccountForDate(accountId: Long,dateStart: Long,dateEnd: Long) : List<TransactionDatabase>?
+
+    @Query("DELETE FROM balance_table WHERE account_id=:accountId")
+    suspend fun deleteAllBalanceEntriesWithAccount(accountId: Long)
+
+    @Query("DELETE FROM balance_table WHERE account_id=:accountId AND month_end>=:date")
+    suspend fun deleteBalanceEntriesWithAccountAfterDate(accountId: Long, date: Long)
 }

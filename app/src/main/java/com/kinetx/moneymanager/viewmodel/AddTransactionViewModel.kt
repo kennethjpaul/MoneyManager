@@ -242,7 +242,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         }
 
         var dateLong : Long = myCalendar.timeInMillis
-        val transaction = TransactionDatabase(0,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
+        val transaction = TransactionDatabase(0,transactionAmount.value!!.toDouble(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
 
         addTransactionDao(transaction)
 
@@ -274,7 +274,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         }
 
         var dateLong : Long = myCalendar.timeInMillis
-        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
+        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toDouble(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
         updateTransactionDao(transaction)
         return true
     }
@@ -291,7 +291,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     fun deleteTransaction()
     {
         var dateLong : Long = myCalendar.timeInMillis
-        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toFloat(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
+        val transaction = TransactionDatabase(argList.transactionId,transactionAmount.value!!.toDouble(),argList.transactionType,_categoryPositionOne.value!!.categoryId,categoryPositionTwo.value!!.categoryId,dateLong,transactionComment.value!!)
         deleteTransactionDao(transaction)
     }
 

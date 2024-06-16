@@ -144,4 +144,30 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
             return databaseDao.getTransactionsWithAccountWithCategory(argList.transactionType,argList.accountId,argList.categoryId,argList.dateStart,argList.dateEnd)
         }
     }
+
+    suspend fun insertBalanceWithAccount(balanceDatabase: BalanceDatabase)
+    {
+        return databaseDao.insertBalanceWithAccount(balanceDatabase)
+    }
+
+    suspend fun getLatestBalanceWithAccount(accountId: Long) : BalanceDatabase
+    {
+        return databaseDao.getLatestBalanceWithAccount(accountId)
+    }
+
+    suspend fun getFirstTransactionWithAccount(accountId: Long): TransactionDatabase?
+    {
+        return databaseDao.getFirstTransactionWithAccount(accountId)
+    }
+
+    suspend fun getTransactionsWithAccountForDate(accountId: Long, dateStart: Long, dateEnd: Long) : List<TransactionDatabase>?
+    {
+        return databaseDao.getTransactionsWithAccountForDate(accountId, dateStart, dateEnd)
+    }
+
+    suspend fun deleteAllBalanceEntriesWithAccount(accountId: Long)
+    {
+        return databaseDao.deleteAllBalanceEntriesWithAccount(accountId)
+    }
+
 }

@@ -12,7 +12,7 @@ data class TransactionDatabase(
     val transactionId : Long = 0L,
 
     @ColumnInfo(name = "amount")
-    val transactionAmount : Float = 0.0f,
+    val transactionAmount : Double = 0.0,
 
     @ColumnInfo(name="transaction_type")
     val transactionType : TransactionType,

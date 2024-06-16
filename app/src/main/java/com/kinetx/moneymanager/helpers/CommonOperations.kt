@@ -31,7 +31,7 @@ object CommonOperations {
         return if (s=="" || s==".") {
             0.0f
         } else {
-            s.toFloat()
+            "%.2f".format(s.toFloat()).toFloat()
         }
     }
 

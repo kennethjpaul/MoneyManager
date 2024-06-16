@@ -113,12 +113,18 @@ object DateManipulation {
     fun getEndOfMonth(myCalendar: Calendar, startOfMonth : Int, weekendEnabled: Boolean, weekendShift : Int) : Calendar
     {
         val endMonthCalendar = myCalendar.clone() as Calendar
+        var startOfMonthCalendar = myCalendar.clone() as Calendar
+
+        val maxDays1 = startOfMonthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        startOfMonthCalendar.set(Calendar.DAY_OF_MONTH,min(maxDays1, startOfMonth))
+        startOfMonthCalendar = checkWeekend(startOfMonthCalendar,weekendEnabled, weekendShift)
+
 
         val day = myCalendar[Calendar.DAY_OF_MONTH]
         var month = myCalendar[Calendar.MONTH]
         var year = myCalendar[Calendar.YEAR]
 
-        if (day >= startOfMonth) {
+        if (day >= startOfMonthCalendar.get(Calendar.DAY_OF_MONTH)) {
             if (month == Calendar.DECEMBER) {
                 month = Calendar.JANUARY
                 year++

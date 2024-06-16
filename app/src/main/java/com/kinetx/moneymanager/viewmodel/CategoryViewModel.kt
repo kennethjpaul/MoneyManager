@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.kinetx.moneymanager.R
+import com.kinetx.moneymanager.database.BalanceDatabase
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
@@ -244,6 +245,8 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         val category = CategoryDatabase(0,categoryName.value!!, argList.categoryType,_iconImageSource.value!!,currentCategory.categoryImageString,_colorColorCode.value!!,CommonOperations.convertToFloat(categoryBudget.value!!))
         insertCategoryDao(category)
 
+
+
         return true
     }
 
@@ -258,9 +261,14 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
             if (argList.categoryType==CategoryType.ACCOUNT)
             {
                 val insertedCategory = repository.getCategoryByName(category.categoryName)
-                val transaction = TransactionDatabase(0,accountBalance.value!!.toFloat(),TransactionType.BALANCE,insertedCategory!!.categoryId,-1L,0,"")
+                val transaction = TransactionDatabase(0,accountBalance.value!!.toDouble(),TransactionType.BALANCE,insertedCategory!!.categoryId,-1L,0,"")
                 repository.insertTransaction(transaction)
-
+                repository.deleteAllBalanceEntriesWithAccount(insertedCategory.categoryId)
+                val balance = accountBalance.value!!.toFloat()
+                val roundedBalance = "%.2f".format(balance).toDouble()
+                Log.i("III","$roundedBalance")
+                val balanceDatabase = BalanceDatabase(0L, category.categoryId,0L,roundedBalance)
+                repository.insertBalanceWithAccount(balanceDatabase)
             }
         }
 
@@ -298,7 +306,7 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         {
             val transaction = TransactionDatabase(
                 _initialBalanceTransactionId.value!!,
-                accountBalance.value!!.toFloat(),
+                accountBalance.value!!.toDouble(),
                 TransactionType.BALANCE,
                 argList.itemId,
                 -1L,
@@ -320,6 +328,15 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         GlobalScope.launch(Dispatchers.IO)
         {
             repository.updateCategory(category)
+
+            if (argList.categoryType==CategoryType.ACCOUNT){
+                repository.deleteAllBalanceEntriesWithAccount(category.categoryId)
+                val balance = accountBalance.value!!.toFloat()
+                val roundedBalance = "%.2f".format(balance).toDouble()
+                Log.i("III","$roundedBalance")
+                val balanceDatabase = BalanceDatabase(0L, category.categoryId,0L,roundedBalance)
+                repository.insertBalanceWithAccount(balanceDatabase)
+            }
         }
     }
 
@@ -344,6 +361,10 @@ class CategoryViewModel (val argList : CategoryFragmentArgs, application: Applic
         {
             repository.deleteCategory(category)
             repository.deleteTransactionsOfCategory(category.categoryId)
+            if (argList.categoryType==CategoryType.ACCOUNT){
+                repository.deleteAllBalanceEntriesWithAccount(category.categoryId)
+            }
+
         }
     }
 

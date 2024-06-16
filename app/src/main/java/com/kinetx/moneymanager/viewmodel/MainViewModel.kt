@@ -5,14 +5,20 @@ import android.icu.util.Calendar
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
+import com.kinetx.moneymanager.database.BalanceDatabase
+import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
+import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.helpers.DateManipulation
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.math.max
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -62,12 +68,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val incomeExpenseQuery :LiveData<IncomeExpenseData>
         get() = _incomeExpenseQuery
 
+    var readAllAccounts : LiveData<List<CategoryDatabase>>
+
     private val repository : DatabaseRepository
 
     init {
 
         val userDao = DatabaseMain.getInstance(application).databaseDao
         repository = DatabaseRepository(userDao)
+
+        readAllAccounts = repository.readAllAccountCategory
 
         _expenseMonth.value = 0.0f
         _balanceMonth.value = 0.0f
@@ -82,9 +92,84 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth, weekendEnabled, weekendShift)
         _startDate.value = DateManipulation.getDateArray(s)
         _endDate.value = DateManipulation.getDateArray(e)
-
-
         _fragmentTitle.value = "Money Manager"
+
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun databaseQueries(accountList: List<CategoryDatabase>) {
+
+        // Query for updating the balances table, it is on global scope for now
+        GlobalScope.launch(Dispatchers.IO)
+        {
+
+            var today : Calendar = Calendar.getInstance()
+            var date : Calendar = Calendar.getInstance()
+
+
+            accountList.forEach { account ->
+                val latestBalance = repository.getLatestBalanceWithAccount(account.categoryId)
+                val firstTransaction = repository.getFirstTransactionWithAccount(account.categoryId)
+
+                if (firstTransaction!=null)
+                {
+                    date.timeInMillis = max( firstTransaction.transactionDate, latestBalance.monthEnd)
+                    date.add(Calendar.DAY_OF_MONTH,1)
+
+                    var monthStart = DateManipulation.getStartOfMonth(
+                        date,
+                        startOfMonth,
+                        weekendEnabled,
+                        weekendShift
+                    )
+                    var monthEnd = DateManipulation.getEndOfMonth(
+                        date,
+                        startOfMonth,
+                        weekendEnabled,
+                        weekendShift
+                    )
+
+                    while (today > monthEnd){
+
+                    var initialBalance  = latestBalance.balance
+
+                    val transactions = repository.getTransactionsWithAccountForDate(account.categoryId, monthStart.timeInMillis, monthEnd.timeInMillis)
+                    val income =
+                        transactions?.filter { it.transactionType == TransactionType.INCOME }
+                            ?.sumOf { it.transactionAmount } ?: 0.0
+
+                    val expense =
+                        transactions?.filter { it.transactionType == TransactionType.EXPENSE }
+                            ?.sumOf { it.transactionAmount } ?: 0.0
+
+                    val transferOut =
+                        transactions?.filter { it.transactionType == TransactionType.TRANSFER && it.transactionCategoryOne == account.categoryId }
+                            ?.sumOf { it.transactionAmount }
+                        ?:0.0
+                    val transferIn =
+                        transactions?.filter { it.transactionType == TransactionType.TRANSFER && it.transactionCategoryTwo == account.categoryId }
+                            ?.sumOf { it.transactionAmount }
+                        ?:0.0
+
+
+                    val newBalance = initialBalance + income - expense - transferOut + transferIn
+
+                        val roundedValue = "%.2f".format(newBalance).toDouble()
+
+                    val balanceDatabase = BalanceDatabase(0L, account.categoryId, monthEnd.timeInMillis, roundedValue)
+                    repository.insertBalanceWithAccount(balanceDatabase)
+                    monthEnd.add(Calendar.DAY_OF_MONTH,1)
+
+                    monthStart = DateManipulation.getStartOfMonth(monthEnd,startOfMonth,weekendEnabled,weekendShift)
+                    monthEnd =  DateManipulation.getEndOfMonth(monthEnd,startOfMonth,weekendEnabled,weekendShift)
+                    }
+                }
+
+
+
+            }
+        }
+
     }
 
     fun updateIncomeExpenseQuery(myCalendar: Calendar) {

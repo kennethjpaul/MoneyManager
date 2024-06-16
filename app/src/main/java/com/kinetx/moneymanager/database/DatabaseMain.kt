@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [CategoryDatabase::class,TransactionDatabase::class], version = 7, exportSchema = false)
+@Database(entities = [CategoryDatabase::class,TransactionDatabase::class,BalanceDatabase::class], version = 8, exportSchema = false)
 abstract class DatabaseMain : RoomDatabase(){
 
     abstract val databaseDao : DatabaseDao
@@ -15,21 +15,21 @@ abstract class DatabaseMain : RoomDatabase(){
     companion object
     {
 
-        private val MIGRATION_5_6 = object : Migration(5,6)
+        private val MIGRATION_7_8 = object :Migration(7,8)
         {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE category_table ADD COLUMN category_image_string TEXT NOT NULL DEFAULT ''")
+                database.execSQL("""
+            CREATE TABLE IF NOT EXISTS `balance_table` (
+                `entryId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                `account_id` INTEGER NOT NULL,
+                `month_end` INTEGER NOT NULL,
+                'balance' REAL NOT NULL
+            )
+        """.trimIndent())
             }
 
         }
 
-        private val MIGRATION_6_7 = object :Migration(6,7)
-        {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE category_table ADD COLUMN category_budget FLOAT NOT NULL DEFAULT 0")
-            }
-
-        }
         @Volatile
         private var INSTANCE : DatabaseMain? = null
 
@@ -46,7 +46,7 @@ abstract class DatabaseMain : RoomDatabase(){
                         DatabaseMain::class.java,
                         "main_database"
                     )
-                        .addMigrations(MIGRATION_5_6,MIGRATION_6_7)
+                        .addMigrations(MIGRATION_7_8)
                         .createFromAsset("database/main.db")
                         .build()
 
