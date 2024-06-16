@@ -115,4 +115,9 @@ interface DatabaseDao {
 
     @Query("DELETE FROM balance_table WHERE account_id=:accountId AND month_end>=:date")
     suspend fun deleteBalanceEntriesWithAccountAfterDate(accountId: Long, date: Long)
+
+
+    /// New and updated queries
+    @Query("SELECT * FROM transaction_table WHERE (category_one=:accountId OR category_two=:accountId) AND date>=:dateStart AND date<=:dateEnd")
+    suspend fun getAllTransactionsWithAccount(accountId: Long, dateStart: Long,dateEnd: Long) : List<TransactionDatabase>
 }

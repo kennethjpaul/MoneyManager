@@ -162,7 +162,11 @@
     <fragment
         android:id="@+id/monthlyOverviewFragment"
         android:name="com.kinetx.moneymanager.fragment.MonthlyOverviewFragment"
-        android:label="Monthly Overview" />
+        android:label="Monthly Overview" >
+        <action
+            android:id="@+id/action_monthlyOverviewFragment_to_accountTransactionFragment"
+            app:destination="@id/accountTransactionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/categorySummaryFragment"
         android:name="com.kinetx.moneymanager.fragment.CategorySummaryFragment"
@@ -170,5 +174,19 @@
         <action
             android:id="@+id/action_categorySummaryFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountTransactionFragment"
+        android:name="com.kinetx.moneymanager.fragment.AccountTransactionFragment"
+        android:label="AccountTransactionFragment" >
+        <argument
+            android:name="accountId"
+            app:argType="long" />
+        <argument
+            android:name="dateStart"
+            app:argType="long" />
+        <argument
+            android:name="dateEnd"
+            app:argType="long" />
     </fragment>
 </navigation>

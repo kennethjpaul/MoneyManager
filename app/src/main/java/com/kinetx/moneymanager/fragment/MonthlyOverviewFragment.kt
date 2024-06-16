@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.databinding.FragmentMonthlyOverviewBinding
@@ -15,7 +16,7 @@ import com.kinetx.moneymanager.viewmodel.MonthlyOverviewVM
 import com.kinetx.moneymanager.viewmodelfactory.MonthlyOverviewVMF
 
 
-class MonthlyOverviewFragment : Fragment() {
+class MonthlyOverviewFragment : Fragment(), AccountListRV.SelectAccountListRV {
 
     lateinit var binding : FragmentMonthlyOverviewBinding
     lateinit var viewModel : MonthlyOverviewVM
@@ -34,7 +35,7 @@ class MonthlyOverviewFragment : Fragment() {
         binding.monthlyOverviewVM = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val adapter = AccountListRV()
+        val adapter = AccountListRV(this)
         binding.monthlyOverviewRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.monthlyOverviewRecyclerView.setHasFixedSize(true)
         binding.monthlyOverviewRecyclerView.adapter = adapter
@@ -46,6 +47,14 @@ class MonthlyOverviewFragment : Fragment() {
         }
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onSelectAccountListRV(position: Int) {
+        val accountId = viewModel.transactionQuery.value?.get(position)?.categoryId!!
+        val dateStart = viewModel.myCalendarStart.timeInMillis
+        val dateEnd = viewModel.myCalendarToday.timeInMillis
+
+        view?.findNavController()?.navigate(MonthlyOverviewFragmentDirections.actionMonthlyOverviewFragmentToAccountTransactionFragment(accountId,dateStart,dateEnd))
     }
 
 }

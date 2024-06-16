@@ -174,4 +174,9 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     {
         return databaseDao.deleteBalanceEntriesWithAccountAfterDate(accountId, date)
     }
+
+    suspend fun getAllTransactionsWithAccount(accountId: Long, dateStart: Long, dateEnd: Long) : List<TransactionDatabase>
+    {
+        return databaseDao.getAllTransactionsWithAccount(accountId, dateStart, dateEnd)
+    }
 }

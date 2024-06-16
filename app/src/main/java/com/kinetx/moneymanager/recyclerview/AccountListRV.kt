@@ -2,6 +2,7 @@ package com.kinetx.moneymanager.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kinetx.moneymanager.R
 import com.kinetx.moneymanager.dataclass.AccountListData
 
-class AccountListRV : RecyclerView.Adapter<AccountListRV.MyViewHolder>()  {
+class AccountListRV(val listener : SelectAccountListRV) : RecyclerView.Adapter<AccountListRV.MyViewHolder>()  {
 
     private var _list = emptyList<AccountListData>()
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), OnClickListener{
 
         val accountName : TextView = itemView.findViewById(R.id.account_list_category_name)
         val accountIncome : TextView = itemView.findViewById(R.id.account_list_income)
@@ -21,6 +22,20 @@ class AccountListRV : RecyclerView.Adapter<AccountListRV.MyViewHolder>()  {
         val accountAmount : TextView = itemView.findViewById(R.id.account_list_amount)
         val accountImageButton : ImageView = itemView.findViewById(R.id.account_list_image_button)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position!=RecyclerView.NO_POSITION) {
+                listener.onSelectAccountListRV(position)
+            }
+        }
+
+    }
+
+    interface SelectAccountListRV {
+        fun onSelectAccountListRV(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
