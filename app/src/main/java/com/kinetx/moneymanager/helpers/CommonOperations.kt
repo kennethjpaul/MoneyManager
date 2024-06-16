@@ -40,4 +40,5 @@ object CommonOperations {
         val scaleFactor = 10.0.pow(decimals).toInt()
         return (num * scaleFactor).roundToInt().toFloat()/scaleFactor
     }
+
 }

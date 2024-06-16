@@ -255,6 +255,11 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         GlobalScope.launch(Dispatchers.IO)
         {
             repository.insertTransaction(transaction)
+            repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryOne, transaction.transactionDate)
+            if (transaction.transactionType==TransactionType.TRANSFER)
+            {
+                repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryTwo,transaction.transactionDate)
+            }
         }
     }
 
@@ -284,6 +289,11 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         GlobalScope.launch(Dispatchers.IO)
         {
             repository.updateTransaction(transaction)
+            repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryOne, transaction.transactionDate)
+            if (transaction.transactionType==TransactionType.TRANSFER)
+            {
+                repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryTwo,transaction.transactionDate)
+            }
         }
     }
 
@@ -300,6 +310,11 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         GlobalScope.launch(Dispatchers.IO)
         {
             repository.deleteTransaction(transaction)
+            repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryOne, transaction.transactionDate)
+            if (transaction.transactionType==TransactionType.TRANSFER)
+            {
+                repository.deleteBalanceEntriesWithAccountAfterDate(transaction.transactionCategoryTwo,transaction.transactionDate)
+            }
         }
     }
 
