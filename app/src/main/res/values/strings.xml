@@ -78,4 +78,7 @@
     <string name="income_categories">Income Categories</string>
     <string name="categories">Categories</string>
     <string name="latest_transactions">Latest Transactions</string>
+    <string name="icon_for_the_picking_the_date">Icon for the picking the date</string>
+    <string name="icon_for_selecting_account_or_category">Icon for selecting account or category</string>
+    <string name="icon_for_selected_account_category">Icon for selected account/category</string>
 </resources>
