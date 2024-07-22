@@ -20,6 +20,7 @@ import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.enums.CategoryType
 import com.kinetx.moneymanager.enums.TransactionType
 import com.kinetx.moneymanager.fragment.AddTransactionFragmentArgs
+import com.kinetx.moneymanager.helpers.DateManipulation
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,6 +40,11 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
     val transactionComment = MutableLiveData<String>()
 
     val transaction = MutableLiveData<TransactionDatabase>()
+
+
+    private val _selectedDate = MutableLiveData<String>()
+    val selectedDate : LiveData<String>
+        get() = _selectedDate
 
     private val _selectedCurrency = MutableLiveData<String>()
     val selectedCurrency : LiveData<String>
@@ -187,6 +193,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         _selectedMonth.value = monthArray[myCalendar.get(
             Calendar.MONTH)]
         _selectedYear.value = myCalendar.get(Calendar.YEAR).toString()
+        _selectedDate.value = DateManipulation.getDateArray(myCalendar)
 
     }
 
@@ -197,6 +204,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         _selectedDay.value = dayofMonth.toString()
         _selectedMonth.value = monthArray[month]
         _selectedYear.value = year.toString()
+        _selectedDate.value = DateManipulation.getDateArray(myCalendar)
     }
 
     fun datePick(it: View?) {

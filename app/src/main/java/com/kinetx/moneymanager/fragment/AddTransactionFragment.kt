@@ -31,14 +31,14 @@ class AddTransactionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         argList = AddTransactionFragmentArgs.fromBundle(requireArguments())
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_add_transaction, container, false)
         val application = requireNotNull(this.activity).application
         val viewModelFactory = AddTransactionViewModelFactory(argList,application)
-        viewModel = ViewModelProvider(this,viewModelFactory).get(AddTransactionViewModel::class.java)
+        viewModel = ViewModelProvider(this,viewModelFactory)[AddTransactionViewModel::class.java]
 
 
         binding.addTransactionViewModel = viewModel
@@ -53,14 +53,14 @@ class AddTransactionFragment : Fragment() {
 
         viewModel.categoryPositionOne.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryOneBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryOneSelectImg.setBackgroundColor(it.categoryColor)
             binding.transactionCategoryOneSelectImg.setImageResource(CommonOperations.getResourceInt(application,it.categoryImageString))
             binding.transactionCategoryOneSelect.text = it.categoryName
         }
 
         viewModel.categoryPositionTwo.observe(viewLifecycleOwner)
         {
-            binding.addTransactionCategoryTwoBtn.setCardBackgroundColor(it.categoryColor)
+            binding.transactionCategoryTwoSelectImg.setBackgroundColor(it.categoryColor)
             binding.transactionCategoryTwoSelectImg.setImageResource(CommonOperations.getResourceInt(application,it.categoryImageString))
             binding.transactionCategoryTwoSelect.text = it.categoryName
         }
@@ -87,7 +87,22 @@ class AddTransactionFragment : Fragment() {
             viewModel.datePick(it)
         }
 
+        binding.addTransactionViewDate.setOnClickListener()
+        {
+            viewModel.datePick(it)
+        }
+
         binding.addTransactionCategoryOneBtn.setOnClickListener()
+        {
+            view?.findNavController()?.navigate(
+                AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
+                    viewModel.categoryPositionOne.value?.categoryType ?: CategoryType.ACCOUNT,
+                    1
+                )
+            )
+        }
+
+        binding.addTransactionViewAccount.setOnClickListener()
         {
             view?.findNavController()?.navigate(
                 AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
@@ -106,7 +121,15 @@ class AddTransactionFragment : Fragment() {
                 )
             )
         }
-
+        binding.addTransactionViewCategory.setOnClickListener()
+        {
+            view?.findNavController()?.navigate(
+                AddTransactionFragmentDirections.actionAddTransactionFragmentToSelectCategoryFragment(
+                    viewModel.categoryPositionTwo.value?.categoryType ?: CategoryType.ACCOUNT,
+                    2
+                )
+            )
+        }
         setFragmentResultListener("SelectCategory")
         { _, bundle ->
             val categoryPosition = bundle.getInt("categoryPosition")
