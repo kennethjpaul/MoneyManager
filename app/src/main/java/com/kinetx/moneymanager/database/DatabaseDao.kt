@@ -120,4 +120,7 @@ interface DatabaseDao {
     /// New and updated queries
     @Query("SELECT * FROM transaction_table WHERE (category_one=:accountId OR category_two=:accountId) AND date>=:dateStart AND date<=:dateEnd")
     suspend fun getAllTransactionsWithAccount(accountId: Long, dateStart: Long,dateEnd: Long) : List<TransactionDatabase>
+
+    @Query("SELECT * FROM transaction_table ORDER BY transactionId DESC LIMIT 5")
+    fun getLatestTransactions() : LiveData<List<TransactionDatabase>>
 }

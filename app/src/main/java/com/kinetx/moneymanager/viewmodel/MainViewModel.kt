@@ -9,8 +9,11 @@ import com.kinetx.moneymanager.database.BalanceDatabase
 import com.kinetx.moneymanager.database.CategoryDatabase
 import com.kinetx.moneymanager.database.DatabaseMain
 import com.kinetx.moneymanager.database.DatabaseRepository
+import com.kinetx.moneymanager.database.TransactionDatabase
 import com.kinetx.moneymanager.dataclass.IncomeExpenseData
+import com.kinetx.moneymanager.dataclass.TransactionChildList
 import com.kinetx.moneymanager.enums.TransactionType
+import com.kinetx.moneymanager.helpers.CommonOperations
 import com.kinetx.moneymanager.helpers.DateManipulation
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -36,24 +39,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val selectedCurrency : LiveData<String>
         get() = _selectedCurrency
 
-    private val _startDate = MutableLiveData<String>()
-    val startDate : LiveData<String>
-        get() = _startDate
+    private val _currentMonth = MutableLiveData<String>()
+    val currentMonth : LiveData<String>
+        get() = _currentMonth
 
-    private val _endDate = MutableLiveData<String>()
-    val endDate : LiveData<String>
-        get() = _endDate
+    private val _currentMonthRange = MutableLiveData<String>()
+    val currentMonthRange : LiveData<String>
+        get() = _currentMonthRange
 
-    private val _expenseMonth = MutableLiveData<Float>()
-    val expenseMonth : LiveData<Float>
+    private val _expenseMonth = MutableLiveData<String>()
+    val expenseMonth : LiveData<String>
         get() = _expenseMonth
 
     private val _balanceMonth = MutableLiveData<Float>()
     val balanceMonth : LiveData<Float>
         get() = _balanceMonth
 
-    private val _incomeMonth = MutableLiveData<Float>()
-    val incomeMonth : LiveData<Float>
+    private val _incomeMonth = MutableLiveData<String>()
+    val incomeMonth : LiveData<String>
         get() = _incomeMonth
 
     private val _percentMonth = MutableLiveData<Float>()
@@ -69,6 +72,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         get() = _incomeExpenseQuery
 
     var readAllAccounts : LiveData<List<CategoryDatabase>>
+    var latestTransactions: LiveData<List<TransactionChildList>>
 
     private val repository : DatabaseRepository
 
@@ -78,11 +82,41 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository = DatabaseRepository(userDao)
 
         readAllAccounts = repository.readAllAccountCategory
+        val m  = repository.getLatestTransactions().value?.map {
+            TransactionChildList(it.transactionId,"","",1,it.transactionComment,it.transactionAmount.toFloat(),1,1,it.transactionType)
+        }
+        latestTransactions = Transformations.map(repository.getLatestTransactions()) { transactionList ->
+            transactionList.map { transaction ->
 
-        _expenseMonth.value = 0.0f
+                val transactionColor = when(transaction.transactionType)
+                {
+                    TransactionType.INCOME -> java.lang.Long.decode("0xFF1b365d").toInt()
+                    TransactionType.EXPENSE -> java.lang.Long.decode("0xFF1b365d").toInt()
+                    TransactionType.TRANSFER -> java.lang.Long.decode("0xFF1b365d").toInt()
+                    TransactionType.BALANCE -> java.lang.Long.decode("0xFF1b365d").toInt()
+                }
+                val cal = Calendar.getInstance()
+                cal.timeInMillis = transaction.transactionDate
+                val date = DateManipulation.getDateArray(cal)
+
+                TransactionChildList(
+                    transaction.transactionId,
+                    "", // Replace with appropriate values
+                    date, // Replace with appropriate values
+                    transactionColor, // Replace with appropriate values
+                    transaction.transactionComment,
+                    transaction.transactionAmount.toFloat(),
+                    CommonOperations.getResourceInt(application,"help"), // Replace with appropriate values
+                    java.lang.Long.decode("0xFF000000").toInt(), // Replace with appropriate values
+                    transaction.transactionType
+                )
+            }
+        }
+
+        _expenseMonth.value = "0.0 $currency"
         _balanceMonth.value = 0.0f
         _percentMonth.value = 0.0f
-        _incomeMonth.value  = 0.0f
+        _incomeMonth.value  = "0.0 $currency"
         var myCalendar : Calendar = Calendar.getInstance()
         myCalendar = DateManipulation.resetToMidnight(myCalendar)
         _selectedCurrency.value = currency
@@ -90,8 +124,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         updateIncomeExpenseQuery(myCalendar)
         val s = DateManipulation.getStartOfMonth(myCalendar,startOfMonth, weekendEnabled,weekendShift)
         val e = DateManipulation.getEndOfMonth(myCalendar,startOfMonth, weekendEnabled, weekendShift)
-        _startDate.value = DateManipulation.getDateArray(s)
-        _endDate.value = DateManipulation.getDateArray(e)
+
+        _currentMonthRange.value = DateManipulation.getDateArray(s) + " - " + DateManipulation.getDateArray(e)
+        if (startOfMonth > 15)
+        {
+            _currentMonth.value = DateManipulation.getMonthArray(e)
+        }
+        else
+        {
+            _currentMonth.value = DateManipulation.getMonthArray(s)
+        }
+
         _fragmentTitle.value = "Money Manager"
 
     }
@@ -188,8 +231,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         df.roundingMode = RoundingMode.DOWN
 
         val a = it?.income!! - it.expense
-        _incomeMonth.value = df.format(it.income).toFloat()
-        _expenseMonth.value = df.format(it.expense).toFloat()
+        _incomeMonth.value = "${df.format(it.income)} $currency"
+        _expenseMonth.value = "${df.format(it.expense)} $currency"
         _balanceMonth.value =  df.format(a).toFloat()
         val p = if (it.income ==0f) {
             0f

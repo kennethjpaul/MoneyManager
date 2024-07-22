@@ -179,4 +179,9 @@ class DatabaseRepository (private val databaseDao: DatabaseDao) {
     {
         return databaseDao.getAllTransactionsWithAccount(accountId, dateStart, dateEnd)
     }
+
+    fun getLatestTransactions() : LiveData<List<TransactionDatabase>>
+    {
+        return databaseDao.getLatestTransactions()
+    }
 }

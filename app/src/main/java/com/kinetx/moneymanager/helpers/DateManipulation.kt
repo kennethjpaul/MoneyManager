@@ -177,4 +177,12 @@ object DateManipulation {
 
         return "$day $month $year"
     }
+
+    fun getMonthArray(calendar: Calendar): String
+    {
+        val month: String = CommonOperations.monthArray[calendar.get(Calendar.MONTH)]
+        val year : String = calendar.get(Calendar.YEAR).toString()
+
+        return "$month $year"
+    }
 }

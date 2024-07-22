@@ -77,4 +77,5 @@
     <string name="expense_categories">Expense Categories</string>
     <string name="income_categories">Income Categories</string>
     <string name="categories">Categories</string>
+    <string name="latest_transactions">Latest Transactions</string>
 </resources>

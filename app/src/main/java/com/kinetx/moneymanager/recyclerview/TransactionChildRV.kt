@@ -52,8 +52,8 @@ class TransactionChildRV(val listener : TransactionChildListener): RecyclerView.
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = _list[position]
         holder.itemCategoryOne.text = currentItem.categoryOne
-        holder.itemCategoryTwo.text = currentItem.categoryTwo
-        holder.itemComment.text = currentItem.comments
+        holder.itemCategoryTwo.text = currentItem.comments
+        holder.itemComment.text = currentItem.categoryTwo
 
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.FLOOR
