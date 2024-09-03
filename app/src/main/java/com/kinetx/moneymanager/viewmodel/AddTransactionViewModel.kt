@@ -362,6 +362,7 @@ class AddTransactionViewModel(val argList: AddTransactionFragmentArgs, val appli
         _selectedDay.value = cal.get(Calendar.DAY_OF_MONTH).toString()
         _selectedMonth.value = monthArray[cal.get(Calendar.MONTH)]
         _selectedYear.value = cal.get(Calendar.YEAR).toString()
+        _selectedDate.value = DateManipulation.getDateArray(cal)
     }
 
 }
